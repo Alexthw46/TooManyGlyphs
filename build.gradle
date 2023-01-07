@@ -27,15 +27,8 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-def baseVersion = "2.0"
-def epoch = new Date(122, 2, 20)
-def offset = System.currentTimeMillis() - epoch.getTime()
-def day = (long) (offset / 86400000)
-def partDay = (long) ((offset % 86400000) / 5000)
-version = "${mc_version}-${mod_version}"
-
 group = 'io.github.derringersmods.toomanyglyphs' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'toomanyglyphs-1.19.0'
+archivesBaseName = 'toomanyglyphs-1.19.2'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -48,7 +41,7 @@ minecraft {
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
 
-    mappings channel: 'parchment', version: '1.18.2-2022.06.05-1.19'
+    mappings channel: 'parchment', version: '2022.08.14-1.19.2'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -142,7 +135,6 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     mavenCentral()
     mavenLocal()
 }
@@ -150,8 +142,7 @@ dependencies {
 
     minecraft "net.minecraftforge:forge:${mc_version}.2-${forge_version}"
 
-    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}.1:${ars_version}")
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${mc_version}:${gecko_version}")
+    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}.2:${ars_version}")
 
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
@@ -160,12 +151,10 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-75")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}.2-77")
 
-    implementation fg.deobf("com.github.LlamaLad7:MixinExtras:0.0.12")
-
-    annotationProcessor "com.github.LlamaLad7:MixinExtras:0.0.12"
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
 
 }
 
@@ -186,24 +175,21 @@ jar {
     }
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// we define a custom artifact that is sourced from the reobfJar output task
-// and then declare that to be published
-// Note you'll need to add a repository here
-def reobfFile = file("$buildDir/reobfJar/toomanyglyphs-${version}.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
-}
+// Example configuration to allow publishing using the maven-publish plugin
+// This is the preferred method to reobfuscate your jar file
+jar.finalizedBy('reobfJar')
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
+// publish.dependsOn('reobfJar')
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact reobfArtifact
+            artifact jar
         }
     }
     repositories {
         maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
+            url "file://${project.projectDir}/mcmodsrepo"
         }
     }
 }
@@ -213,7 +199,7 @@ publishing {
 // Copied from Botania
 if (System.getProperty("idea.sync.active") == "true") {
     afterEvaluate {
-        tasks.withType(JavaCompile).all {
+        tasks.withType(JavaCompile).configureEach {
             it.options.annotationProcessorPath = files()
         }
     }

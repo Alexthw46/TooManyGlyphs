@@ -4,7 +4,6 @@ import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodTouch;
 import io.github.derringersmods.toomanyglyphs.api.FilterUtil;
-import io.github.derringersmods.toomanyglyphs.api.filter.ITargetFilter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -37,7 +36,7 @@ public class MethodLayOnHands extends AbstractTMGForm{
         return 10;
     }
 
-    public static ITargetFilter getTargetFilter(SpellContext spellContext)
+    public static IFilter getTargetFilter(SpellContext spellContext)
     {
         return FilterUtil.getTargetFilter(spellContext, EffectFilterLivingNotMonster.INSTANCE);
     }

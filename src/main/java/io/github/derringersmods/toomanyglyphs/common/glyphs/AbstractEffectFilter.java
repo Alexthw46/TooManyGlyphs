@@ -1,19 +1,17 @@
 package io.github.derringersmods.toomanyglyphs.common.glyphs;
 
 import com.hollingsworth.arsnouveau.api.spell.*;
-import io.github.derringersmods.toomanyglyphs.api.filter.ITargetFilter;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Set;
 
-public abstract class AbstractEffectFilter extends AbstractTMGEffect implements ITargetFilter {
+public abstract class AbstractEffectFilter extends AbstractTMGEffect implements com.hollingsworth.arsnouveau.api.spell.IFilter {
     public AbstractEffectFilter(String tag, String description) {
         super(tag, description);
     }
@@ -52,17 +50,6 @@ public abstract class AbstractEffectFilter extends AbstractTMGEffect implements 
 
     @Override
     public boolean shouldResolveOnEntity(EntityHitResult target) {
-        return false;
-    }
-
-    //Does not override anymore
-    public boolean wouldSucceed(HitResult rayTraceResult, Level level, LivingEntity shooter, SpellStats stats, SpellContext context) {
-        if (rayTraceResult == null) return false;
-        if (rayTraceResult.getType() == HitResult.Type.MISS) return false;
-        if (rayTraceResult instanceof BlockHitResult)
-            return shouldResolveOnBlock((BlockHitResult) rayTraceResult);
-        if (rayTraceResult instanceof EntityHitResult)
-            return shouldResolveOnEntity((EntityHitResult) rayTraceResult);
         return false;
     }
 

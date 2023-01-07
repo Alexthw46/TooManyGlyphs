@@ -8,14 +8,9 @@ import net.minecraftforge.network.simple.SimpleChannel;
 public class TooManyGlyphsNetworking {
     public static SimpleChannel fxChannel;
 
-    public static void registerNetwork()
-    {
+    public static void registerNetwork() {
         fxChannel = NetworkRegistry.newSimpleChannel(new ResourceLocation(TooManyGlyphsMod.MODID, "fx"), () -> "1", v -> true, v -> true);
 
-        fxChannel.registerMessage(0,
-                PacketRayEffect.class,
-                PacketRayEffect::encode,
-                PacketRayEffect::decode,
-                PacketRayEffect::handle);
+        fxChannel.registerMessage(0, PacketRayEffect.class, PacketRayEffect::encode, PacketRayEffect::decode, PacketRayEffect::handle);
     }
 }
