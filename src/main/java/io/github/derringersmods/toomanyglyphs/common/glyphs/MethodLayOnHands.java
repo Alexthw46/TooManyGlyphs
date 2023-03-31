@@ -27,7 +27,7 @@ public class MethodLayOnHands extends AbstractTMGForm{
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.ONE;
     }
 

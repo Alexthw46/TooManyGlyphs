@@ -34,7 +34,7 @@ public class EffectReverseDirection extends AbstractTMGEffect {
     }
 
     @Override
-    public SpellTier getTier() { return SpellTier.ONE; }
+    public SpellTier defaultTier() { return SpellTier.ONE; }
 
     @Override
     public int getDefaultManaCost() { return 0; }

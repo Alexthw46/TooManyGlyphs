@@ -13,7 +13,7 @@ public class EffectFilterBlock extends AbstractEffectFilter implements IFilter {
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.ONE;
     }
 

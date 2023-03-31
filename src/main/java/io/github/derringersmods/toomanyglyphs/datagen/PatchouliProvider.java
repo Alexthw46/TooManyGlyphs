@@ -16,8 +16,6 @@ import net.minecraft.resources.ResourceLocation;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider.PatchouliPage;
-
 public class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider
 {
     public PatchouliProvider(DataGenerator generatorIn) {
@@ -37,7 +35,7 @@ public class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datag
 
     @Override
     public void addGlyphPage(AbstractSpellPart spellPart) {
-        ResourceLocation category = switch (spellPart.getTier().value) {
+        ResourceLocation category = switch (spellPart.defaultTier().value) {
             case 1 -> GLYPHS_1;
             case 2 -> GLYPHS_2;
             default -> GLYPHS_3;

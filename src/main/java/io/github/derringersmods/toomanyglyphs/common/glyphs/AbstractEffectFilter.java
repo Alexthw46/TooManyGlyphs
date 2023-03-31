@@ -11,9 +11,14 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Set;
 
-public abstract class AbstractEffectFilter extends AbstractTMGEffect implements com.hollingsworth.arsnouveau.api.spell.IFilter {
+public abstract class AbstractEffectFilter extends AbstractTMGEffect implements IFilter {
     public AbstractEffectFilter(String tag, String description) {
         super(tag, description);
+    }
+
+    @Override
+    public Integer getTypeIndex() {
+        return 15;
     }
 
     @Override

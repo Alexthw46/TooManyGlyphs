@@ -14,7 +14,7 @@ public class EffectFilterIsBaby extends EffectFilterEntity {
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
 

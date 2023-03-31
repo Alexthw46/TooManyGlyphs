@@ -32,9 +32,6 @@ public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.dat
         recipes.add(get(EffectChaining.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(Items.CHAIN, 3).withItem(Items.LAPIS_BLOCK, 1).withItem(Items.REDSTONE_BLOCK, 1).withItem(BlockRegistry.SOURCE_GEM_BLOCK, 1));
         recipes.add(get(EffectReverseDirection.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(Items.GLASS_PANE));
 
-        recipes.add(get(AugmentAmplifyTwo.INSTANCE).withItem(Items.DIAMOND, 3).withItem(Items.DIAMOND_BLOCK));
-        recipes.add(get(AugmentAmplifyThree.INSTANCE).withItem(Items.DIAMOND, 3).withItem(Items.DIAMOND_BLOCK, 5));
-
         recipes.add(get(EffectFilterBlock.INSTANCE).withIngredient(Ingredient.of(Tags.Items.COBBLESTONE)));
         recipes.add(get(EffectFilterEntity.INSTANCE).withIngredient(Ingredient.of(Tags.Items.NUGGETS_IRON)));
 

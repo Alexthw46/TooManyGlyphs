@@ -13,7 +13,7 @@ public class EffectFilterAny extends AbstractEffectFilter {
     }
 
     @Override
-    public SpellTier getTier() {
+    public SpellTier defaultTier() {
         return SpellTier.ONE;
     }
 

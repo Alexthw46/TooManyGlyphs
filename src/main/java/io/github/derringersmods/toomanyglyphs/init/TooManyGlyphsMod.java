@@ -30,10 +30,7 @@ public class TooManyGlyphsMod
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() ->{
-            TooManyGlyphsNetworking.registerNetwork();
-            ArsNouveauRegistry.addAugments();
-        });
+        event.enqueueWork(TooManyGlyphsNetworking::registerNetwork);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
