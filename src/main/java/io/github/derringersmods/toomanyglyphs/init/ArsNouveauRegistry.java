@@ -11,6 +11,7 @@ public class ArsNouveauRegistry {
     public static List<AbstractSpellPart> registeredSpells = new ArrayList<>();
 
     public static void registerGlyphs() {
+        register(EffectPlow.INSTANCE);
         register(EffectFilterBlock.INSTANCE);
         register(EffectFilterEntity.INSTANCE);
         register(EffectFilterLiving.INSTANCE);

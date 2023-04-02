@@ -59,12 +59,8 @@
 	"toomanyglyphs.glyph_desc.glyph_filter_is_mature": "Stops the spell from resolving unless it targets a mature, ageable living creature.",
 	"item.toomanyglyphs.glyph_filter_is_mature": "Glyph of Filtering: Mature",
 
-	"toomanyglyphs.glyph_name.glyph_amplify_two": "Amplify II",
-	"toomanyglyphs.glyph_desc.glyph_amplify_two": "An intense variant of Amplify that trades away efficiency for power.",
-	"item.toomanyglyphs.glyph_amplify_two": "Glyph of Amplify II",
-
-	"toomanyglyphs.glyph_name.glyph_amplify_three": "Amplify III",
-	"toomanyglyphs.glyph_desc.glyph_amplify_three": "A furious variant of Amplify that pours frankly ludicrous amounts of mana into an effect.",
-	"item.toomanyglyphs.glyph_amplify_three": "Glyph of Amplify III"
+	"toomanyglyphs.glyph_name.glyph_plow": "Plow",
+	"toomanyglyphs.glyph_desc.glyph_plow": "Simulate the use of an Hoe on blocks.",
+	"item.toomanyglyphs.glyph_plow": "Glyph of Plow"
 
 }
