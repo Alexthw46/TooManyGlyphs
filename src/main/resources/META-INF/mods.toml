@@ -8,33 +8,33 @@ modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
 loaderVersion="[41,)" #mandatory
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/DerringersMods/TooManyGlyphs/issues" #optional
+issueTrackerURL="https://github.com/DerringersMods/not_enough_glyphs/issues" #optional
 
 license="LGPL v2.1+"
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="toomanyglyphs" #mandatory
+modId="not_enough_glyphs" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 version="${file.jarVersion}" #mandatory
  # A display name for the mod
-displayName="Too Many Glyphs" #mandatory
+displayName="Not Enough Glyphs" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 #updateJSONURL="http://myurl.me/" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="http://example.com/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="toomanyglyphs.png" #optional
+#logoFile="not_enough_glyphs.png" #optional
 # A text field displayed in the mod UI
-credits="Ars Nouveau and friends for inspiration" #optional
+credits="Ars Nouveau and friends for inspiration, DerringersMods as the original maker of toomanyglyphs" #optional
 # A text field displayed in the mod UI
-authors="DerringersMods, 1.19 porting by Alexthw" #optional
+authors=", Porting by Alexthw to 1.19 and up" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligent, or maybe in a few cases just plain overpowered.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.toomanyglyphs]] #optional
+[[dependencies.not_enough_glyphs]] #optional
     # the modid of the dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
@@ -46,19 +46,19 @@ A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligen
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
 # Here's another dependency
-[[dependencies.toomanyglyphs]]
+[[dependencies.not_enough_glyphs]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.19,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.toomanyglyphs]]
+[[dependencies.not_enough_glyphs]]
     modId="ars_nouveau"
     mandatory=true
     versionRange="[1.19.0-3.0.10,)"
     ordering="AFTER"
     side="BOTH"
-[[dependencies.toomanyglyphs]]
+[[dependencies.not_enough_glyphs]]
     modId="patchouli"
     mandatory=false
     versionRange="[1.19-75,)"
