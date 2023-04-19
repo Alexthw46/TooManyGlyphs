@@ -8,6 +8,7 @@ import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateSelf;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -60,6 +61,7 @@ public class ArsNouveauRegistry {
                     abstractAugment.applyModifiers(builder, MethodOrbit.INSTANCE);
                 }
                 SpellStats stats = builder.build();
+                total += stats.getBuffCount(AugmentSplit.INSTANCE);
                 PropagateOrbit.orbitOnBlock(serverLevel, fakePlayer, resolver, stats, pos, total);
             }
         });

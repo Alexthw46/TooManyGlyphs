@@ -7,21 +7,31 @@ import com.hollingsworth.arsnouveau.api.spell.SpellStats;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public interface IPropagator {
 
     default void copyResolver(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
         spellContext.setCanceled(true);
+        //keep the propagator glyph to ensure augments are applied
+        spellContext.setCurrentIndex(spellContext.getCurrentIndex() - 1);
         Spell newSpell = spellContext.getRemainingSpell();
         if (newSpell.isEmpty()) return;
         SpellContext newContext = spellContext.clone().withSpell(newSpell);
-        SpellResolver newResolver = resolver.getNewResolver(newContext);
-        propagate(world, rayTraceResult.getLocation(), shooter, stats, newResolver, spellContext);
+        SpellResolver newResolver = new SpellResolver(newContext){
+            //remove the leftover propagator before resolving
+            @Override
+            protected void resolveAllEffects(Level world) {
+                this.spellContext.getSpell().recipe.remove(0);
+                super.resolveAllEffects(world);
+            }
+        };
+
+        propagate(world, rayTraceResult, shooter, stats, newResolver);
 
     }
 
-    void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext);
+
+    void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver);
 
 }

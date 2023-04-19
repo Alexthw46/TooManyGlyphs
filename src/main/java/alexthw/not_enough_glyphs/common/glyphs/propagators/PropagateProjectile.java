@@ -1,8 +1,8 @@
 package alexthw.not_enough_glyphs.common.glyphs.propagators;
 
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
-import com.hollingsworth.arsnouveau.common.block.tile.BasicSpellTurretTile;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -30,9 +31,10 @@ public class PropagateProjectile extends AbstractEffect implements IPropagator {
         super(omega("propagate_projectile"), "Propagate Projectile");
     }
 
-    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
+    @Override
+    public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         int numSplits = 1 + stats.getBuffCount(AugmentSplit.INSTANCE);
-
+        Vec3 pos = hitResult.getLocation();
         List<EntityProjectileSpell> projectiles = new ArrayList<>();
         for (int i = 0; i < numSplits; i++) {
             projectiles.add(new EntityProjectileSpell(world, resolver));
@@ -42,11 +44,11 @@ public class PropagateProjectile extends AbstractEffect implements IPropagator {
         int counter = 0;
 
         Vec3 direction = pos.subtract(shooter.position());
-        if (spellContext.castingTile instanceof BasicSpellTurretTile turretTile) {
-            if (turretTile instanceof RotatingTurretTile rotatingTurretTile) {
+        if (resolver.spellContext.getCaster() instanceof TileCaster tc) {
+            if (tc.getTile() instanceof RotatingTurretTile rotatingTurretTile) {
                 direction = rotatingTurretTile.getShootAngle();
             } else {
-                direction = new Vec3(turretTile.getBlockState().getValue(BasicSpellTurret.FACING).step());
+                direction = new Vec3(tc.getTile().getBlockState().getValue(BasicSpellTurret.FACING).step());
             }
         }
         for (EntityProjectileSpell proj : projectiles) {
@@ -62,6 +64,7 @@ public class PropagateProjectile extends AbstractEffect implements IPropagator {
         }
 
     }
+
 
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {

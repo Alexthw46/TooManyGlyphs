@@ -10,9 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
@@ -31,34 +29,18 @@ public class PropagateOrbit extends AbstractEffect implements IPropagator {
         copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
     }
 
-    @Override
-    public void copyResolver(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
-        spellContext.setCanceled(true);
-        Spell newSpell = spellContext.getRemainingSpell();
-        if (newSpell.isEmpty()) return;
-        SpellContext newContext = spellContext.clone().withSpell(newSpell);
-        SpellResolver newResolver = resolver.getNewResolver(newContext);
-        propagate(world, shooter, newResolver, stats, rayTraceResult);
-    }
-
-    @Override
-    public void propagate(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver, SpellContext spellContext) {
-
-    }
-
-    private void propagate(Level world, LivingEntity shooter, SpellResolver resolver, SpellStats stats, HitResult hitResult) {
+    public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         if (hitResult instanceof BlockHitResult blockHitResult) {
             orbitOnBlock(world, shooter, resolver, stats, blockHitResult.getBlockPos(), 3 + stats.getBuffCount(AugmentSplit.INSTANCE));
-        } else {
-            MethodOrbit.INSTANCE.summonProjectiles(world, hitResult instanceof EntityHitResult ehr && ehr.getEntity() instanceof LivingEntity living
-                    ? living : shooter, resolver, stats);
+        } else if (hitResult instanceof EntityHitResult entityHitResult) {
+            MethodOrbit.INSTANCE.summonProjectiles(world, entityHitResult.getEntity() instanceof LivingEntity living ? living : shooter, resolver, stats);
         }
     }
 
     public static void orbitOnBlock(Level world, LivingEntity shooter, SpellResolver resolver, SpellStats stats, BlockPos pos, int total) {
+        if (world.getBlockState(pos).isAir()) return;
         for (int i = 0; i < total; i++) {
             ModifiedOrbitProjectile wardProjectile = new ModifiedOrbitProjectile(world, resolver);
-
             wardProjectile.setCenter(pos);
             wardProjectile.setOwnerID(shooter.getId());
             wardProjectile.setOffset(i);
