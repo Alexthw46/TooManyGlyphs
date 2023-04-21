@@ -69,6 +69,8 @@
 	"ars_omega.glyph_desc.glyph_propagate_projectile": "TODO.",
 	"ars_omega.glyph_name.glyph_propagate_self": "Propagate Self",
 	"ars_omega.glyph_desc.glyph_propagate_self": "TODO.",
+	"ars_omega.glyph_name.glyph_propagate_underfoot": "Propagate Underfoot",
+	"ars_omega.glyph_desc.glyph_propagate_underfoot": "TODO.",
 
 	"ars_omega.glyph_name.glyph_propagate": "Propagate",
 	"ars_omega.glyph_desc.glyph_propagate": "TODO."

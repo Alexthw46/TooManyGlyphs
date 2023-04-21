@@ -1,0 +1,16 @@
+{
+  "category": "ars_nouveau:glyphs_3",
+  "icon": "ars_omega:glyph_propagate_orbit",
+  "name": "ars_omega.glyph_name.glyph_propagate_orbit",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_omega.glyph_desc.glyph_propagate_orbit"
+    },
+    {
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_omega:glyph_propagate_orbit"
+    }
+  ],
+  "sortnum": 2
+}

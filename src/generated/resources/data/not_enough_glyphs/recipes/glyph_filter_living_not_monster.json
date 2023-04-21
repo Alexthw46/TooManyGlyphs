@@ -1,0 +1,13 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 27,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:oxeye_daisy"
+      }
+    }
+  ],
+  "output": "toomanyglyphs:glyph_filter_living_not_monster"
+}

@@ -1,5 +1,6 @@
 package alexthw.not_enough_glyphs.common.glyphs.propagators;
 
+import alexthw.not_enough_glyphs.api.IPropagator;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +25,11 @@ public class PropagateSelf extends AbstractEffect implements IPropagator {
     @Override
     public void propagate(Level world, HitResult result, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         resolver.onResolveEffect(world, new EntityHitResult(shooter));
+    }
+
+    @Override
+    public void onResolve(HitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        copyResolver(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
     }
 
     @Override

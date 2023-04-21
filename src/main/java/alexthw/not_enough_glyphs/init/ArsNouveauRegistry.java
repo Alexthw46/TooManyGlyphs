@@ -5,6 +5,7 @@ import alexthw.not_enough_glyphs.common.glyphs.filters.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateOrbit;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateProjectile;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateSelf;
+import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateUnderfoot;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
@@ -23,7 +24,18 @@ public class ArsNouveauRegistry {
     public static List<AbstractSpellPart> registeredSpells = new ArrayList<>();
 
     public static void registerGlyphs() {
+
+        //tmg methods
+        register(MethodLayOnHands.INSTANCE);
+        register(MethodRay.INSTANCE);
+
+        //tmg effects
+        register(EffectReverseDirection.INSTANCE);
+        register(EffectChaining.INSTANCE);
+        //neg effects
         register(EffectPlow.INSTANCE);
+
+        //filters
         register(EffectFilterBlock.INSTANCE);
         register(EffectFilterEntity.INSTANCE);
         register(EffectFilterLiving.INSTANCE);
@@ -31,15 +43,13 @@ public class ArsNouveauRegistry {
         register(EffectFilterLivingNotPlayer.INSTANCE);
         register(EffectFilterMonster.INSTANCE);
         register(EffectFilterPlayer.INSTANCE);
-        register(MethodLayOnHands.INSTANCE);
-        register(EffectReverseDirection.INSTANCE);
-        register(EffectChaining.INSTANCE);
-        register(MethodRay.INSTANCE);
         register(EffectFilterItem.INSTANCE);
         register(EffectFilterAnimal.INSTANCE);
         register(EffectFilterIsBaby.INSTANCE);
         register(EffectFilterIsMature.INSTANCE);
 
+        //propagators
+        register(PropagateUnderfoot.INSTANCE);
         register(PropagateOrbit.INSTANCE);
         register(PropagateProjectile.INSTANCE);
         register(PropagateSelf.INSTANCE);

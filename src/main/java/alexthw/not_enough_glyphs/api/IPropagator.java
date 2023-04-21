@@ -1,4 +1,4 @@
-package alexthw.not_enough_glyphs.common.glyphs.propagators;
+package alexthw.not_enough_glyphs.api;
 
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
@@ -18,11 +18,12 @@ public interface IPropagator {
         Spell newSpell = spellContext.getRemainingSpell();
         if (newSpell.isEmpty()) return;
         SpellContext newContext = spellContext.clone().withSpell(newSpell);
-        SpellResolver newResolver = new SpellResolver(newContext){
+        SpellResolver newResolver = new SpellResolver(newContext) {
             //remove the leftover propagator before resolving
             @Override
             protected void resolveAllEffects(Level world) {
-                this.spellContext.getSpell().recipe.remove(0);
+                if (!spell.isEmpty())
+                    this.spellContext.getSpell().recipe.remove(0);
                 super.resolveAllEffects(world);
             }
         };

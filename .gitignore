@@ -21,7 +21,8 @@ build
 eclipse
 run
 classes
-generated
 
 # Files from Forge MDK
 forge*changelog.txt
+/gradle/
+/logs/

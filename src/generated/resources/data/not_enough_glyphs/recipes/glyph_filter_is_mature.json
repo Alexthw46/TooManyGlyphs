@@ -1,0 +1,13 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 55,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:chicken"
+      }
+    }
+  ],
+  "output": "toomanyglyphs:glyph_filter_is_mature"
+}

@@ -1,5 +1,6 @@
 package alexthw.not_enough_glyphs.common.glyphs.propagators;
 
+import alexthw.not_enough_glyphs.api.IPropagator;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
