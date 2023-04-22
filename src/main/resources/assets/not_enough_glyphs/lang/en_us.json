@@ -12,19 +12,19 @@
 	"item.toomanyglyphs.glyph_filter_living": "Glyph of Filtering: Living",
 
 	"toomanyglyphs.glyph_name.glyph_filter_living_not_player": "Filter: Not Player",
-	"toomanyglyphs.glyph_desc.glyph_filter_living_not_player": "Stops the spell from resolving unless it targets a living entity other than a player.",
+	"toomanyglyphs.glyph_desc.glyph_filter_living_not_player": "Stops the spell from resolving if it targets a player.",
 	"item.toomanyglyphs.glyph_filter_living_not_player": "Glyph of Filtering: Living, Not Player",
 
 	"toomanyglyphs.glyph_name.glyph_filter_living_not_monster": "Filter: Not Monster",
-	"toomanyglyphs.glyph_desc.glyph_filter_living_not_monster": "Stops the spell from resolving unless it targets a living entity other than a monster.",
+	"toomanyglyphs.glyph_desc.glyph_filter_living_not_monster": "Stops the spell from resolving if it targets a monster.",
 	"item.toomanyglyphs.glyph_filter_living_not_monster": "Glyph of Filtering: Living, Not Monster",
 
 	"toomanyglyphs.glyph_name.glyph_filter_player": "Filter: Player",
-	"toomanyglyphs.glyph_desc.glyph_filter_player": "Stops the spell from resolving unless it targets a living player.",
+	"toomanyglyphs.glyph_desc.glyph_filter_player": "Stops the spell from resolving unless it targets a player.",
 	"item.toomanyglyphs.glyph_filter_player": "Glyph of Filtering: Player",
 
 	"toomanyglyphs.glyph_name.glyph_filter_monster": "Filter: Monster",
-	"toomanyglyphs.glyph_desc.glyph_filter_monster": "Stops the spell from resolving unless it targets a living monster.",
+	"toomanyglyphs.glyph_desc.glyph_filter_monster": "Stops the spell from resolving unless it targets a monster.",
 	"item.toomanyglyphs.glyph_filter_monster": "Glyph of Filtering: Monster",
 
 	"toomanyglyphs.glyph_name.glyph_lay_on_hands": "Lay on Hands",
@@ -63,15 +63,15 @@
 	"not_enough_glyphs.glyph_desc.glyph_plow": "Simulate the use of an Hoe on blocks.",
 	"item.not_enough_glyphs.glyph_plow": "Glyph of Plow",
 
-	"ars_omega.glyph_name.glyph_propagate_orbit": "Propagate Orbit",
-	"ars_omega.glyph_desc.glyph_propagate_orbit": "TODO.",
-	"ars_omega.glyph_name.glyph_propagate_projectile": "Propagate Projectile",
-	"ars_omega.glyph_desc.glyph_propagate_projectile": "TODO.",
-	"ars_omega.glyph_name.glyph_propagate_self": "Propagate Self",
-	"ars_omega.glyph_desc.glyph_propagate_self": "TODO.",
-	"ars_omega.glyph_name.glyph_propagate_underfoot": "Propagate Underfoot",
-	"ars_omega.glyph_desc.glyph_propagate_underfoot": "TODO.",
+	"arsomega.glyph_name.glyph_propagate_orbit": "Propagate Orbit",
+	"arsomega.glyph_desc.glyph_propagate_orbit": "Convert the remainder of the spell into an Orbit spell, circling around the entity or the block hit. Rules of Orbit apply for augments.",
+	"arsomega.glyph_name.glyph_propagate_projectile": "Propagate Projectile",
+	"arsomega.glyph_desc.glyph_propagate_projectile": "Convert the remainder of the spell into a Projectile spell and shoot it from where it resolves.",
+	"arsomega.glyph_name.glyph_propagate_self": "Propagate Self",
+	"arsomega.glyph_desc.glyph_propagate_self": "Resolves the remainder of the spell on the caster.",
+	"arsomega.glyph_name.glyph_propagate_underfoot": "Propagate Underfoot",
+	"arsomega.glyph_desc.glyph_propagate_underfoot": "Resolves the remainder of the spell one block under the position hit.",
 
-	"ars_omega.glyph_name.glyph_propagate": "Propagate",
-	"ars_omega.glyph_desc.glyph_propagate": "TODO."
+	"arsomega.glyph_name.glyph_propagate": "Propagate",
+	"arsomega.glyph_desc.glyph_propagate": "Resolves/Convert the remainder in."
 }

@@ -79,7 +79,7 @@ public class PropagateProjectile extends AbstractEffect implements IPropagator {
 
     @Override
     public int getDefaultManaCost() {
-        return 400;
+        return 100;
     }
 
     @NotNull

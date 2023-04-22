@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class NetworkUtil {
-    public static ConcurrentHashMap<Class, AbstractPacketHandler> clientHandlers = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Class<?>, AbstractPacketHandler<?>> clientHandlers = new ConcurrentHashMap<>();
 
     public static <MSG> AbstractPacketHandler<MSG> getClientHandlerFor(Class<MSG> packetType) {
             return (AbstractPacketHandler<MSG>) clientHandlers.computeIfAbsent(packetType, t -> {

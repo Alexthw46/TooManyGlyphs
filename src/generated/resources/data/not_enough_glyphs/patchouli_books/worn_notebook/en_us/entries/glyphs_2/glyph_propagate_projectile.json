@@ -1,15 +1,15 @@
 {
   "category": "ars_nouveau:glyphs_2",
-  "icon": "ars_omega:glyph_propagate_projectile",
-  "name": "ars_omega.glyph_name.glyph_propagate_projectile",
+  "icon": "arsomega:glyph_propagate_projectile",
+  "name": "arsomega.glyph_name.glyph_propagate_projectile",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "ars_omega.glyph_desc.glyph_propagate_projectile"
+      "text": "arsomega.glyph_desc.glyph_propagate_projectile"
     },
     {
       "type": "ars_nouveau:glyph_recipe",
-      "recipe": "ars_omega:glyph_propagate_projectile"
+      "recipe": "arsomega:glyph_propagate_projectile"
     }
   ],
   "sortnum": 2

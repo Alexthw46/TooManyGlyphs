@@ -143,6 +143,11 @@ dependencies {
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
     implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-77")
 
+    runtimeOnly fg.deobf("curse.maven:elemental-561470:4482116")
+    //runtimeOnly fg.deobf("curse.maven:tmg-560595:4001247")
+    runtimeOnly fg.deobf("curse.maven:instrumentum-580179:4482648")
+    //runtimeOnly fg.deobf("curse.maven:omega-597007:4502337")
+
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
     annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")
 

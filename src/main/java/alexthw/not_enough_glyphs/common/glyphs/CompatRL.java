@@ -8,7 +8,7 @@ public class CompatRL {
     }
 
     public static ResourceLocation omega(String path) {
-        return new ResourceLocation("ars_omega", "glyph_" + path);
+        return new ResourceLocation("arsomega", "glyph_" + path);
     }
 
     public static ResourceLocation neg(String path) {

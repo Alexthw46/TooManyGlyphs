@@ -2,8 +2,17 @@ package alexthw.not_enough_glyphs.datagen;
 
 import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
+import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateOrbit;
+import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateProjectile;
+import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateSelf;
+import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateUnderfoot;
 import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
+import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodUnderfoot;
 import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
@@ -49,6 +58,11 @@ public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.dat
         recipes.add(get(EffectFilterIsBaby.INSTANCE).withIngredient(Ingredient.of(Tags.Items.EGGS)));
         recipes.add(get(EffectFilterIsMature.INSTANCE).withItem(Items.CHICKEN));
 
+        recipes.add(get(PropagateSelf.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodSelf.INSTANCE)));
+        recipes.add(get(PropagateProjectile.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodProjectile.INSTANCE)));
+        recipes.add(get(PropagateOrbit.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodOrbit.INSTANCE)));
+        recipes.add(get(PropagateUnderfoot.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodUnderfoot.INSTANCE)));
+
         Path outputBase = generator.getOutputFolder();
         for (GlyphRecipe recipe : recipes)
             DataProvider.saveStable(cache, recipe.asRecipe(), getScribeGlyphPath(outputBase, recipe.output.getItem()));
@@ -56,4 +70,5 @@ public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.dat
     protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
         return pathIn.resolve("data/" + NotEnoughGlyphs.MODID + "/recipes/" + getRegistryName(glyph).getPath() + ".json");
     }
+
 }

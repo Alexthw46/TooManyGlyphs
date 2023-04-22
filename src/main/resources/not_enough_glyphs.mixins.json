@@ -3,9 +3,7 @@
   "package": "alexthw.not_enough_glyphs.common.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "not_enough_glyphs.refmap.json",
-  "mixins": [
-    "RuneBlockFilterMixin"
-  ],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   },

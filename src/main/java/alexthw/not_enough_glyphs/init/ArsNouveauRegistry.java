@@ -16,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,34 +26,41 @@ public class ArsNouveauRegistry {
 
     public static void registerGlyphs() {
 
-        //tmg methods
-        register(MethodLayOnHands.INSTANCE);
-        register(MethodRay.INSTANCE);
 
-        //tmg effects
-        register(EffectReverseDirection.INSTANCE);
-        register(EffectChaining.INSTANCE);
         //neg effects
         register(EffectPlow.INSTANCE);
 
-        //filters
-        register(EffectFilterBlock.INSTANCE);
-        register(EffectFilterEntity.INSTANCE);
-        register(EffectFilterLiving.INSTANCE);
-        register(EffectFilterLivingNotMonster.INSTANCE);
-        register(EffectFilterLivingNotPlayer.INSTANCE);
-        register(EffectFilterMonster.INSTANCE);
-        register(EffectFilterPlayer.INSTANCE);
-        register(EffectFilterItem.INSTANCE);
-        register(EffectFilterAnimal.INSTANCE);
-        register(EffectFilterIsBaby.INSTANCE);
-        register(EffectFilterIsMature.INSTANCE);
+        //propagators
+        if (!ModList.get().isLoaded("toomanyglyphs")) {
+            //tmg methods
+            register(MethodLayOnHands.INSTANCE);
+            register(MethodRay.INSTANCE);
+
+            //tmg effects
+            register(EffectReverseDirection.INSTANCE);
+            register(EffectChaining.INSTANCE);
+
+            //filters
+            register(EffectFilterBlock.INSTANCE);
+            register(EffectFilterEntity.INSTANCE);
+            register(EffectFilterLiving.INSTANCE);
+            register(EffectFilterLivingNotMonster.INSTANCE);
+            register(EffectFilterLivingNotPlayer.INSTANCE);
+            register(EffectFilterMonster.INSTANCE);
+            register(EffectFilterPlayer.INSTANCE);
+            register(EffectFilterItem.INSTANCE);
+            register(EffectFilterAnimal.INSTANCE);
+            register(EffectFilterIsBaby.INSTANCE);
+            register(EffectFilterIsMature.INSTANCE);
+        }
 
         //propagators
-        register(PropagateUnderfoot.INSTANCE);
-        register(PropagateOrbit.INSTANCE);
-        register(PropagateProjectile.INSTANCE);
-        register(PropagateSelf.INSTANCE);
+        if (!ModList.get().isLoaded("arsomega")) {
+            register(PropagateUnderfoot.INSTANCE);
+            register(PropagateOrbit.INSTANCE);
+            register(PropagateProjectile.INSTANCE);
+            register(PropagateSelf.INSTANCE);
+        }
     }
 
     public static void register(AbstractSpellPart spellPart) {
