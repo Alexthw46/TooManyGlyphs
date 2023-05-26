@@ -55,9 +55,9 @@ public class ArsNouveauRegistry {
         }
 
         //propagators
+        register(PropagateOrbit.INSTANCE);
         if (!ModList.get().isLoaded("arsomega")) {
             register(PropagateUnderfoot.INSTANCE);
-            register(PropagateOrbit.INSTANCE);
             register(PropagateProjectile.INSTANCE);
             register(PropagateSelf.INSTANCE);
         }

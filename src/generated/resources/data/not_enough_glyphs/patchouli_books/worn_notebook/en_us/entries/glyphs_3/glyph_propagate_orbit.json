@@ -1,15 +1,15 @@
 {
   "category": "ars_nouveau:glyphs_3",
-  "icon": "arsomega:glyph_propagate_orbit",
-  "name": "arsomega.glyph_name.glyph_propagate_orbit",
+  "icon": "not_enough_glyphs:glyph_propagate_orbit",
+  "name": "not_enough_glyphs.glyph_name.glyph_propagate_orbit",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "arsomega.glyph_desc.glyph_propagate_orbit"
+      "text": "not_enough_glyphs.glyph_desc.glyph_propagate_orbit"
     },
     {
       "type": "ars_nouveau:glyph_recipe",
-      "recipe": "arsomega:glyph_propagate_orbit"
+      "recipe": "not_enough_glyphs:glyph_propagate_orbit"
     }
   ],
   "sortnum": 2

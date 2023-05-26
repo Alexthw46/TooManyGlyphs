@@ -14,5 +14,5 @@
       }
     }
   ],
-  "output": "arsomega:glyph_propagate_orbit"
+  "output": "not_enough_glyphs:glyph_propagate_orbit"
 }

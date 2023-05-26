@@ -15,14 +15,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.omega;
+import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.neg;
 
 public class PropagateOrbit extends AbstractEffect implements IPropagator {
 
     public static final PropagateOrbit INSTANCE = new PropagateOrbit();
 
     public PropagateOrbit() {
-        super(omega("propagate_orbit"), "Propagate Orbit");
+        super(neg("propagate_orbit"), "Propagate Orbit");
     }
 
     @Override

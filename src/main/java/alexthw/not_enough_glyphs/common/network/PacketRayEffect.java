@@ -88,10 +88,9 @@ public class PacketRayEffect {
         double radius = 64.0 + fromPoint.distanceTo(midpoint);
         double radiusSqr = radius * radius;
 
-        if (level instanceof ServerLevel)
+        if (level instanceof ServerLevel serverLevel)
         {
             PacketRayEffect fx = new PacketRayEffect(fromPoint, hitPoint, spellContext.getColors());
-            ServerLevel serverLevel = (ServerLevel) level;
             serverLevel.getChunkSource().chunkMap.getPlayers(new ChunkPos(new BlockPos(midpoint)), false)
                     .stream()
                     .filter(p -> p.distanceToSqr(midpoint) <= radiusSqr)
