@@ -24,7 +24,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
@@ -34,8 +33,10 @@ public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.dat
         super(generator);
     }
 
+
     @Override
-    public void run(CachedOutput cache) throws IOException {
+    public void collectJsons(CachedOutput pOutput) {
+
         recipes.add(get(EffectPlow.INSTANCE).withItem(ItemsRegistry.EARTH_ESSENCE).withItem(Items.STONE_HOE));
 
         recipes.add(get(MethodLayOnHands.INSTANCE).withIngredient(Ingredient.of(ItemTags.WOODEN_PRESSURE_PLATES)).withIngredient(Ingredient.of(ItemTags.BUTTONS)));
@@ -63,9 +64,9 @@ public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.dat
         recipes.add(get(PropagateOrbit.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodOrbit.INSTANCE)));
         recipes.add(get(PropagateUnderfoot.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodUnderfoot.INSTANCE)));
 
-        Path outputBase = generator.getOutputFolder();
+        Path outputBase = generator.getPackOutput().getOutputFolder();
         for (GlyphRecipe recipe : recipes)
-            DataProvider.saveStable(cache, recipe.asRecipe(), getScribeGlyphPath(outputBase, recipe.output.getItem()));
+            DataProvider.saveStable(pOutput, recipe.asRecipe(), getScribeGlyphPath(outputBase, recipe.output.getItem()));
     }
     protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
         return pathIn.resolve("data/" + NotEnoughGlyphs.MODID + "/recipes/" + getRegistryName(glyph).getPath() + ".json");

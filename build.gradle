@@ -29,7 +29,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
 
-    mappings channel: 'parchment', version: '2022.09.18-1.19.2'
+    mappings channel: 'parchment', version: '1.19.3-2023.03.12-1.20'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
 
@@ -137,16 +137,18 @@ dependencies {
 
     implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}:${ars_version}")
 
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
+    // at runtime, use the full JEI
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-common:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
 
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-77")
+    //implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curio_version}")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curio_version}")
 
-    runtimeOnly fg.deobf("curse.maven:elemental-561470:4482116")
-    //runtimeOnly fg.deobf("curse.maven:tmg-560595:4001247")
-    runtimeOnly fg.deobf("curse.maven:instrumentum-580179:4482648")
-    //runtimeOnly fg.deobf("curse.maven:omega-597007:4502337")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
+
+    implementation /*compileOnly*/ fg.deobf("com.github.glitchfiend:TerraBlender-forge:1.20.1-3.0.0.165")
 
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
     annotationProcessor("com.github.LlamaLad7:MixinExtras:0.1.1")

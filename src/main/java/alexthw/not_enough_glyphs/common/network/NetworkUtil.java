@@ -1,6 +1,5 @@
 package alexthw.not_enough_glyphs.common.network;
 
-import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
@@ -44,13 +43,4 @@ public class NetworkUtil {
         return new Vec3(x, y, z);
     }
 
-    public static void encode(@Nonnull FriendlyByteBuf buf, @Nonnull ParticleColor.IntWrapper item) {
-        buf.writeInt((item.r << 16) | (item.g << 8) | item.b);
-    }
-
-    @Nonnull
-    public static ParticleColor.IntWrapper decodeParticleColorIntWrapper(@Nonnull FriendlyByteBuf buf) {
-        int rgb = buf.readInt();
-        return new ParticleColor.IntWrapper((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF);
-    }
 }

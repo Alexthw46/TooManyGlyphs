@@ -28,7 +28,7 @@ displayName="Not Enough Glyphs" #mandatory
 # A text field displayed in the mod UI
 credits="Ars Nouveau and friends for inspiration, DerringersMods as the original maker of toomanyglyphs" #optional
 # A text field displayed in the mod UI
-authors="Porting by Alexthw to 1.19 and up" #optional
+authors="Porting by Alexthw to 1.19.2 and up" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligent, or maybe in a few cases just plain overpowered.

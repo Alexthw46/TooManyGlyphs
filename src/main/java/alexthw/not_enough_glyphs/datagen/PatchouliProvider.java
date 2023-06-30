@@ -13,7 +13,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
 
-import java.io.IOException;
 import java.nio.file.Path;
 
 public class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider
@@ -24,11 +23,11 @@ public class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datag
 
     @Override
     public Path getPath(ResourceLocation category, String fileName) {
-        return this.generator.getOutputFolder().resolve("data/" + NotEnoughGlyphs.MODID + "/patchouli_books/worn_notebook/en_us/entries/" + category.getPath() + "/" + fileName + ".json");
+        return this.generator.getPackOutput().getOutputFolder().resolve("data/" + NotEnoughGlyphs.MODID + "/patchouli_books/worn_notebook/en_us/entries/" + category.getPath() + "/" + fileName + ".json");
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
+    public void collectJsons(CachedOutput cache) {
         for (AbstractSpellPart part : ArsNouveauRegistry.registeredSpells) this.addGlyphPage(part);
         for (PatchouliPage page : pages) DataProvider.saveStable(cache, page.build(), page.path());
     }

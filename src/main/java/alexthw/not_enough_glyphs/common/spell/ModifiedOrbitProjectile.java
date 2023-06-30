@@ -8,13 +8,14 @@ import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.network.PacketANEffect;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +23,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 
 public class ModifiedOrbitProjectile extends EntityProjectileSpell {
@@ -96,12 +96,12 @@ public class ModifiedOrbitProjectile extends EntityProjectileSpell {
 
     @Override
     public Vec3 getNextHitPosition() {
-        return level.getBlockState(getCenter()).isAir() ? super.getNextHitPosition() : getAngledPosition(tickCount + 3); // trace 3 ticks ahead for hit
+        return level().getBlockState(getCenter()).isAir() ? super.getNextHitPosition() : getAngledPosition(tickCount + 3); // trace 3 ticks ahead for hit
     }
 
     @Override
     public void tickNextPosition() {
-        if (level.getBlockState(getCenter()).isAir()) {
+        if (level().getBlockState(getCenter()).isAir()) {
             if (getDeltaMovement().length() == 0) age += 20;
             super.tickNextPosition();
             return;
@@ -131,7 +131,7 @@ public class ModifiedOrbitProjectile extends EntityProjectileSpell {
 
     @Override
     protected void onHit(HitResult result) {
-        if (level.isClientSide)
+        if (level().isClientSide)
             return;
 
         result = transformHitResult(result);
@@ -139,25 +139,26 @@ public class ModifiedOrbitProjectile extends EntityProjectileSpell {
         if (result instanceof EntityHitResult entityHitResult) {
             if (entityHitResult.getEntity().equals(this.getOwner())) return;
             if (this.spellResolver != null) {
-                this.spellResolver.onResolveEffect(level, result);
-                Networking.sendToNearby(level, new BlockPos(result.getLocation()), new PacketANEffect(PacketANEffect.EffectType.BURST,
-                        new BlockPos(result.getLocation()), getParticleColorWrapper()));
+                this.spellResolver.onResolveEffect(level(), result);
+                Vec3i pos = new BlockPos(Mth.ceil(result.getLocation().x), Mth.ceil(result.getLocation().y), Mth.ceil(result.getLocation().z));
+                Networking.sendToNearby(level(), new BlockPos(pos), new PacketANEffect(PacketANEffect.EffectType.BURST,
+                        new BlockPos(pos), getParticleColorWrapper()));
                 attemptRemoval();
             }
         } else if (result instanceof BlockHitResult blockRaytraceResult && !this.isRemoved()) {
-            BlockState state = level.getBlockState(blockRaytraceResult.getBlockPos());
+            BlockState state = level().getBlockState(blockRaytraceResult.getBlockPos());
 
             if (state.getBlock() instanceof IPrismaticBlock prismaticBlock) {
-                prismaticBlock.onHit((ServerLevel) level, blockRaytraceResult.getBlockPos(), this);
+                prismaticBlock.onHit((ServerLevel) level(), blockRaytraceResult.getBlockPos(), this);
                 return;
             }
 
             if (numSensitive > 0) {
                 if (this.spellResolver != null) {
-                    this.spellResolver.onResolveEffect(this.level, blockRaytraceResult);
+                    this.spellResolver.onResolveEffect(this.level(), blockRaytraceResult);
                 }
-                Networking.sendToNearby(level, blockRaytraceResult.getBlockPos(), new PacketANEffect(PacketANEffect.EffectType.BURST,
-                        new BlockPos(result.getLocation()).below(), getParticleColorWrapper()));
+                Networking.sendToNearby(level(), blockRaytraceResult.getBlockPos(), new PacketANEffect(PacketANEffect.EffectType.BURST,
+                        new BlockPos(blockRaytraceResult.getBlockPos()).below(), getParticleColorWrapper()));
                 attemptRemoval();
             }
         }
@@ -198,10 +199,6 @@ public class ModifiedOrbitProjectile extends EntityProjectileSpell {
         setOwnerID(tag.getInt("ownerID"));
         setTotal(tag.getInt("total"));
         setCenter(NBTUtil.getNullablePos(tag, "origin"));
-    }
-
-    public Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     public int getOwnerID() {
