@@ -9,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -92,8 +91,7 @@ public class PacketRayEffect {
 
         if (level instanceof ServerLevel serverLevel) {
             PacketRayEffect fx = new PacketRayEffect(fromPoint, hitPoint, spellContext.getColors());
-            Vec3i intVec = new Vec3i(Mth.ceil(midpoint.x), Mth.ceil(midpoint.y), Mth.ceil(midpoint.z));
-            serverLevel.getChunkSource().chunkMap.getPlayers(new ChunkPos(new BlockPos(intVec)), false)
+            serverLevel.getChunkSource().chunkMap.getPlayers(new ChunkPos(BlockPos.containing(midpoint)), false)
                     .stream()
                     .filter(p -> p.distanceToSqr(midpoint) <= radiusSqr)
                     .forEach(p -> Networking.fxChannel.send(PacketDistributor.PLAYER.with(() -> p), fx));

@@ -15,7 +15,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -140,7 +139,7 @@ public class ModifiedOrbitProjectile extends EntityProjectileSpell {
             if (entityHitResult.getEntity().equals(this.getOwner())) return;
             if (this.spellResolver != null) {
                 this.spellResolver.onResolveEffect(level(), result);
-                Vec3i pos = new BlockPos(Mth.ceil(result.getLocation().x), Mth.ceil(result.getLocation().y), Mth.ceil(result.getLocation().z));
+                Vec3i pos = BlockPos.containing(result.getLocation());
                 Networking.sendToNearby(level(), new BlockPos(pos), new PacketANEffect(PacketANEffect.EffectType.BURST,
                         new BlockPos(pos), getParticleColorWrapper()));
                 attemptRemoval();
@@ -158,7 +157,7 @@ public class ModifiedOrbitProjectile extends EntityProjectileSpell {
                     this.spellResolver.onResolveEffect(this.level(), blockRaytraceResult);
                 }
                 Networking.sendToNearby(level(), blockRaytraceResult.getBlockPos(), new PacketANEffect(PacketANEffect.EffectType.BURST,
-                        new BlockPos(blockRaytraceResult.getBlockPos()).below(), getParticleColorWrapper()));
+                        BlockPos.containing(blockRaytraceResult.getLocation()).below(), getParticleColorWrapper()));
                 attemptRemoval();
             }
         }

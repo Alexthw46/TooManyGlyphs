@@ -1,12 +1,11 @@
 package alexthw.not_enough_glyphs.common.glyphs;
 
+import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
-import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -84,7 +83,7 @@ public class MethodRay extends AbstractCastMethod {
         if (blockTarget.getType() == HitResult.Type.MISS && sensitivity >= 2)
         {
             Vec3 approximateNormal = fromPoint.subtract(toPoint).normalize();
-            blockTarget = new BlockHitResult(toPoint, Direction.getNearest(approximateNormal.x, approximateNormal.y, approximateNormal.z), new BlockPos(new Vec3i((int) toPoint.x, (int) toPoint.y, (int) toPoint.z)), true);
+            blockTarget = new BlockHitResult(toPoint, Direction.getNearest(approximateNormal.x, approximateNormal.y, approximateNormal.z), BlockPos.containing(toPoint), true);
             resolver.onResolveEffect(world, blockTarget);
             PacketRayEffect.send(world, spellContext, fromPoint, blockTarget.getLocation());
         }
