@@ -10,7 +10,6 @@ import com.hollingsworth.arsnouveau.common.datagen.patchouli.PatchouliBuilder;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.TextPage;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
 
 import java.nio.file.Path;
@@ -29,7 +28,7 @@ public class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datag
     @Override
     public void collectJsons(CachedOutput cache) {
         for (AbstractSpellPart part : ArsNouveauRegistry.registeredSpells) this.addGlyphPage(part);
-        for (PatchouliPage page : pages) DataProvider.saveStable(cache, page.build(), page.path());
+        for (PatchouliPage page : pages) saveStable(cache, page.build(), page.path());
     }
 
     @Override

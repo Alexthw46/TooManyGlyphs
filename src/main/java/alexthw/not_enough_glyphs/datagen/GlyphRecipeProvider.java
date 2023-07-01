@@ -17,7 +17,6 @@ import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -66,7 +65,7 @@ public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.dat
 
         Path outputBase = generator.getPackOutput().getOutputFolder();
         for (GlyphRecipe recipe : recipes)
-            DataProvider.saveStable(pOutput, recipe.asRecipe(), getScribeGlyphPath(outputBase, recipe.output.getItem()));
+            saveStable(pOutput, recipe.asRecipe(), getScribeGlyphPath(outputBase, recipe.output.getItem()));
     }
     protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
         return pathIn.resolve("data/" + NotEnoughGlyphs.MODID + "/recipes/" + getRegistryName(glyph).getPath() + ".json");
