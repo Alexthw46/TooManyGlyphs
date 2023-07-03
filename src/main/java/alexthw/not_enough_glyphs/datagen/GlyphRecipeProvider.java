@@ -68,7 +68,8 @@ public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.dat
             saveStable(pOutput, recipe.asRecipe(), getScribeGlyphPath(outputBase, recipe.output.getItem()));
     }
     protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
-        return pathIn.resolve("data/" + NotEnoughGlyphs.MODID + "/recipes/" + getRegistryName(glyph).getPath() + ".json");
+        var regname = getRegistryName(glyph);
+        return pathIn.resolve("data/" + regname.getNamespace() + "/recipes/" + regname.getPath() + ".json");
     }
 
 }

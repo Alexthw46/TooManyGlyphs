@@ -6,9 +6,9 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[41,)" #mandatory
+loaderVersion="[47,)" #mandatory
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="" #optional
+issueTrackerURL="https://github.com/Alexthw46/NotEnoughGlyphs/issues" #optional
 
 license="LGPL v2.1+"
 # A list of mods - how many allowed here is determined by the individual mod loader
@@ -33,35 +33,16 @@ authors="Porting by Alexthw to 1.19.2 and up" #optional
 description='''
 A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligent, or maybe in a few cases just plain overpowered.
 '''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.not_enough_glyphs]] #optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="[43.2.0,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
-    ordering="NONE"
-    # Side this dependency is applied on - BOTH, CLIENT or SERVER
-    side="BOTH"
-# Here's another dependency
 [[dependencies.not_enough_glyphs]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,)"
+    versionRange="[1.20,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.not_enough_glyphs]]
     modId="ars_nouveau"
     mandatory=true
     versionRange="[1.19.0-3.0.10,)"
-    ordering="AFTER"
-    side="BOTH"
-[[dependencies.not_enough_glyphs]]
-    modId="patchouli"
-    mandatory=false
-    versionRange="[1.19-75,)"
     ordering="AFTER"
     side="BOTH"
 [[dependencies.not_enough_glyphs]]
