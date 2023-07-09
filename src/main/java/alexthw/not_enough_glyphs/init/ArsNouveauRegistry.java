@@ -6,11 +6,11 @@ import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateOrbit;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateProjectile;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateSelf;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateUnderfoot;
-import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
+import com.hollingsworth.arsnouveau.setup.registry.APIRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -64,7 +64,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void register(AbstractSpellPart spellPart) {
-        ArsNouveauAPI.getInstance().registerSpell(spellPart);
+        APIRegistry.registerSpell(spellPart);
         registeredSpells.add(spellPart);
     }
 
@@ -76,7 +76,7 @@ public class ArsNouveauRegistry {
                 SpellStats.Builder builder = new SpellStats.Builder();
                 List<AbstractAugment> augments = resolver.spell.getAugments(0, fakePlayer);
                 for (AbstractAugment abstractAugment : augments) {
-                    abstractAugment.applyModifiers(builder, MethodOrbit.INSTANCE);
+                    abstractAugment.applyModifiers(builder, MethodOrbit.INSTANCE, resolver.hitResult, serverLevel, fakePlayer, resolver.spellContext);
                 }
                 SpellStats stats = builder.build();
                 total += stats.getBuffCount(AugmentSplit.INSTANCE);

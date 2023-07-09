@@ -14,7 +14,7 @@ public class DatagenMain {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        generator.addProvider(event.includeServer(), new GlyphRecipeProvider(generator));
+        generator.addProvider(event.includeServer(), new NEGGlyphRecipeProvider(generator));
         generator.addProvider(event.includeServer(),new PatchouliProvider(generator));
     }
 

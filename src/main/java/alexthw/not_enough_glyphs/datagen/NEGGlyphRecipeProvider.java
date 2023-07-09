@@ -6,15 +6,15 @@ import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateOrbit;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateProjectile;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateSelf;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateUnderfoot;
-import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
+import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodSelf;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodUnderfoot;
-import com.hollingsworth.arsnouveau.setup.BlockRegistry;
-import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.ItemTags;
@@ -25,10 +25,10 @@ import net.minecraftforge.common.Tags;
 
 import java.nio.file.Path;
 
-import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
+import static com.hollingsworth.arsnouveau.setup.registry.RegistryHelper.getRegistryName;
 
-public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider {
-    public GlyphRecipeProvider(DataGenerator generator) {
+public class NEGGlyphRecipeProvider extends GlyphRecipeProvider {
+    public NEGGlyphRecipeProvider(DataGenerator generator) {
         super(generator);
     }
 
@@ -58,10 +58,10 @@ public class GlyphRecipeProvider extends com.hollingsworth.arsnouveau.common.dat
         recipes.add(get(EffectFilterIsBaby.INSTANCE).withIngredient(Ingredient.of(Tags.Items.EGGS)));
         recipes.add(get(EffectFilterIsMature.INSTANCE).withItem(Items.CHICKEN));
 
-        recipes.add(get(PropagateSelf.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodSelf.INSTANCE)));
-        recipes.add(get(PropagateProjectile.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodProjectile.INSTANCE)));
-        recipes.add(get(PropagateOrbit.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodOrbit.INSTANCE)));
-        recipes.add(get(PropagateUnderfoot.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ArsNouveauAPI.getInstance().getGlyphItem(MethodUnderfoot.INSTANCE)));
+        recipes.add(get(PropagateSelf.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodSelf.INSTANCE.getGlyph()));
+        recipes.add(get(PropagateProjectile.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodProjectile.INSTANCE.getGlyph()));
+        recipes.add(get(PropagateOrbit.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodOrbit.INSTANCE.getGlyph()));
+        recipes.add(get(PropagateUnderfoot.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodUnderfoot.INSTANCE.getGlyph()));
 
         Path outputBase = generator.getPackOutput().getOutputFolder();
         for (GlyphRecipe recipe : recipes)

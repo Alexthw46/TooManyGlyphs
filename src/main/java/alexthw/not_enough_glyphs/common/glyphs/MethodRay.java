@@ -137,9 +137,9 @@ public class MethodRay extends AbstractCastMethod {
     }
 
     @Override
-    protected Map<ResourceLocation, Integer> getDefaultAugmentLimits(Map<ResourceLocation, Integer> result) {
-        result.put(AugmentSensitive.INSTANCE.getRegistryName(), 2);
-        return result;
+    protected void buildAugmentLimitsConfig(ForgeConfigSpec.Builder builder, Map<ResourceLocation, Integer> defaults) {
+        defaults.put(AugmentSensitive.INSTANCE.getRegistryName(), 2);
+        super.buildAugmentLimitsConfig(builder, defaults);
     }
 
 }

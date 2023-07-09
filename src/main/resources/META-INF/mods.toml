@@ -42,7 +42,7 @@ A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligen
 [[dependencies.not_enough_glyphs]]
     modId="ars_nouveau"
     mandatory=true
-    versionRange="[1.19.0-3.0.10,)"
+    versionRange="[1.20.1-4.0,)"
     ordering="AFTER"
     side="BOTH"
 [[dependencies.not_enough_glyphs]]
