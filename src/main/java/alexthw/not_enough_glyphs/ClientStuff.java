@@ -21,6 +21,7 @@ public class ClientStuff {
     public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
 
         event.registerEntityRenderer(Registry.MODIFIED_ORBIT.get(), ClientStuff::projectileRender);
+        event.registerEntityRenderer(Registry.TRAILING_PROJECTILE.get(), ClientStuff::projectileRender);
 
     }
 

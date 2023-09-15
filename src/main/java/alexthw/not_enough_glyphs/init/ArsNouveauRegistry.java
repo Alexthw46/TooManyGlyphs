@@ -2,10 +2,7 @@ package alexthw.not_enough_glyphs.init;
 
 import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
-import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateOrbit;
-import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateProjectile;
-import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateSelf;
-import alexthw.not_enough_glyphs.common.glyphs.propagators.PropagateUnderfoot;
+import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
@@ -29,6 +26,9 @@ public class ArsNouveauRegistry {
 
         //neg effects
         register(EffectPlow.INSTANCE);
+        register(EffectFlatten.INSTANCE);
+        register(MethodTrail.INSTANCE);
+        register(PropagatePlane.INSTANCE);
 
         //propagators
         if (!ModList.get().isLoaded("toomanyglyphs")) {

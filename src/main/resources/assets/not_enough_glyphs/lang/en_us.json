@@ -63,6 +63,14 @@
 	"not_enough_glyphs.glyph_desc.glyph_plow": "Simulate the use of an Hoe on blocks.",
 	"item.not_enough_glyphs.glyph_plow": "Glyph of Plow",
 
+	"not_enough_glyphs.glyph_name.glyph_trail": "Echoing Projectile",
+	"not_enough_glyphs.glyph_desc.glyph_trail": "Fire a projectile that resolves the spell on its trail.",
+	"item.not_enough_glyphs.glyph_trail": "Glyph of Echoing Projectile",
+
+	"not_enough_glyphs.glyph_name.glyph_propagate_plane": "Propagate Plane",
+	"not_enough_glyphs.glyph_desc.glyph_propagate_plane": "Resolves the remainder of the spell into a plane, extending from the block hit. Add Sensitive to make the plane circular. Add Dampen to make the plane hollow.",
+	"item.not_enough_glyphs.glyph_propagate_plane": "Glyph of Propagate Plane",
+
 	"not_enough_glyphs.glyph_name.glyph_propagate_orbit": "Propagate Orbit",
 	"not_enough_glyphs.glyph_desc.glyph_propagate_orbit": "Convert the remainder of the spell into an Orbit spell, circling around the entity or the block hit. Rules of Orbit apply for augments.",
 	"item.not_enough_glyphs.glyph_propagate_orbit": "Glyph of Propagate Orbit",
@@ -73,6 +81,10 @@
 	"arsomega.glyph_desc.glyph_propagate_self": "Resolves the remainder of the spell on the caster.",
 	"arsomega.glyph_name.glyph_propagate_underfoot": "Propagate Underfoot",
 	"arsomega.glyph_desc.glyph_propagate_underfoot": "Resolves the remainder of the spell one block under the position hit.",
+
+	"arsomega.glyph_name.glyph_flatten": "Flatten",
+	"arsomega.glyph_desc.glyph_flatten": "Simulate the use of a Shovel on blocks or deal damage relative to the block underneath the entity.",
+	"item.arsomega.glyph_flatten": "Glyph of Flatten",
 
 	"arsomega.glyph_name.glyph_propagate": "Propagate",
 	"arsomega.glyph_desc.glyph_propagate": "Resolves/Convert the remainder in."
