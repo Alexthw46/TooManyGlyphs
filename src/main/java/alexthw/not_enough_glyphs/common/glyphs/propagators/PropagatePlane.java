@@ -25,9 +25,9 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.neg;
 
@@ -37,7 +37,7 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
 
     private PropagatePlane() {
         super(neg("propagate_plane"), "Propagate Plane");
-        invalidCombinations.addAll(List.of(EffectWall.INSTANCE, EffectLinger.INSTANCE, EffectBurst.INSTANCE, EffectChaining.INSTANCE).stream().map(AbstractSpellPart::getRegistryName).toList());
+        invalidCombinations.addAll(Stream.of(EffectWall.INSTANCE, EffectLinger.INSTANCE, EffectBurst.INSTANCE, EffectChaining.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
     }
 
     @Override
@@ -73,46 +73,24 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
 
         // Define cylinder parameters
         int radius = (int) width;
-
-        // Calculate minimum and maximum coordinates for x and z axes
-        int minX, minZ, maxZ, minY, maxY;
-        Direction.Axis axis;
-
-        switch (blockHitResult.getDirection()) {
-            case EAST, WEST -> {
-                minX = center.getX();
-                minZ = center.getZ() - radius;
-                minY = center.getY() - radius;
-                axis = Direction.Axis.X;
-            }
-            case NORTH, SOUTH -> {
-                minX = (center.getX() - radius);
-                minZ = center.getZ();
-                minY = (center.getY() - radius);
-                axis = Direction.Axis.Z;
-            }
-            case UP, DOWN -> {
-                minX = center.getX() - radius;
-                minZ = center.getZ() - radius;
-                minY = center.getY();
-                axis = Direction.Axis.Y;
-            }
-            default -> {
-                return;
-            }
-        }
+        @SuppressWarnings("unused") //this would be normally useless, but it's needed to make the whole thing work
+        int anchor = switch (blockHitResult.getDirection()) {
+            case EAST, WEST -> anchor = center.getX();
+            case NORTH, SOUTH -> anchor = center.getZ();
+            case UP, DOWN -> anchor = center.getY();
+        };
 
         // Loop through cylinder dimensions
-        for (BlockPos pos : SpellUtil.calcAOEBlocks(shooter, center, blockHitResult, width*2, height)) {
+        for (BlockPos pos : SpellUtil.calcAOEBlocks(shooter, center, blockHitResult, width * 2, height)) {
             int x = pos.getX();
             int y = pos.getY();
             int z = pos.getZ();
 
             // Check if the point is within the cylinder's radius
-            double distance = BlockUtil.distanceFromCenter(center, switch (axis){
-                case X -> new BlockPos(minX, y, z);
-                case Y -> new BlockPos(x, minY, z);
-                case Z -> new BlockPos(x, y, minZ);
+            double distance = BlockUtil.distanceFromCenter(center, switch (blockHitResult.getDirection()) {
+                case EAST, WEST -> new BlockPos(center.getX(), y, z);
+                case UP, DOWN -> new BlockPos(x, center.getY(), z);
+                case NORTH, SOUTH -> new BlockPos(x, y, center.getZ());
             });
             if (isHollow) {
                 if (distance <= radius + 0.5 && distance >= radius - 0.5) {
@@ -225,7 +203,7 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
     @Override
     protected void addAugmentCostOverrides(Map<ResourceLocation, Integer> defaults) {
         super.addAugmentCostOverrides(defaults);
-        defaults.put(AugmentSensitive.INSTANCE.getRegistryName(), 200);
+        defaults.put(AugmentSensitive.INSTANCE.getRegistryName(), 100);
     }
 
     @Override

@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class EffectFlatten extends AbstractEffect implements IDamageEffect {
-    public static EffectFlatten INSTANCE = new EffectFlatten("flatten", "Flatten");
+    public static final EffectFlatten INSTANCE = new EffectFlatten("flatten", "Flatten");
 
     private EffectFlatten(String tag, String description) {
         super(CompatRL.omega(tag), description);
@@ -41,7 +41,7 @@ public class EffectFlatten extends AbstractEffect implements IDamageEffect {
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         for (BlockPos p : SpellUtil.calcAOEBlocks(shooter, rayTraceResult.getBlockPos(), rayTraceResult, spellStats.getAoeMultiplier(), spellStats.getBuffCount(AugmentPierce.INSTANCE))) {
-            doFlat(p, rayTraceResult, world, shooter, spellStats, spellContext, resolver);
+            doFlat(p, rayTraceResult, world, spellStats);
         }
     }
 
@@ -50,7 +50,7 @@ public class EffectFlatten extends AbstractEffect implements IDamageEffect {
         return be != null && (world.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent() || be instanceof Container);
     }
 
-    public void doFlat(BlockPos p, BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver){
+    public void doFlat(BlockPos p, BlockHitResult rayTraceResult, Level world, SpellStats spellStats){
         ItemStack shovel = new ItemStack(Items.DIAMOND_SHOVEL);
         applyEnchantments(spellStats, shovel);
         Player entity = ANFakePlayer.getPlayer((ServerLevel) world);

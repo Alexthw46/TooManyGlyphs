@@ -1,5 +1,6 @@
 package alexthw.not_enough_glyphs.common.spell;
 
+import alexthw.not_enough_glyphs.common.glyphs.MethodTrail;
 import alexthw.not_enough_glyphs.init.Registry;
 import com.hollingsworth.arsnouveau.api.block.IPrismaticBlock;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
@@ -35,6 +36,11 @@ public class TrailingProjectile extends EntityProjectileSpell {
 
     public TrailingProjectile(Level world, SpellResolver resolver) {
         super(Registry.TRAILING_PROJECTILE.get(), world, resolver);
+    }
+
+    @Override
+    public int getExpirationTime() {
+        return MethodTrail.INSTANCE.getProjectileLifespan() * 20;
     }
 
     @Override

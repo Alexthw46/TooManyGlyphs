@@ -4,6 +4,9 @@ import alexthw.not_enough_glyphs.common.spell.TrailingProjectile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectBurst;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectLinger;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectWall;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class MethodTrail extends AbstractCastMethod {
 
@@ -29,6 +33,7 @@ public class MethodTrail extends AbstractCastMethod {
 
     public MethodTrail() {
         super(CompatRL.neg("trail"), "Makes a projectile that resolves the spell on its trail few times instead of where it hits.");
+        invalidCombinations.addAll(Stream.of(EffectLinger.INSTANCE, EffectWall.INSTANCE, EffectBurst.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
     }
 
     public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
