@@ -7,6 +7,21 @@
       "item": {
         "item": "ars_nouveau:manipulation_essence"
       }
+    },
+    {
+      "item": {
+        "item": "minecraft:diamond_block"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:firework_star"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:wilden_spike"
+      }
     }
   ],
   "output": "not_enough_glyphs:glyph_propagate_plane"

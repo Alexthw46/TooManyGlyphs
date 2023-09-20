@@ -1,6 +1,0 @@
-{
-  "name": "Not Enough Notes",
-  "landing_text": "Extra notes for the worn notebook",
-  "version": 1,
-  "extend": "ars_nouveau:worn_notebook"
-}

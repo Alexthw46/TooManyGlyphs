@@ -21,11 +21,6 @@ public class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datag
     }
 
     @Override
-    public Path getPath(ResourceLocation category, String fileName) {
-        return this.generator.getPackOutput().getOutputFolder().resolve("data/" + NotEnoughGlyphs.MODID + "/patchouli_books/worn_notebook/en_us/entries/" + category.getPath() + "/" + fileName + ".json");
-    }
-
-    @Override
     public void collectJsons(CachedOutput cache) {
         for (AbstractSpellPart part : ArsNouveauRegistry.registeredSpells) this.addGlyphPage(part);
         for (PatchouliPage page : pages) saveStable(cache, page.build(), page.path());
@@ -43,7 +38,8 @@ public class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datag
                 .withIcon(spellPart.getRegistryName().toString())
                 .withSortNum(spellPart instanceof AbstractCastMethod ? 1 : spellPart instanceof AbstractEffect ? 2 : 3)
                 .withPage(new TextPage(spellPart.getRegistryName().getNamespace() + ".glyph_desc." + spellPart.getRegistryName().getPath()))
-                .withPage(new GlyphScribePage(spellPart));
+                .withPage(new GlyphScribePage(spellPart))
+                .withProperty("!flag", "mod:" + spellPart.getRegistryName().getNamespace());
         this.pages.add(new PatchouliPage(builder, getPath(category, spellPart.getRegistryName().getPath())));
     }
 

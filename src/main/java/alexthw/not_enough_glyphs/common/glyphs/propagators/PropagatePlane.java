@@ -37,7 +37,11 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
 
     private PropagatePlane() {
         super(neg("propagate_plane"), "Propagate Plane");
-        invalidCombinations.addAll(Stream.of(EffectWall.INSTANCE, EffectLinger.INSTANCE, EffectBurst.INSTANCE, EffectChaining.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
+    }
+
+    @Override
+    protected void addDefaultInvalidCombos(Set<ResourceLocation> defaults) {
+        defaults.addAll(Stream.of(EffectWall.INSTANCE, EffectLinger.INSTANCE, EffectBurst.INSTANCE, EffectChaining.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
     }
 
     @Override

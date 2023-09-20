@@ -10,6 +10,7 @@ import com.hollingsworth.arsnouveau.common.spell.effect.EffectWall;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,7 +34,11 @@ public class MethodTrail extends AbstractCastMethod {
 
     public MethodTrail() {
         super(CompatRL.neg("trail"), "Makes a projectile that resolves the spell on its trail few times instead of where it hits.");
-        invalidCombinations.addAll(Stream.of(EffectLinger.INSTANCE, EffectWall.INSTANCE, EffectBurst.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
+    }
+
+    @Override
+    protected void addDefaultInvalidCombos(Set<ResourceLocation> defaults) {
+        defaults.addAll(Stream.of(EffectLinger.INSTANCE, EffectWall.INSTANCE, EffectBurst.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
     }
 
     public void summonProjectiles(Level world, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
@@ -109,6 +114,11 @@ public class MethodTrail extends AbstractCastMethod {
     public CastResolveType onCastOnEntity(ItemStack stack, LivingEntity caster, Entity target, InteractionHand hand, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         summonProjectiles(caster.getCommandSenderWorld(), caster, spellStats, resolver);
         return CastResolveType.SUCCESS;
+    }
+
+    @Override
+    public SpellTier defaultTier() {
+        return SpellTier.THREE;
     }
 
     /**

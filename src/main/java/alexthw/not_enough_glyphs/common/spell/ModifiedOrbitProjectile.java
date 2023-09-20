@@ -141,7 +141,7 @@ public class ModifiedOrbitProjectile extends EntityProjectileSpell {
                 this.spellResolver.onResolveEffect(level(), result);
                 Vec3i pos = BlockPos.containing(result.getLocation());
                 Networking.sendToNearby(level(), new BlockPos(pos), new PacketANEffect(PacketANEffect.EffectType.BURST,
-                        new BlockPos(pos), getParticleColorWrapper()));
+                        new BlockPos(pos), getParticleColor()));
                 attemptRemoval();
             }
         } else if (result instanceof BlockHitResult blockRaytraceResult && !this.isRemoved()) {
@@ -157,7 +157,7 @@ public class ModifiedOrbitProjectile extends EntityProjectileSpell {
                     this.spellResolver.onResolveEffect(this.level(), blockRaytraceResult);
                 }
                 Networking.sendToNearby(level(), blockRaytraceResult.getBlockPos(), new PacketANEffect(PacketANEffect.EffectType.BURST,
-                        BlockPos.containing(blockRaytraceResult.getLocation()).below(), getParticleColorWrapper()));
+                        BlockPos.containing(blockRaytraceResult.getLocation()).below(), getParticleColor()));
                 attemptRemoval();
             }
         }

@@ -23,17 +23,13 @@ public class ArsNouveauRegistry {
 
     public static void registerGlyphs() {
 
-
         //neg effects
         register(EffectPlow.INSTANCE);
-        register(EffectFlatten.INSTANCE);
         register(MethodTrail.INSTANCE);
-        register(PropagatePlane.INSTANCE);
 
-        //propagators
+        //tmg
         if (!ModList.get().isLoaded("toomanyglyphs")) {
             //tmg methods
-            register(MethodLayOnHands.INSTANCE);
             register(MethodRay.INSTANCE);
 
             //tmg effects
@@ -54,12 +50,25 @@ public class ArsNouveauRegistry {
             register(EffectFilterIsMature.INSTANCE);
         }
 
-        //propagators
+        //neg propagators
         register(PropagateOrbit.INSTANCE);
+        register(PropagatePlane.INSTANCE);
+
+        //omega
         if (!ModList.get().isLoaded("arsomega")) {
+            register(EffectFlatten.INSTANCE);
+
             register(PropagateUnderfoot.INSTANCE);
             register(PropagateProjectile.INSTANCE);
             register(PropagateSelf.INSTANCE);
+        }
+        //elemental
+        if (!ModList.get().isLoaded("ars_elemental")) {
+            register(MethodArc.INSTANCE);
+            register(MethodHoming.INSTANCE);
+
+            register(PropagateArc.INSTANCE);
+            register(PropagateHoming.INSTANCE);
         }
     }
 

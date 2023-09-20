@@ -8,6 +8,7 @@ import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectLinger;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectWall;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -25,6 +26,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.tmg;
 
@@ -34,10 +36,11 @@ public class EffectChaining extends AbstractEffect {
 
     public EffectChaining(String tag, String description) {
         super(tmg(tag), description);
-        invalidCombinations.add(EffectLinger.INSTANCE.getRegistryName());
-        invalidCombinations.add(EffectWall.INSTANCE.getRegistryName());
     }
-
+    @Override
+    protected void addDefaultInvalidCombos(Set<ResourceLocation> defaults) {
+        defaults.addAll(Stream.of(EffectLinger.INSTANCE, EffectWall.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
+    }
     // configurable bits
     public ForgeConfigSpec.IntValue BASE_MAX_BLOCKS;
     public ForgeConfigSpec.IntValue BONUS_BLOCKS;
