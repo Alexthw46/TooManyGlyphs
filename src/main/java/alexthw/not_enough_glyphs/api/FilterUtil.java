@@ -33,7 +33,7 @@ public class FilterUtil {
         boolean flag = true;
         if (filters == null) return true;
         for (IFilter spellPart : filters) {
-            flag &= spellPart.shouldAffect(new EntityHitResult(e));
+            flag &= spellPart.shouldAffect(new EntityHitResult(e), e.level());
         }
         return !flag;
     }
@@ -55,7 +55,7 @@ public class FilterUtil {
     /**
      * Returns a predicate that checks if an entity is affected by the given spell.
      */
-    public static Predicate<Entity> getFilterPredicate(Spell spell, Predicate<Entity> defaultFilter) {
+    public static Predicate<Entity>getFilterPredicate(Spell spell, Predicate<Entity> defaultFilter) {
         Set<IFilter> set = getFilters(spell.recipe, 0);
         if (set.isEmpty()) return defaultFilter;
         return (entity -> !checkIgnoreFilters(entity, set));

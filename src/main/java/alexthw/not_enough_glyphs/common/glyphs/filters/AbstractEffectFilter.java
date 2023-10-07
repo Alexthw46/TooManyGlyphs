@@ -24,8 +24,8 @@ public abstract class AbstractEffectFilter extends AbstractFilter {
         return this;
     }
 
-    public boolean shouldAffect(HitResult rayTraceResult) {
-        return inverted != super.shouldAffect(rayTraceResult);
+    public boolean shouldAffect(HitResult rayTraceResult, Level level) {
+        return inverted != super.shouldAffect(rayTraceResult, level);
     }
 
     private boolean inverted = false;
@@ -37,12 +37,12 @@ public abstract class AbstractEffectFilter extends AbstractFilter {
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        if (!shouldResolveOnEntity(rayTraceResult)) spellContext.setCanceled(true);
+        if (!shouldResolveOnEntity(rayTraceResult, world)) spellContext.setCanceled(true);
     }
 
     @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        if (!shouldResolveOnBlock(rayTraceResult)) spellContext.setCanceled(true);
+        if (!shouldResolveOnBlock(rayTraceResult, world)) spellContext.setCanceled(true);
     }
 
     @Nonnull
@@ -63,12 +63,12 @@ public abstract class AbstractEffectFilter extends AbstractFilter {
     }
 
     @Override
-    public boolean shouldResolveOnBlock(BlockHitResult target) {
+    public boolean shouldResolveOnBlock(BlockHitResult target, Level level) {
         return false;
     }
 
     @Override
-    public boolean shouldResolveOnEntity(EntityHitResult target) {
+    public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
         return false;
     }
 

@@ -4,6 +4,8 @@ import com.hollingsworth.arsnouveau.common.entity.EntityDummy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.EntityHitResult;
 
+import java.util.logging.Level;
+
 public class EffectFilterLivingNotPlayer extends EffectFilterLiving {
     public static final EffectFilterLivingNotPlayer INSTANCE = new EffectFilterLivingNotPlayer("filter_living_not_player", "Filter: Not Player");
 
@@ -12,7 +14,7 @@ public class EffectFilterLivingNotPlayer extends EffectFilterLiving {
     }
 
     @Override
-    public boolean shouldResolveOnEntity(EntityHitResult target) {
-        return super.shouldResolveOnEntity(target) && !(target.getEntity() instanceof Player || target.getEntity() instanceof EntityDummy);
+    public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
+        return super.shouldResolveOnEntity(target, level) && !(target.getEntity() instanceof Player || target.getEntity() instanceof EntityDummy);
     }
 }

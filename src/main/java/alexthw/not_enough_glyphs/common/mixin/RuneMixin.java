@@ -22,7 +22,7 @@ public class RuneMixin {
                     opcode = Opcodes.PUTFIELD))
     private void entityInsideFilterCheck(@Nonnull RuneTile instance, Entity value) {
         if (instance.touchedEntity != null) return;
-        if (!FilterUtil.getTargetFilter(instance.spell, EffectFilterAny.INSTANCE).shouldResolveOnEntity(value))
+        if (!FilterUtil.getTargetFilter(instance.spell, EffectFilterAny.INSTANCE).shouldResolveOnEntity(value, value.level()))
             return;
         instance.touchedEntity = value;
     }

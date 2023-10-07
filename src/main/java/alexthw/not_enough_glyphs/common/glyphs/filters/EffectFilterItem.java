@@ -1,6 +1,7 @@
 package alexthw.not_enough_glyphs.common.glyphs.filters;
 
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 
 public class EffectFilterItem extends EffectFilterEntity {
@@ -11,7 +12,7 @@ public class EffectFilterItem extends EffectFilterEntity {
     }
 
     @Override
-    public boolean shouldResolveOnEntity(EntityHitResult target) {
-        return super.shouldResolveOnEntity(target) && target.getEntity() instanceof ItemEntity;
+    public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
+        return super.shouldResolveOnEntity(target, level) && target.getEntity() instanceof ItemEntity;
     }
 }
