@@ -85,7 +85,7 @@ public class EffectFlatten extends AbstractEffect implements IDamageEffect {
         //buff dirt and similar:
         damage = Mth.clamp(damage, 0.5f, 500f);
 
-        this.attemptDamage(world, shooter, spellStats, spellContext, resolver, rayTraceResult.getEntity(), shooter.getLastDamageSource(), damage);
+        this.attemptDamage(world, shooter, spellStats, spellContext, resolver, rayTraceResult.getEntity(), buildDamageSource(world, shooter), damage);
     }
 
     @Override
