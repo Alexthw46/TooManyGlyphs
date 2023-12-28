@@ -3,16 +3,8 @@ package alexthw.not_enough_glyphs.init;
 import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
-import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
-import com.hollingsworth.arsnouveau.common.spell.method.MethodOrbit;
+import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.setup.registry.APIRegistry;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fml.ModList;
 
 import java.util.ArrayList;
@@ -51,7 +43,7 @@ public class ArsNouveauRegistry {
         }
 
         //neg propagators
-        register(PropagateOrbit.INSTANCE);
+        //register(PropagateOrbit.INSTANCE);
         register(PropagatePlane.INSTANCE);
 
         //omega
@@ -75,23 +67,6 @@ public class ArsNouveauRegistry {
     public static void register(AbstractSpellPart spellPart) {
         APIRegistry.registerSpell(spellPart);
         registeredSpells.add(spellPart);
-    }
-
-    static {
-        BasicSpellTurret.TURRET_BEHAVIOR_MAP.put(MethodOrbit.INSTANCE, new ITurretBehavior() {
-            @Override
-            public void onCast(SpellResolver resolver, ServerLevel serverLevel, BlockPos pos, Player fakePlayer, Position dispensePosition, Direction direction) {
-                int total = 3;
-                SpellStats.Builder builder = new SpellStats.Builder();
-                List<AbstractAugment> augments = resolver.spell.getAugments(0, fakePlayer);
-                for (AbstractAugment abstractAugment : augments) {
-                    abstractAugment.applyModifiers(builder, MethodOrbit.INSTANCE, resolver.hitResult, serverLevel, fakePlayer, resolver.spellContext);
-                }
-                SpellStats stats = builder.build();
-                total += stats.getBuffCount(AugmentSplit.INSTANCE);
-                PropagateOrbit.orbitOnBlock(serverLevel, fakePlayer, resolver, stats, pos, total);
-            }
-        });
     }
 
 }
