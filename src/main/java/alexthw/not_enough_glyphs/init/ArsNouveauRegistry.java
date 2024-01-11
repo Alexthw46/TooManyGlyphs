@@ -4,6 +4,7 @@ import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import com.hollingsworth.arsnouveau.setup.registry.APIRegistry;
 import net.minecraftforge.fml.ModList;
 
@@ -69,4 +70,8 @@ public class ArsNouveauRegistry {
         registeredSpells.add(spellPart);
     }
 
+    public static void postInit() {
+        EffectReset.RESET_LIMITS.add(PropagatePlane.INSTANCE);
+        EffectReset.RESET_LIMITS.add(EffectChaining.INSTANCE);
+    }
 }

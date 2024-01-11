@@ -3,6 +3,7 @@ package alexthw.not_enough_glyphs.init;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -29,6 +30,7 @@ public class NotEnoughGlyphs
 
     private void setup(final FMLCommonSetupEvent event) {
         event.enqueueWork(Networking::registerNetwork);
+        event.enqueueWork(ArsNouveauRegistry::postInit);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

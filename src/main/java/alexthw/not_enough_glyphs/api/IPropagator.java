@@ -9,14 +9,10 @@ import org.jetbrains.annotations.Nullable;
 public interface IPropagator {
 
     default void copyResolver(HitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
-        spellContext.setCanceled(true);
-        //keep the propagator glyph to ensure augments are applied
-        Spell newSpell = spellContext.getRemainingSpell();
-        newSpell.add(DUMMY, 1, 0);
-        if (newSpell.isEmpty()) return;
-        SpellContext newContext = spellContext.clone().withSpell(newSpell);
+        SpellContext newContext = spellContext.makeChildContext();
+        newContext.getSpell().add(DUMMY, 1, 0);
         SpellResolver newResolver = resolver.getNewResolver(newContext);
-
+        spellContext.setCanceled(true);
         propagate(world, rayTraceResult, shooter, stats, newResolver);
     }
 

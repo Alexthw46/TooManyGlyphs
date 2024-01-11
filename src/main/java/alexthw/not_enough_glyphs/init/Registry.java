@@ -1,25 +1,42 @@
 package alexthw.not_enough_glyphs.init;
 
-import alexthw.not_enough_glyphs.common.spell.ModifiedOrbitProjectile;
 import alexthw.not_enough_glyphs.common.spell.TrailingProjectile;
+import alexthw.not_enough_glyphs.common.spellbinder.SpellBinder;
+import alexthw.not_enough_glyphs.common.spellbinder.SpellBinderContainer;
+import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.stream.Collectors;
+
 public class Registry {
 
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NotEnoughGlyphs.MODID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, NotEnoughGlyphs.MODID);
-
-    public static final RegistryObject<EntityType<ModifiedOrbitProjectile>> MODIFIED_ORBIT;
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, NotEnoughGlyphs.MODID);
     public static final RegistryObject<EntityType<TrailingProjectile>> TRAILING_PROJECTILE;
 
+
+    public static final RegistryObject<MenuType<SpellBinderContainer>> SPELL_HOLDER;
+    public static final RegistryObject<Item> SPELL_BINDER;
+
     static {
-        MODIFIED_ORBIT = addEntity("orbit", 0.5F, 0.5F, true, true, ModifiedOrbitProjectile::new, MobCategory.MISC);
         TRAILING_PROJECTILE = addEntity("trail", 0.5F, 0.5F, true, true, TrailingProjectile::new, MobCategory.MISC);
+
+        SPELL_BINDER = ITEMS.register("spell_binder", () -> new SpellBinder(new Item.Properties().stacksTo(1)));
+
+        SPELL_HOLDER = CONTAINERS.register("spell_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new SpellBinderContainer(id, inv, extraData.readItem())));
 
     }
 
@@ -39,7 +56,14 @@ public class Registry {
     }
 
     public static void init(IEventBus modbus) {
+        ITEMS.register(modbus);
         ENTITIES.register(modbus);
+        CONTAINERS.register(modbus);
+        modbus.addListener((BuildCreativeModeTabContentsEvent event) -> {
+            if (event.getTab() == CreativeTabRegistry.BLOCKS.get())
+                for (var item : ITEMS.getEntries())
+                    event.accept(item.get());
+        });
     }
 
 }
