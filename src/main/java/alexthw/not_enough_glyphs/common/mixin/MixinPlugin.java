@@ -14,8 +14,7 @@ public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
         MixinExtrasBootstrap.init();
-        try{
-
+        try {
             Class.forName("src.main.java.io.github.derringersmods.toomanyglyphs.init.TooManyGlyphsMod");
             tooManyGlyphLoaded = true;
         } catch (Throwable t) {

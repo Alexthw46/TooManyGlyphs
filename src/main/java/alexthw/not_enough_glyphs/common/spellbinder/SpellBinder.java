@@ -2,10 +2,7 @@ package alexthw.not_enough_glyphs.common.spellbinder;
 
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import com.hollingsworth.arsnouveau.api.item.IRadialProvider;
-import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
-import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
-import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-import com.hollingsworth.arsnouveau.api.spell.Spell;
+import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.gui.radial_menu.GuiRadialMenu;
 import com.hollingsworth.arsnouveau.client.gui.radial_menu.RadialMenu;
 import com.hollingsworth.arsnouveau.client.gui.radial_menu.RadialMenuSlot;
@@ -16,10 +13,12 @@ import com.hollingsworth.arsnouveau.common.network.PacketSetBookMode;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -36,6 +35,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,6 +46,22 @@ import static alexthw.not_enough_glyphs.init.Networking.*;
 
 public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
 
+    @Override
+    public ISpellCaster getSpellCaster() {
+        return new SpellBook.BookCaster(new CompoundTag());
+    }
+
+
+    @Override
+    public ISpellCaster getSpellCaster(CompoundTag tag) {
+        return new SpellBook.BookCaster(tag);
+
+    }
+
+    @Override
+    public @NotNull ISpellCaster getSpellCaster(ItemStack stack) {
+        return new SpellBook.BookCaster(stack);
+    }
 
     public SpellBinder(Properties pProperties) {
         super(pProperties);
@@ -66,6 +82,13 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
         }
     }
 
+    @Override
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
+        ItemStack stack = pPlayer.getItemInHand(pUsedHand);
+        ISpellCaster caster = this.getSpellCaster(stack);
+        return caster.castSpell(pLevel, pPlayer, pUsedHand, Component.translatable("ars_nouveau.invalid_spell"));
+    }
+
     private static class InventoryCapability implements ICapabilityProvider {
         private final LazyOptional<IItemHandler> opt;
 
@@ -81,7 +104,7 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
     }
 
     public static ItemInventory getInventory(ItemStack stack) {
-        return new ItemInventory(stack, 20);
+        return new ItemInventory(stack);
     }
 
     @Override
@@ -141,7 +164,5 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
 
         return radialMenuSlots;
     }
-
-
 
 }

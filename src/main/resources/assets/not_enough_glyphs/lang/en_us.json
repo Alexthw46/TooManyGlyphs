@@ -1,4 +1,6 @@
 {
+	"item.not_enough_glyphs.spell_binder": "Spell Binder",
+
 	"toomanyglyphs.glyph_name.glyph_filter_block": "Filter: Block",
 	"toomanyglyphs.glyph_desc.glyph_filter_block": "Stops the spell from resolving unless it targets a block.",
 	"item.toomanyglyphs.glyph_filter_block": "Glyph of Filtering: Block",

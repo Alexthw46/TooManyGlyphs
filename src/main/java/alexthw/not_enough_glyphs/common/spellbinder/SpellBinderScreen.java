@@ -20,16 +20,27 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
 
     @Override
     protected void renderBg(@NotNull GuiGraphics gui, float partialTicks, int x, int y) {
-        int topPos = (this.height - this.imageHeight)/3;
-        gui.blit(BACKGROUND, leftPos -45, topPos, 0, 0, 256, 256);
+        gui.blit(BACKGROUND, leftPos -40, topPos-40, 0, 0, 256, 256);
     }
 
     @Override
     public void render(@NotNull GuiGraphics gui, int mouseX, int mouseY, float partialTicks) {
+        renderBackground(gui);
         super.render(gui, mouseX, mouseY, partialTicks);
         renderTooltip(gui, mouseX, mouseY);
     }
 
+    @Override
+    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
+        pGuiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        this.titleLabelX = 8;
+        this.titleLabelY = -20;
+    }
 
     @Override
     protected void renderTooltip(@NotNull GuiGraphics gui, int mouseX, int mouseY) {

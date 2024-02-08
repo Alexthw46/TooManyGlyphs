@@ -1,6 +1,7 @@
 package alexthw.not_enough_glyphs.common.spellbinder;
 
 import alexthw.not_enough_glyphs.init.Registry;
+import com.hollingsworth.arsnouveau.common.items.CasterTome;
 import com.hollingsworth.arsnouveau.common.items.SpellParchment;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -30,11 +31,10 @@ public class SpellBinderContainer extends AbstractContainerMenu {
         // backpack inventory
 
         // each page have 10 slots are 5 rows of 2 slots
-
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 2; ++j) {
                 int index = i * 2 + j;
-                addSlot(this.makeSlot(inventory, i, j, index));
+                addSlot(this.makeSlot(inventory, -3 + i * 20, (j % 2 == 0 ? -5 : +14) + j * 20, index));
             }
         }
 
@@ -43,7 +43,7 @@ public class SpellBinderContainer extends AbstractContainerMenu {
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 2; ++j) {
                 int index = pageoffset + i * 2 + j;
-                addSlot(this.makeSlot(inventory, i, j, index));
+                addSlot(this.makeSlot(inventory, -3 + i * 20, (j % 2 == 0 ? +2 : +28) + (pageoffset + j) * 12, index));
             }
         }
 
@@ -61,13 +61,17 @@ public class SpellBinderContainer extends AbstractContainerMenu {
     }
 
     @NotNull
-    protected Slot makeSlot(Container inventory, int i, int j, int index) {
-        return new Slot(inventory, index, 8 + j * 18, 18 + i * 18) {
+    protected Slot makeSlot(Container inventory, int y, int x, int index) {
+        return new Slot(inventory, index, x, y) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
-                return stack.getItem() instanceof SpellParchment;
+                return stack.getItem() instanceof SpellParchment || stack.getItem() instanceof CasterTome;
             }
 
+            @Override
+            public int getMaxStackSize() {
+                return 1;
+            }
         };
     }
 
