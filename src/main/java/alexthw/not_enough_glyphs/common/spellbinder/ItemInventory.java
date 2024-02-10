@@ -12,12 +12,12 @@ public class ItemInventory extends SimpleContainer {
     private final ItemStack stack;
 
     public ItemInventory(ItemStack stack) {
-        super(20);
+        super(25);
         this.stack = stack;
 
         ListTag list = stack.getOrCreateTag().getList("items", 10);
 
-        for (int i = 0; i < 20 && i < list.size(); i++) {
+        for (int i = 0; i < 25 && i < list.size(); i++) {
             setItem(i, ItemStack.of(list.getCompound(i)));
         }
     }
@@ -32,7 +32,7 @@ public class ItemInventory extends SimpleContainer {
         super.setChanged();
         CompoundTag spellTag = new CompoundTag();
         ListTag list = new ListTag();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 25; i++) {
             if (i < 10 && getItem(i).getItem() instanceof ICasterTool c)
                 spellTag.put("spell" + i, c.getSpellCaster(getItem(i)).getSpell().serialize());
             list.add(getItem(i).save(new CompoundTag()));

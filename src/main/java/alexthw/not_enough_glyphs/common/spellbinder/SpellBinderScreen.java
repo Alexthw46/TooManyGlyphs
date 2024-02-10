@@ -1,6 +1,9 @@
 package alexthw.not_enough_glyphs.common.spellbinder;
 
 import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
+import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.client.gui.utils.RenderUtils;
+import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -20,13 +23,14 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
 
     @Override
     protected void renderBg(@NotNull GuiGraphics gui, float partialTicks, int x, int y) {
-        gui.blit(BACKGROUND, leftPos -40, topPos-40, 0, 0, 256, 256);
+        gui.blit(BACKGROUND, leftPos - 40, topPos - 40, 0, 0, 256, 256);
     }
 
     @Override
     public void render(@NotNull GuiGraphics gui, int mouseX, int mouseY, float partialTicks) {
         renderBackground(gui);
         super.render(gui, mouseX, mouseY, partialTicks);
+        renderGlyphPreview(gui, this.leftPos + 8, this.topPos + 8);
         renderTooltip(gui, mouseX, mouseY);
     }
 
@@ -50,5 +54,40 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
         }
     }
 
+    public void renderGlyphPreview(GuiGraphics gui, int x, int y) {
+        if (this.menu.binder.isEmpty()) return;
+        SpellCaster spellCaster = new SpellBook.BookCaster(this.menu.binder);
+        int offsetX = 0, offsetY = -26;
+        for (int i = 0; i < spellCaster.getMaxSlots(); ++i) {
+            if (i % 2 == 0) {
+                offsetY += 23;
+                offsetX = 0;
+            } else {
+                offsetX += 40;
+            }
+            Spell spell = spellCaster.getSpell(i);
+            AbstractSpellPart primaryIcon = null;
+            AbstractSpellPart secondaryIcon = null;
+
+            for (AbstractSpellPart p : spell.recipe) {
+                if (p instanceof AbstractCastMethod) {
+                    primaryIcon = p;
+                }
+
+                if (p instanceof AbstractEffect) {
+                    secondaryIcon = p;
+                    break;
+                }
+            }
+
+
+            if (primaryIcon != null)
+                RenderUtils.drawSpellPart(primaryIcon, gui, x + offsetX + 6, y + offsetY - 20, 8, false);
+
+            if (secondaryIcon != null)
+                RenderUtils.drawSpellPart(secondaryIcon, gui, x + offsetX + 6, y + offsetY - 10, 12, false);
+
+        }
+    }
 
 }

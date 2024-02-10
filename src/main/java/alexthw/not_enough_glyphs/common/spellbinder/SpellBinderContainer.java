@@ -18,13 +18,14 @@ import javax.annotation.Nonnull;
 
 public class SpellBinderContainer extends AbstractContainerMenu {
     private final Container inventory;
-
+    public final ItemStack binder;
     public SpellBinderContainer(int windowId, Inventory playerInv, ItemStack backpack) {
-        this(Registry.SPELL_HOLDER.get(), windowId, playerInv, SpellBinder.getInventory(backpack));
+        this(Registry.SPELL_HOLDER.get(), windowId, playerInv, SpellBinder.getInventory(backpack), backpack);
     }
 
-    public SpellBinderContainer(MenuType<? extends SpellBinderContainer> containerType, int windowId, Inventory playerInv, Container inventory) {
+    public SpellBinderContainer(MenuType<? extends SpellBinderContainer> containerType, int windowId, Inventory playerInv, Container inventory, ItemStack binder) {
         super(containerType, windowId);
+        this.binder = binder;
         this.inventory = inventory;
         inventory.startOpen(playerInv.player);
 
@@ -34,16 +35,20 @@ public class SpellBinderContainer extends AbstractContainerMenu {
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 2; ++j) {
                 int index = i * 2 + j;
-                addSlot(this.makeSlot(inventory, -3 + i * 20, (j % 2 == 0 ? -5 : +14) + j * 20, index));
+                addSlot(this.makeSlot(inventory, -8 + i * 23, (j % 2 == 0 ? -5 : +14) + j * 20, index));
             }
         }
 
-        // slots from 10 to 20 are in the second page, 5 rows of 2 slots
+        // slots from 10 to 20 are in the second page, 5 rows of 3 slots
         int pageoffset = 10;
         for (int i = 0; i < 5; ++i) {
-            for (int j = 0; j < 2; ++j) {
-                int index = pageoffset + i * 2 + j;
-                addSlot(this.makeSlot(inventory, -3 + i * 20, (j % 2 == 0 ? +2 : +28) + (pageoffset + j) * 12, index));
+            for (int j = 0; j < 3; ++j) {
+                int index = pageoffset + i * 3 + j;
+                addSlot(this.makeSlot(inventory, -3 + i * 20, switch (j) {
+                    default -> +2;
+                    case 1 -> +9;
+                    case 2 -> +16;
+                } + (pageoffset + j) * 12, index));
             }
         }
 
