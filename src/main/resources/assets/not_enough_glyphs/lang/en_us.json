@@ -66,7 +66,7 @@
 	"item.not_enough_glyphs.glyph_plow": "Glyph of Plow",
 
 	"not_enough_glyphs.glyph_name.glyph_trail": "Echoing Projectile",
-	"not_enough_glyphs.glyph_desc.glyph_trail": "Fire a projectile that resolves the spell multiple times on its trail. Add Sensitive to make it resolve on blocks. Use extend time to reduce the delay between each cast and AoE to increase the range.",
+	"not_enough_glyphs.glyph_desc.glyph_trail": "Fire a projectile that resolves the spell multiple times on its trail. Add Sensitive to make it resolve on blocks. Use extend time to reduce the delay between each cast and AoE to increase the area of effect.",
 	"item.not_enough_glyphs.glyph_trail": "Glyph of Echoing Projectile",
 
 	"not_enough_glyphs.glyph_name.glyph_propagate_plane": "Propagate Plane",

@@ -33,7 +33,7 @@ public class MethodTrail extends AbstractCastMethod {
     public static final MethodTrail INSTANCE = new MethodTrail();
 
     public MethodTrail() {
-        super(CompatRL.neg("trail"), "Makes a projectile that resolves the spell on its trail few times instead of where it hits.");
+        super(CompatRL.neg("trail"), "Trail");
     }
 
     @Override
