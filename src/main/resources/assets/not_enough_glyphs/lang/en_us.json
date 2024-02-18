@@ -98,5 +98,14 @@
 	"ars_elemental.glyph_desc.glyph_propagator_arc": "Convert the remainder of the spell into an Arc Projectile and shoot it from where it lands.",
 
 	"arsomega.glyph_name.glyph_propagate": "Propagate",
-	"arsomega.glyph_desc.glyph_propagate": "Resolves/Convert the remainder in."
+	"arsomega.glyph_desc.glyph_propagate": "Resolves/Convert the remainder in.",
+
+	"ars_nouveau.book_thread": "Book Thread : %s",
+	"item.ars_nouveau.thread_summon_focus": "Summoning Focus",
+	"item.ars_nouveau.thread_summon_focus.desc": "Thread for the spellbinder. Will cast spells as if the summoning focus was equipped.",
+
+	"ars_nouveau.spell_binder.open": "Press %s to open the inventory",
+	"item.ars_nouveau.thread_shaper_focus": "BlockShaping Focus",
+	"item.ars_nouveau.thread_shaper_focus.desc": "Thread for the spellbinder. Will cast spells as if the blockshaping focus was equipped."
+
 }

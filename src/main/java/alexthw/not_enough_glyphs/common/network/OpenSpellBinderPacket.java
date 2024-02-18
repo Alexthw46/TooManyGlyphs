@@ -1,5 +1,6 @@
-package alexthw.not_enough_glyphs.common.spellbinder;
+package alexthw.not_enough_glyphs.common.network;
 
+import alexthw.not_enough_glyphs.common.spellbinder.SpellBinder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;

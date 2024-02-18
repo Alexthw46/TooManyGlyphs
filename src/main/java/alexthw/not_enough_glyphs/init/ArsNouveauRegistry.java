@@ -3,6 +3,11 @@ package alexthw.not_enough_glyphs.init;
 import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
+import alexthw.not_enough_glyphs.common.spell.FocusPerk;
+import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
+import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
+import com.hollingsworth.arsnouveau.api.perk.StackPerkHolder;
+import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import com.hollingsworth.arsnouveau.setup.registry.APIRegistry;
@@ -63,6 +68,10 @@ public class ArsNouveauRegistry {
             register(PropagateArc.INSTANCE);
             register(PropagateHoming.INSTANCE);
         }
+
+        //perks
+        PerkRegistry.registerPerk(FocusPerk.MANIPULATION);
+        PerkRegistry.registerPerk(FocusPerk.SUMMONING);
     }
 
     public static void register(AbstractSpellPart spellPart) {
@@ -71,6 +80,12 @@ public class ArsNouveauRegistry {
     }
 
     public static void postInit() {
+        PerkRegistry.registerPerkProvider(Registry.SPELL_BINDER.get(), (s) -> new StackPerkHolder(s) {
+            @Override
+            public List<PerkSlot> getSlotsForTier() {
+                return List.of(PerkSlot.ONE, PerkSlot.TWO);
+            }
+        });
         EffectReset.RESET_LIMITS.add(PropagatePlane.INSTANCE);
         EffectReset.RESET_LIMITS.add(EffectChaining.INSTANCE);
     }

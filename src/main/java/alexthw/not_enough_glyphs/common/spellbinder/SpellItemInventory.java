@@ -1,6 +1,9 @@
 package alexthw.not_enough_glyphs.common.spellbinder;
 
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
+import com.hollingsworth.arsnouveau.api.spell.ISpellCaster;
+import com.hollingsworth.arsnouveau.api.spell.Spell;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.SimpleContainer;
@@ -8,10 +11,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class ItemInventory extends SimpleContainer {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SpellItemInventory extends SimpleContainer {
     private final ItemStack stack;
 
-    public ItemInventory(ItemStack stack) {
+    public SpellItemInventory(ItemStack stack) {
         super(25);
         this.stack = stack;
 
@@ -30,17 +36,20 @@ public class ItemInventory extends SimpleContainer {
     @Override
     public void setChanged() {
         super.setChanged();
-        CompoundTag spellTag = new CompoundTag();
+        List<Spell> spells = NonNullList.withSize(10, new Spell());
         ListTag list = new ListTag();
         for (int i = 0; i < 25; i++) {
             if (i < 10 && getItem(i).getItem() instanceof ICasterTool c)
-                spellTag.put("spell" + i, c.getSpellCaster(getItem(i)).getSpell().serialize());
+                spells.set(i, c.getSpellCaster(getItem(i)).getSpell());
             list.add(getItem(i).save(new CompoundTag()));
         }
         var tag = stack.getOrCreateTag();
         tag.put("items", list);
-        var wrap = new CompoundTag();
-        wrap.put("spells", spellTag);
-        tag.put("ars_nouveau:caster", wrap);
+
+        if (stack.getItem() instanceof ICasterTool c) {
+            for (int i = 0; i < spells.size(); i++) {
+                c.getSpellCaster(stack).setSpell(spells.get(i), i);
+            }
+        }
     }
 }
