@@ -8,21 +8,22 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import com.hollingsworth.arsnouveau.api.item.IRadialProvider;
-import com.hollingsworth.arsnouveau.api.perk.IPerk;
-import com.hollingsworth.arsnouveau.api.perk.IPerkHolder;
-import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
-import com.hollingsworth.arsnouveau.api.perk.PerkInstance;
+import com.hollingsworth.arsnouveau.api.perk.*;
 import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
+import com.hollingsworth.arsnouveau.client.gui.SpellTooltip;
 import com.hollingsworth.arsnouveau.client.gui.radial_menu.GuiRadialMenu;
 import com.hollingsworth.arsnouveau.client.gui.radial_menu.RadialMenu;
 import com.hollingsworth.arsnouveau.client.gui.radial_menu.RadialMenuSlot;
 import com.hollingsworth.arsnouveau.client.gui.utils.RenderUtils;
 import com.hollingsworth.arsnouveau.client.registry.ModKeyBindings;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
+import com.hollingsworth.arsnouveau.setup.config.Config;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -38,6 +39,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -58,6 +60,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static alexthw.not_enough_glyphs.init.Networking.fxChannel;
 
@@ -203,19 +206,18 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(@NotNull ItemStack stack, Level world, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         super.appendHoverText(stack, world, tooltip, flag);
+        ISpellCaster caster = getSpellCaster(stack);
 
-        getInformation(stack, world, tooltip, flag);
+        if (!Config.GLYPH_TOOLTIPS.get() || Screen.hasShiftDown() || caster.isSpellHidden() || caster.getSpell().isEmpty())
+            getInformation(stack, world, tooltip, flag);
 
         tooltip.add(Component.translatable("ars_nouveau.spell_book.select", KeyMapping.createNameSupplier(ModKeyBindings.OPEN_RADIAL_HUD.getName()).get()));
         tooltip.add(Component.translatable("ars_nouveau.spell_binder.open", KeyMapping.createNameSupplier(ModKeyBindings.OPEN_BOOK.getName()).get()));
         IPerkProvider<ItemStack> perkProvider = PerkRegistry.getPerkProvider(stack.getItem());
         if (perkProvider != null) {
-            /*
-            if (perkProvider.getPerkHolder(stack) instanceof StackPerkHolder armorPerkHolder) {
-                tooltip.add(Component.translatable("ars_nouveau.tier", armorPerkHolder.getTier() + 1).withStyle(ChatFormatting.GOLD));
-            }
-            */
-
+            //if (perkProvider.getPerkHolder(stack) instanceof StackPerkHolder) {
+                tooltip.add(Component.translatable("ars_nouveau.book_slot").withStyle(ChatFormatting.GOLD));
+            //}
             perkProvider.getPerkHolder(stack).appendPerkTooltip(tooltip, stack);
         }
     }
@@ -223,7 +225,7 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot pEquipmentSlot, ItemStack stack) {
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributes = new ImmutableMultimap.Builder<>();
-        attributes.putAll(super.getDefaultAttributeModifiers(pEquipmentSlot));
+        attributes.putAll(super.getAttributeModifiers(pEquipmentSlot, stack));
         if (pEquipmentSlot.getType() == EquipmentSlot.Type.HAND) {
             IPerkHolder<ItemStack> perkHolder = PerkUtil.getPerkHolder(stack);
             if (perkHolder != null) {
@@ -235,5 +237,14 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
             }
         }
         return attributes.build();
+    }
+
+
+    @Override
+    public @NotNull Optional<TooltipComponent> getTooltipImage(@NotNull ItemStack pStack) {
+        ISpellCaster caster = getSpellCaster(pStack);
+        if (Config.GLYPH_TOOLTIPS.get() && !Screen.hasShiftDown() && !caster.isSpellHidden() && !caster.getSpell().isEmpty())
+            return Optional.of(new SpellTooltip(caster));
+        return Optional.empty();
     }
 }

@@ -101,6 +101,7 @@
 	"arsomega.glyph_desc.glyph_propagate": "Resolves/Convert the remainder in.",
 
 	"ars_nouveau.book_thread": "Book Thread : %s",
+	"ars_nouveau.book_slot": "Book Thread Slots",
 	"item.ars_nouveau.thread_summon_focus": "Summoning Focus",
 	"item.ars_nouveau.thread_summon_focus.desc": "Thread for the spellbinder. Will cast spells as if the summoning focus was equipped.",
 
