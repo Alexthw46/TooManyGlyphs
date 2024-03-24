@@ -100,13 +100,23 @@
 	"arsomega.glyph_name.glyph_propagate": "Propagate",
 	"arsomega.glyph_desc.glyph_propagate": "Resolves/Convert the remainder in.",
 
+	"ars_nouveau.spell_binder.open": "Press %s to open the inventory",
+
 	"ars_nouveau.book_thread": "Book Thread : %s",
 	"ars_nouveau.book_slot": "Book Thread Slots",
 	"item.ars_nouveau.thread_summon_focus": "Summoning Focus",
 	"item.ars_nouveau.thread_summon_focus.desc": "Thread for the spellbinder. Will cast spells as if the summoning focus was equipped.",
 
-	"ars_nouveau.spell_binder.open": "Press %s to open the inventory",
 	"item.ars_nouveau.thread_shaper_focus": "BlockShaping Focus",
-	"item.ars_nouveau.thread_shaper_focus.desc": "Thread for the spellbinder. Will cast spells as if the blockshaping focus was equipped."
+	"item.ars_nouveau.thread_shaper_focus.desc": "Thread for the spellbinder. Will cast spells as if the blockshaping focus was equipped.",
+
+	"item.ars_nouveau.thread_fire_focus": "Fire Focus",
+	"item.ars_nouveau.thread_fire_focus.desc": "Thread for the spellbinder. Will cast spells as if the fire focus was equipped.",
+	"item.ars_nouveau.thread_earth_focus": "Earth Focus",
+	"item.ars_nouveau.thread_earth_focus.desc": "Thread for the spellbinder. Will cast spells as if the earth focus was equipped.",
+	"item.ars_nouveau.thread_water_focus": "Water Focus",
+	"item.ars_nouveau.thread_water_focus.desc": "Thread for the spellbinder. Will cast spells as if the water focus was equipped.",
+	"item.ars_nouveau.thread_air_focus": "Air Focus",
+	"item.ars_nouveau.thread_air_focus.desc": "Thread for the spellbinder. Will cast spells as if the air focus was equipped."
 
 }

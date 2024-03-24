@@ -31,7 +31,8 @@ credits="Ars Nouveau and friends for inspiration, DerringersMods as the original
 authors="Porting by Alexthw to 1.19.2 and up" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligent, or maybe in a few cases just plain overpowered.
+A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligent, or maybe in a few cases just crazy convoluted combos.
+Also includes the spellbinder and its focus threads.
 '''
 [[dependencies.not_enough_glyphs]]
     modId="minecraft"
@@ -56,4 +57,10 @@ A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligen
     mandatory=false
     versionRange="[0,)"
     ordering="BEFORE"
+    side="BOTH"
+[[dependencies.not_enough_glyphs]]
+    modId="ars_elemental"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="AFTER"
     side="BOTH"

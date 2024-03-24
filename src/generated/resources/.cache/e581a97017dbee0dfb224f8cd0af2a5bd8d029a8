@@ -1,4 +1,8 @@
-// 1.20.1	2024-02-16T19:36:13.5983603	Apparatus
+// 1.20.1	2024-03-24T00:11:50.9091067	Apparatus
 44d31cf4c159c02cdad58ae490c110bf525a2258 data/ars_nouveau/recipes/spell_binder.json
+9832f19f1af9845e010330551441bfee0b1dc7f6 data/ars_nouveau/recipes/thread_air_focus.json
+46f89a158b414444bce16b11d5289fdb154b5d86 data/ars_nouveau/recipes/thread_earth_focus.json
+3215387993f3f130863d8bc415a8fe2b9ce59d6c data/ars_nouveau/recipes/thread_fire_focus.json
 08ebbecdd5845153e9a303d55c58b946b5debf76 data/ars_nouveau/recipes/thread_shaper_focus.json
 d7ff18224dc4f57c97d6b8934a9e63785fb6b7d2 data/ars_nouveau/recipes/thread_summon_focus.json
+50b5f8d880a8135d8390d285d5a3f566881a945d data/ars_nouveau/recipes/thread_water_focus.json

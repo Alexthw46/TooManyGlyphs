@@ -1,10 +1,13 @@
 package alexthw.not_enough_glyphs.init;
 
+import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
+import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
+import alexthw.ars_elemental.common.glyphs.PropagatorArc;
+import alexthw.ars_elemental.common.glyphs.PropagatorHoming;
 import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
 import alexthw.not_enough_glyphs.common.spell.FocusPerk;
-import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
 import com.hollingsworth.arsnouveau.api.perk.StackPerkHolder;
 import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
@@ -19,14 +22,20 @@ import java.util.List;
 public class ArsNouveauRegistry {
     public static List<AbstractSpellPart> registeredSpells = new ArrayList<>();
 
+    static public boolean arsElemental, tooManyGlyphs, arsOmega;
+
     public static void registerGlyphs() {
+
+        arsElemental = ModList.get().isLoaded("ars_elemental");
+        tooManyGlyphs = ModList.get().isLoaded("toomanyglyphs");
+        arsOmega = ModList.get().isLoaded("arsomega");
 
         //neg effects
         register(EffectPlow.INSTANCE);
         register(MethodTrail.INSTANCE);
 
         //tmg
-        if (!ModList.get().isLoaded("toomanyglyphs")) {
+        if (!tooManyGlyphs) {
             //tmg methods
             register(MethodRay.INSTANCE);
 
@@ -49,11 +58,10 @@ public class ArsNouveauRegistry {
         }
 
         //neg propagators
-        //register(PropagateOrbit.INSTANCE);
         register(PropagatePlane.INSTANCE);
 
         //omega
-        if (!ModList.get().isLoaded("arsomega")) {
+        if (!arsOmega) {
             register(EffectFlatten.INSTANCE);
 
             register(PropagateUnderfoot.INSTANCE);
@@ -61,12 +69,21 @@ public class ArsNouveauRegistry {
             register(PropagateSelf.INSTANCE);
         }
         //elemental
-        if (!ModList.get().isLoaded("ars_elemental")) {
+        if (!arsElemental) {
             register(MethodArc.INSTANCE);
             register(MethodHoming.INSTANCE);
 
             register(PropagateArc.INSTANCE);
             register(PropagateHoming.INSTANCE);
+        } else {
+            registeredSpells.addAll(List.of(
+                    MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE,
+                    PropagatorArc.INSTANCE, PropagatorHoming.INSTANCE)
+            );
+            PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_FIRE);
+            PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_WATER);
+            PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_EARTH);
+            PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_AIR);
         }
 
         //perks

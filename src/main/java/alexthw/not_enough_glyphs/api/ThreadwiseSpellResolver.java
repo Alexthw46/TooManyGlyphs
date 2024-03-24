@@ -1,6 +1,7 @@
 package alexthw.not_enough_glyphs.api;
 
 import alexthw.not_enough_glyphs.common.spell.FocusPerk;
+import alexthw.not_enough_glyphs.init.ArsNouveauRegistry;
 import com.hollingsworth.arsnouveau.api.perk.IPerk;
 import com.hollingsworth.arsnouveau.api.perk.IPerkHolder;
 import com.hollingsworth.arsnouveau.api.perk.PerkInstance;
@@ -22,11 +23,14 @@ public class ThreadwiseSpellResolver extends SpellResolver {
 
     @Override
     public boolean hasFocus(ItemStack stack) {
+        if (super.hasFocus(stack)) return true;
         if (stack.getItem() == ItemsRegistry.SHAPERS_FOCUS.get())
             return getHolderForPerkHands(FocusPerk.MANIPULATION, this.spellContext.getUnwrappedCaster()) != null;
         if (stack.getItem() == ItemsRegistry.SUMMONING_FOCUS.get())
             return getHolderForPerkHands(FocusPerk.SUMMONING, this.spellContext.getUnwrappedCaster()) != null;
-        return super.hasFocus(stack);
+        if (ArsNouveauRegistry.arsElemental)
+            return ElementalCompat.focusCheck(stack, this.spellContext.getUnwrappedCaster());
+        return false;
     }
 
     @Override

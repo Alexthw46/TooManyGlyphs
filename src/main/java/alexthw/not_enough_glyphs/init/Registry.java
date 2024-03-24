@@ -5,12 +5,14 @@ import alexthw.not_enough_glyphs.common.spellbinder.SpellBinder;
 import alexthw.not_enough_glyphs.common.spellbinder.SpellBinderContainer;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -36,7 +38,11 @@ public class Registry {
 
         SPELL_BINDER = ITEMS.register("spell_binder", () -> new SpellBinder(new Item.Properties().stacksTo(1)));
 
-        SPELL_HOLDER = CONTAINERS.register("spell_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> new SpellBinderContainer(id, inv, extraData.readItem())));
+        SPELL_HOLDER = CONTAINERS.register("spell_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> {
+            boolean mainHand = extraData.readBoolean();
+            ItemStack stack = inv.player.getItemInHand(mainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+            return new SpellBinderContainer(id, inv, stack);
+        }));
 
     }
 

@@ -38,8 +38,9 @@ public class PatchouliProvider extends com.hollingsworth.arsnouveau.common.datag
                 .withIcon(spellPart.getRegistryName().toString())
                 .withSortNum(spellPart instanceof AbstractCastMethod ? 1 : spellPart instanceof AbstractEffect ? 2 : 3)
                 .withPage(new TextPage(spellPart.getRegistryName().getNamespace() + ".glyph_desc." + spellPart.getRegistryName().getPath()))
-                .withPage(new GlyphScribePage(spellPart))
-                .withProperty("!flag", "mod:" + spellPart.getRegistryName().getNamespace());
+                .withPage(new GlyphScribePage(spellPart));
+        if (!spellPart.getRegistryName().getNamespace().equals(NotEnoughGlyphs.MODID))
+                builder.withProperty("!flag", "mod:" + spellPart.getRegistryName().getNamespace());
         this.pages.add(new PatchouliPage(builder, getPath(category, spellPart.getRegistryName().getPath())));
     }
 
