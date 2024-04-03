@@ -1,12 +1,18 @@
 {
   "type": "ars_nouveau:enchanting_apparatus",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ars_elemental"
+    }
+  ],
   "keepNbtOfReagent": false,
   "output": {
     "item": "ars_nouveau:thread_water_focus"
   },
   "pedestalItems": [
     {
-      "item": "ars_elemental:water_focus"
+      "item": "ars_elemental:lesser_water_focus"
     },
     {
       "item": "ars_nouveau:water_essence"

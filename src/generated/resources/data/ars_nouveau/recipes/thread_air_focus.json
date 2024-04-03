@@ -1,12 +1,18 @@
 {
   "type": "ars_nouveau:enchanting_apparatus",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ars_elemental"
+    }
+  ],
   "keepNbtOfReagent": false,
   "output": {
     "item": "ars_nouveau:thread_air_focus"
   },
   "pedestalItems": [
     {
-      "item": "ars_elemental:air_focus"
+      "item": "ars_elemental:lesser_air_focus"
     },
     {
       "item": "ars_nouveau:air_essence"
