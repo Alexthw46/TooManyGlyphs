@@ -8,7 +8,7 @@ import com.hollingsworth.arsnouveau.api.spell.SpellSchools;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-import static alexthw.not_enough_glyphs.api.ThreadwiseSpellResolver.getHolderForPerkHands;
+import static alexthw.not_enough_glyphs.common.spellbinder.SpellBinder.getHolderForPerkHands;
 
 public class ElementalCompat {
 

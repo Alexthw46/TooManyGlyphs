@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public class FocusPerk extends Perk {
+public class FocusPerk extends BookPerk {
     public static final FocusPerk MANIPULATION = new FocusPerk(new ResourceLocation(ArsNouveau.MODID, "thread_shaper_focus"));
     public static final FocusPerk SUMMONING = new FocusPerk(new ResourceLocation(ArsNouveau.MODID, "thread_summon_focus"));
 
@@ -23,13 +23,5 @@ public class FocusPerk extends Perk {
         super(key);
     }
 
-    @Override
-    public String getName() {
-        return Component.translatable(getRegistryName().getNamespace() + ".book_thread", Component.translatable("item." + getRegistryName().getNamespace() + "." + getRegistryName().getPath()).getString()).getString();
-    }
 
-    @Override
-    public boolean validForSlot(PerkSlot slot, ItemStack stack, Player player) {
-        return super.validForSlot(slot, stack, player) && stack.getItem() instanceof SpellBinder;
-    }
 }

@@ -3,12 +3,17 @@ package alexthw.not_enough_glyphs.common.spellbinder;
 import alexthw.not_enough_glyphs.api.ThreadwiseSpellResolver;
 import alexthw.not_enough_glyphs.common.network.OpenSpellBinderPacket;
 import alexthw.not_enough_glyphs.common.network.PacketSetBinderMode;
+import alexthw.not_enough_glyphs.common.spell.RandomPerk;
 import alexthw.not_enough_glyphs.init.Networking;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
 import com.hollingsworth.arsnouveau.api.item.IRadialProvider;
-import com.hollingsworth.arsnouveau.api.perk.*;
+import com.hollingsworth.arsnouveau.api.item.ISpellModifierItem;
+import com.hollingsworth.arsnouveau.api.perk.IPerk;
+import com.hollingsworth.arsnouveau.api.perk.IPerkHolder;
+import com.hollingsworth.arsnouveau.api.perk.IPerkProvider;
+import com.hollingsworth.arsnouveau.api.perk.PerkInstance;
 import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
@@ -44,6 +49,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
@@ -64,7 +70,24 @@ import java.util.Optional;
 
 import static alexthw.not_enough_glyphs.init.Networking.fxChannel;
 
-public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
+public class SpellBinder extends Item implements ICasterTool, IRadialProvider, ISpellModifierItem {
+
+    public static @Nullable IPerkHolder<ItemStack> getHolderForPerkHands(IPerk perk, @NotNull LivingEntity entity) {
+        IPerkHolder<ItemStack> highestHolder = null;
+        int maxCount = 0;
+        for (ItemStack stack : entity.getHandSlots()) {
+            IPerkHolder<ItemStack> holder = PerkUtil.getPerkHolder(stack);
+            if (holder == null)
+                continue;
+            for (PerkInstance instance : holder.getPerkInstances()) {
+                if (instance.getPerk() == perk) {
+                    maxCount = Math.max(maxCount, instance.getSlot().value);
+                    highestHolder = holder;
+                }
+            }
+        }
+        return highestHolder;
+    }
 
     @Override
     public ISpellCaster getSpellCaster() {
@@ -215,10 +238,20 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider {
         IPerkProvider<ItemStack> perkProvider = PerkRegistry.getPerkProvider(stack.getItem());
         if (perkProvider != null) {
             //if (perkProvider.getPerkHolder(stack) instanceof StackPerkHolder) {
-                tooltip.add(Component.translatable("ars_nouveau.book_slot").withStyle(ChatFormatting.GOLD));
+            tooltip.add(Component.translatable("ars_nouveau.book_slot").withStyle(ChatFormatting.GOLD));
             //}
             perkProvider.getPerkHolder(stack).appendPerkTooltip(tooltip, stack);
         }
+    }
+
+    @Override
+    public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @org.jetbrains.annotations.Nullable LivingEntity shooter, SpellContext spellContext) {
+        if (shooter != null) {
+            if (getHolderForPerkHands(RandomPerk.INSTANCE, shooter) != null)
+                // apply the modifiers from the perk to the builder
+                return RandomPerk.applyItemModifiers(builder, world);
+        }
+        return builder;
     }
 
     @Override
