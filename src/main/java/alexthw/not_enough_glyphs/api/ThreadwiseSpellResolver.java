@@ -5,7 +5,9 @@ import alexthw.not_enough_glyphs.common.spellbinder.SpellBinder;
 import alexthw.not_enough_glyphs.init.ArsNouveauRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
+import com.hollingsworth.arsnouveau.api.util.CuriosUtil;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class ThreadwiseSpellResolver extends SpellResolver {
@@ -24,6 +26,11 @@ public class ThreadwiseSpellResolver extends SpellResolver {
         if (ArsNouveauRegistry.arsElemental)
             return ElementalCompat.focusCheck(stack, this.spellContext.getUnwrappedCaster());
         return false;
+    }
+
+    @Override
+    public boolean hasFocus(Item stack) {
+        return hasFocus(stack.getDefaultInstance());
     }
 
     @Override

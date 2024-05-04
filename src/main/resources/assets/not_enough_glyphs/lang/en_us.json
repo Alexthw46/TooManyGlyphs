@@ -104,21 +104,22 @@
 
 	"ars_nouveau.book_thread": "Book Thread : %s",
 	"ars_nouveau.book_slot": "Book Thread Slots",
+
 	"item.ars_nouveau.thread_summon_focus": "Summoning Focus",
-	"item.ars_nouveau.thread_summon_focus.desc": "Thread for the spellbinder. Will cast spells as if the summoning focus was equipped.",
+	"ars_nouveau.perk_desc.thread_summon_focus": "Thread for the spellbinder. Will cast spells as if the summoning focus was equipped.",
 
 	"item.ars_nouveau.thread_shaper_focus": "BlockShaping Focus",
-	"item.ars_nouveau.thread_shaper_focus.desc": "Thread for the spellbinder. Will cast spells as if the blockshaping focus was equipped.",
+	"ars_nouveau.perk_desc.thread_shaper_focus": "Thread for the spellbinder. Will cast spells as if the blockshaping focus was equipped.",
 
 	"item.ars_nouveau.thread_fire_focus": "Fire Focus",
-	"item.ars_nouveau.thread_fire_focus.desc": "Thread for the spellbinder. Will cast spells as if the fire focus was equipped.",
+	"ars_nouveau.perk_desc.thread_fire_focus": "Thread for the spellbinder. Will cast spells as if the fire focus was equipped.",
 	"item.ars_nouveau.thread_earth_focus": "Earth Focus",
-	"item.ars_nouveau.thread_earth_focus.desc": "Thread for the spellbinder. Will cast spells as if the earth focus was equipped.",
+	"ars_nouveau.perk_desc.thread_earth_focus": "Thread for the spellbinder. Will cast spells as if the earth focus was equipped.",
 	"item.ars_nouveau.thread_water_focus": "Water Focus",
-	"item.ars_nouveau.thread_water_focus.desc": "Thread for the spellbinder. Will cast spells as if the water focus was equipped.",
+	"ars_nouveau.perk_desc.thread_water_focus": "Thread for the spellbinder. Will cast spells as if the water focus was equipped.",
 	"item.ars_nouveau.thread_air_focus": "Air Focus",
-	"item.ars_nouveau.thread_air_focus.desc": "Thread for the spellbinder. Will cast spells as if the air focus was equipped.",
+	"ars_nouveau.perk_desc.thread_air_focus": "Thread for the spellbinder. Will cast spells as if the air focus was equipped.",
 	"item.ars_nouveau.thread_wild_magic": "Wild Magic",
-	"item.ars_nouveau.thread_wild_magic.desc": "Thread for the spellbinder. Will randomly add positive or negative augments to effects of your spells when equipped."
+	"ars_nouveau.perk_desc.thread_wild_magic": "Thread for the spellbinder. Will randomly add positive or negative augments to effects of your spells when equipped."
 
 }
