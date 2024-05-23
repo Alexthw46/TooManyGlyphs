@@ -29,10 +29,6 @@
 	"toomanyglyphs.glyph_desc.glyph_filter_monster": "Stops the spell from resolving unless it targets a monster.",
 	"item.toomanyglyphs.glyph_filter_monster": "Glyph of Filtering: Monster",
 
-	"toomanyglyphs.glyph_name.glyph_lay_on_hands": "Lay on Hands",
-	"toomanyglyphs.glyph_desc.glyph_lay_on_hands": "Embrace your inner paladin! A context-sensitive blend of Touch and Self. Targets Living, Not Monster entities by touch, or self if unable to do so, expending no mana if targeting fails entirely. If followed immediately by a Filter glyph, that Filter applies instead of Living, Not Monster.",
-	"item.toomanyglyphs.glyph_lay_on_hands": "Glyph of Lay on Hands",
-
 	"toomanyglyphs.glyph_name.glyph_reverse_direction": "Reverse Direction",
 	"toomanyglyphs.glyph_desc.glyph_reverse_direction": "Reverses the direction of a block-targeted spell across the face struck.",
 	"item.toomanyglyphs.glyph_reverse_direction": "Glyph of Reverse Direction",
@@ -120,6 +116,12 @@
 	"item.ars_nouveau.thread_air_focus": "Air Focus",
 	"ars_nouveau.perk_desc.thread_air_focus": "Thread for the spellbinder. Will cast spells as if the air focus was equipped.",
 	"item.ars_nouveau.thread_wild_magic": "Wild Magic",
-	"ars_nouveau.perk_desc.thread_wild_magic": "Thread for the spellbinder. Will randomly add positive or negative augments to effects of your spells when equipped."
+	"ars_nouveau.perk_desc.thread_wild_magic": "Thread for the spellbinder. Will randomly add positive or negative augments to effects of your spells when equipped.",
+	"item.ars_nouveau.thread_cheap_damage":"Cheap Damage",
+	"ars_nouveau.perk_desc.thread_cheap_damage": "Thread for the spellbinder. Will greatly discount the spells cast from the equipped book but heavily reduce their damage.",
+	"item.ars_nouveau.thread_slow_power": "Slow Power",
+	"ars_nouveau.perk_desc.thread_slow_power": "Thread for the spellbinder. Will increase the damage of the spells cast from the equipped book but heavily reduce their speed.",
 
+	"not_enough_glyphs.perk.mana_discount": "Mana Discount",
+	"not_enough_glyphs.perk.mana_discount.desc": "Reduces the mana cost of the spell by %s."
 }

@@ -7,7 +7,9 @@ import alexthw.ars_elemental.common.glyphs.PropagatorHoming;
 import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
+import alexthw.not_enough_glyphs.common.spell.BulldozeThread;
 import alexthw.not_enough_glyphs.common.spell.FocusPerk;
+import alexthw.not_enough_glyphs.common.spell.PacificThread;
 import alexthw.not_enough_glyphs.common.spell.RandomPerk;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
 import com.hollingsworth.arsnouveau.api.perk.StackPerkHolder;
@@ -91,6 +93,8 @@ public class ArsNouveauRegistry {
         PerkRegistry.registerPerk(FocusPerk.MANIPULATION);
         PerkRegistry.registerPerk(FocusPerk.SUMMONING);
         PerkRegistry.registerPerk(RandomPerk.INSTANCE);
+        PerkRegistry.registerPerk(PacificThread.INSTANCE);
+        PerkRegistry.registerPerk(BulldozeThread.INSTANCE);
     }
 
     public static void register(AbstractSpellPart spellPart) {

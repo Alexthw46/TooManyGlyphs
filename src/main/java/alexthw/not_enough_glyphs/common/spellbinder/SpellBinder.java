@@ -3,6 +3,7 @@ package alexthw.not_enough_glyphs.common.spellbinder;
 import alexthw.not_enough_glyphs.api.ThreadwiseSpellResolver;
 import alexthw.not_enough_glyphs.common.network.OpenSpellBinderPacket;
 import alexthw.not_enough_glyphs.common.network.PacketSetBinderMode;
+import alexthw.not_enough_glyphs.common.spell.BulldozeThread;
 import alexthw.not_enough_glyphs.common.spell.RandomPerk;
 import alexthw.not_enough_glyphs.init.Networking;
 import com.google.common.collect.ImmutableMultimap;
@@ -247,6 +248,9 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
     @Override
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @org.jetbrains.annotations.Nullable LivingEntity shooter, SpellContext spellContext) {
         if (shooter != null) {
+            IPerkHolder<ItemStack> slowPerk = getHolderForPerkHands(BulldozeThread.INSTANCE, shooter);
+            if (slowPerk != null)
+                builder.addAccelerationModifier(-1.5f * (slowPerk.getTier()+1));
             if (getHolderForPerkHands(RandomPerk.INSTANCE, shooter) != null)
                 // apply the modifiers from the perk to the builder
                 return RandomPerk.applyItemModifiers(builder, world);
@@ -263,7 +267,7 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
             if (perkHolder != null) {
                 for (PerkInstance perkInstance : perkHolder.getPerkInstances()) {
                     IPerk perk = perkInstance.getPerk();
-                    attributes.putAll(perk.getModifiers(pEquipmentSlot, stack, perkInstance.getSlot().value));
+                    attributes.putAll(perk.getModifiers(pEquipmentSlot, stack, 2*perkInstance.getSlot().value));
                 }
 
             }

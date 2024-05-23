@@ -1,8 +1,11 @@
-// 1.20.1	2024-04-03T14:52:27.7258976	Apparatus
+// 1.20.1	2024-05-23T12:27:55.5202313	Apparatus
 44d31cf4c159c02cdad58ae490c110bf525a2258 data/ars_nouveau/recipes/spell_binder.json
 f28bcade681696f2a19af82d42c8155208d1eaa1 data/ars_nouveau/recipes/thread_air_focus.json
+05b7d359545a39857a5e79f4854757c6c4b3cd37 data/ars_nouveau/recipes/thread_cheap_damage.json
 6540b2631a030b145d96c0d3949010bedab2d680 data/ars_nouveau/recipes/thread_earth_focus.json
 ac6b7419ddec74407f811fcb96d6d4c4f1f7c245 data/ars_nouveau/recipes/thread_fire_focus.json
 08ebbecdd5845153e9a303d55c58b946b5debf76 data/ars_nouveau/recipes/thread_shaper_focus.json
+366ee97b2dc7d7ca3beb403f0022fe79dd30e4ac data/ars_nouveau/recipes/thread_slow_power.json
 d7ff18224dc4f57c97d6b8934a9e63785fb6b7d2 data/ars_nouveau/recipes/thread_summon_focus.json
 cb51e4314f51efa7195b62fae13004c0a7387aa7 data/ars_nouveau/recipes/thread_water_focus.json
+8a5c3013ee23f14db63ddfb70fc31931070bc1b1 data/ars_nouveau/recipes/thread_wild_magic.json
