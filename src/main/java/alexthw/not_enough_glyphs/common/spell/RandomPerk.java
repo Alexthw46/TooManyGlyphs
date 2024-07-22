@@ -17,7 +17,7 @@ public class RandomPerk extends BookPerk implements IEffectResolvePerk {
         super(key);
     }
 
-    public static final RandomPerk INSTANCE = new RandomPerk(new ResourceLocation(ArsNouveau.MODID, "thread_wild_magic"));
+    public static final RandomPerk INSTANCE = new RandomPerk(ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "thread_wild_magic"));
     public static final Random random = new Random();
 
     public enum WILD_MAGIC {

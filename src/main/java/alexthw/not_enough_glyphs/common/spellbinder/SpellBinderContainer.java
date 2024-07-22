@@ -6,6 +6,7 @@ import com.hollingsworth.arsnouveau.common.items.SpellParchment;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -20,7 +21,8 @@ public class SpellBinderContainer extends AbstractContainerMenu {
     private final Container inventory;
     public final ItemStack binder;
     public SpellBinderContainer(int windowId, Inventory playerInv, ItemStack backpack) {
-        this(Registry.SPELL_HOLDER.get(), windowId, playerInv, SpellBinder.getInventory(backpack), backpack);
+//        Registry.SPELL_HOLDER.get()
+        this(null, windowId, playerInv, SpellBinder.getInventory(backpack), backpack);
     }
 
     public SpellBinderContainer(MenuType<? extends SpellBinderContainer> containerType, int windowId, Inventory playerInv, Container inventory, ItemStack binder) {
@@ -82,7 +84,7 @@ public class SpellBinderContainer extends AbstractContainerMenu {
 
     @Override
     public void removed(Player playerIn) {
-        playerIn.level().playSound(null, playerIn.blockPosition(), SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.PLAYERS, 1, 1);
+        playerIn.level().playSound(null, playerIn.blockPosition(), SoundEvents.ARMOR_EQUIP_LEATHER.value(), SoundSource.PLAYERS, 1, 1);
         super.removed(playerIn);
         this.inventory.stopOpen(playerIn);
     }

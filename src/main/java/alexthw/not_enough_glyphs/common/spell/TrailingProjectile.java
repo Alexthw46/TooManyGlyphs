@@ -23,6 +23,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import org.jetbrains.annotations.Nullable;
 
+import static net.neoforged.neoforge.event.EventHooks.onProjectileImpact;
+
 
 public class TrailingProjectile extends EntityProjectileSpell {
 
@@ -66,7 +68,7 @@ public class TrailingProjectile extends EntityProjectileSpell {
             rayTraceResult = entityraytraceresult;
         }
 
-        if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+        if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !onProjectileImpact(this, rayTraceResult)) {
             Level level = level();
             if (!level.isClientSide && rayTraceResult instanceof BlockHitResult blockRaytraceResult && !this.isRemoved() && !hitList.contains(blockRaytraceResult.getBlockPos())) {
 
@@ -78,7 +80,7 @@ public class TrailingProjectile extends EntityProjectileSpell {
                 }
 
                 if (state.is(BlockTags.PORTALS)) {
-                    state.getBlock().entityInside(state, level, blockRaytraceResult.getBlockPos(), this);
+                    state.entityInside(level, blockRaytraceResult.getBlockPos(), this);
                     return;
                 }
 
@@ -166,10 +168,10 @@ public class TrailingProjectile extends EntityProjectileSpell {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        entityData.define(DELAY, 0);
-        entityData.define(AOE, 0f);
+    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
+        super.defineSynchedData(pBuilder);
+        pBuilder.define(DELAY, 0);
+        pBuilder.define(AOE, 0f);
     }
 
 }

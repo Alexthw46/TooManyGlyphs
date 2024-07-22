@@ -1,15 +1,16 @@
 package alexthw.not_enough_glyphs.common.glyphs;
 
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectLinger;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectWall;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -18,7 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,17 +44,17 @@ public class EffectChaining extends AbstractEffect {
         defaults.addAll(Stream.of(EffectLinger.INSTANCE, EffectWall.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
     }
     // configurable bits
-    public ForgeConfigSpec.IntValue BASE_MAX_BLOCKS;
-    public ForgeConfigSpec.IntValue BONUS_BLOCKS;
-    public ForgeConfigSpec.DoubleValue BASE_BLOCK_DISTANCE;
-    public ForgeConfigSpec.DoubleValue BONUS_BLOCK_DISTANCE;
-    public ForgeConfigSpec.IntValue BASE_MAX_ENTITIES;
-    public ForgeConfigSpec.IntValue BONUS_ENTITIES;
-    public ForgeConfigSpec.DoubleValue BASE_ENTITY_DISTANCE;
-    public ForgeConfigSpec.DoubleValue BONUS_ENTITY_DISTANCE;
+    public ModConfigSpec.IntValue BASE_MAX_BLOCKS;
+    public ModConfigSpec.IntValue BONUS_BLOCKS;
+    public ModConfigSpec.DoubleValue BASE_BLOCK_DISTANCE;
+    public ModConfigSpec.DoubleValue BONUS_BLOCK_DISTANCE;
+    public ModConfigSpec.IntValue BASE_MAX_ENTITIES;
+    public ModConfigSpec.IntValue BONUS_ENTITIES;
+    public ModConfigSpec.DoubleValue BASE_ENTITY_DISTANCE;
+    public ModConfigSpec.DoubleValue BONUS_ENTITY_DISTANCE;
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         PER_SPELL_LIMIT = builder.comment("The maximum number of times this glyph may appear in a single spell").defineInRange("per_spell_limit", 1, 1, Integer.MAX_VALUE);
         BASE_MAX_BLOCKS = builder.comment("Base maximum number of blocks struck when targeting blocks").defineInRange("base_max_blocks", 16, 1, Integer.MAX_VALUE);
@@ -97,7 +98,7 @@ public class EffectChaining extends AbstractEffect {
         {
             Vec3 toCenter = getBlockCenter(edge.to);
             BlockHitResult chainedRayTraceResult = new BlockHitResult(toCenter, rayTraceResult.getDirection(), edge.to,true);
-            PacketRayEffect.send(world, spellContext, getBlockCenter(edge.from), getBlockCenter(edge.to));
+            Networking.sendToNearbyClient(world, edge.to, new PacketRayEffect(getBlockCenter(edge.from), toCenter, spellContext.getColors()));
             SpellContext newContext = spellContext.clone().withSpell(continuation);
             resolver.getNewResolver(newContext).onResolveEffect(world, chainedRayTraceResult);
         }
@@ -127,7 +128,11 @@ public class EffectChaining extends AbstractEffect {
         Spell continuation = spellContext.getRemainingSpell();
         for (Edge<Entity> edge : chain)
         {
-            PacketRayEffect.send(world, spellContext, edge.from.position(), edge.to.position());
+            Vec3 midpoint = edge.from.position().add(edge.to.position()).scale(0.5);
+            double radius = 64.0 + edge.from.position().distanceTo(midpoint);
+            if (world instanceof ServerLevel) {
+                Networking.sendToNearbyClient(world, edge.to, new PacketRayEffect(edge.from.position(), edge.to.position(), spellContext.getColors()));
+            }
             SpellContext newContext = spellContext.clone().withSpell(continuation);
             resolver.getNewResolver(newContext).onResolveEffect(world, new EntityHitResult(edge.to));
         }

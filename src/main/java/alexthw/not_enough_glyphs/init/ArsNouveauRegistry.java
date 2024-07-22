@@ -1,9 +1,9 @@
 package alexthw.not_enough_glyphs.init;
 
-import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
-import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
-import alexthw.ars_elemental.common.glyphs.PropagatorArc;
-import alexthw.ars_elemental.common.glyphs.PropagatorHoming;
+//import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
+//import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
+//import alexthw.ars_elemental.common.glyphs.PropagatorArc;
+//import alexthw.ars_elemental.common.glyphs.PropagatorHoming;
 import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
@@ -12,12 +12,11 @@ import alexthw.not_enough_glyphs.common.spell.FocusPerk;
 import alexthw.not_enough_glyphs.common.spell.PacificThread;
 import alexthw.not_enough_glyphs.common.spell.RandomPerk;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
-import com.hollingsworth.arsnouveau.api.perk.StackPerkHolder;
 import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import com.hollingsworth.arsnouveau.setup.registry.APIRegistry;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ArsNouveauRegistry {
 
     public static void registerGlyphs() {
 
-        arsElemental = ModList.get().isLoaded("ars_elemental");
+        arsElemental = false; // ModList.get().isLoaded("ars_elemental");
         tooManyGlyphs = ModList.get().isLoaded("toomanyglyphs");
         arsOmega = ModList.get().isLoaded("arsomega");
 
@@ -79,10 +78,11 @@ public class ArsNouveauRegistry {
             register(PropagateArc.INSTANCE);
             register(PropagateHoming.INSTANCE);
         } else {
-            registeredSpells.addAll(List.of(
-                    MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE,
-                    PropagatorArc.INSTANCE, PropagatorHoming.INSTANCE)
-            );
+
+//            registeredSpells.addAll(List.of(
+//                    MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE,
+//                    PropagatorArc.INSTANCE, PropagatorHoming.INSTANCE)
+//            );
             PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_FIRE);
             PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_WATER);
             PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_EARTH);
@@ -103,12 +103,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void postInit() {
-        PerkRegistry.registerPerkProvider(Registry.SPELL_BINDER.get(), (s) -> new StackPerkHolder(s) {
-            @Override
-            public List<PerkSlot> getSlotsForTier() {
-                return List.of(PerkSlot.ONE, PerkSlot.TWO);
-            }
-        });
+        PerkRegistry.registerPerkProvider(Registry.SPELL_BINDER.get(),List.of(List.of(PerkSlot.ONE, PerkSlot.TWO)));
         EffectReset.RESET_LIMITS.add(PropagatePlane.INSTANCE);
         EffectReset.RESET_LIMITS.add(EffectChaining.INSTANCE);
     }

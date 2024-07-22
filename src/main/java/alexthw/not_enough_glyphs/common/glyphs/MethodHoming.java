@@ -131,7 +131,7 @@ public class MethodHoming extends AbstractCastMethod {
         if (!targetPlayers) {
             ignore.add(entity -> entity instanceof Player);
         }
-        Set<IFilter> filters = FilterUtil.getFilters(spell.recipe, 0);
+        Set<IFilter> filters = FilterUtil.getFilters(spell.recipe(), 0);
         if (!filters.isEmpty()) {
             ignore.add(entity -> FilterUtil.checkIgnoreFilters(entity, filters));
         }

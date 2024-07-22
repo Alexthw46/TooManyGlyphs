@@ -2,6 +2,7 @@ package alexthw.not_enough_glyphs.common.glyphs;
 
 import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
 import net.minecraft.core.BlockPos;
@@ -16,7 +17,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,11 +37,11 @@ public class MethodRay extends AbstractCastMethod {
         return BASE_RANGE.get() + BONUS_RANGE_PER_AUGMENT.get() * stats.getAoeMultiplier();
     }
 
-    public ForgeConfigSpec.DoubleValue BASE_RANGE;
-    public ForgeConfigSpec.DoubleValue BONUS_RANGE_PER_AUGMENT;
+    public ModConfigSpec.DoubleValue BASE_RANGE;
+    public ModConfigSpec.DoubleValue BONUS_RANGE_PER_AUGMENT;
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         BASE_RANGE = builder.comment("Base range in blocks").defineInRange("base_range", 16d, 0d, Double.MAX_VALUE);
         BONUS_RANGE_PER_AUGMENT = builder.comment("Bonus range per augment").defineInRange("bonus_range_per_augment", 16d, 0d, Double.MAX_VALUE);
@@ -69,14 +70,14 @@ public class MethodRay extends AbstractCastMethod {
         {
             resolver.onResolveEffect(world,  entityTarget);
             Vec3 hitPoint = findNearestPointOnLine(fromPoint, toPoint, entityTarget.getLocation());
-            PacketRayEffect.send(world, spellContext, fromPoint, hitPoint);
+            send(world, spellContext, fromPoint, hitPoint);
             return CastResolveType.SUCCESS;
         }
 
         if (blockTarget.getType() == HitResult.Type.BLOCK)
         {
             resolver.onResolveEffect(world, blockTarget);
-            PacketRayEffect.send(world, spellContext, fromPoint, blockTarget.getLocation());
+            send(world, spellContext, fromPoint, blockTarget.getLocation());
             return CastResolveType.SUCCESS;
         }
 
@@ -85,13 +86,17 @@ public class MethodRay extends AbstractCastMethod {
             Vec3 approximateNormal = fromPoint.subtract(toPoint).normalize();
             blockTarget = new BlockHitResult(toPoint, Direction.getNearest(approximateNormal.x, approximateNormal.y, approximateNormal.z), BlockPos.containing(toPoint), true);
             resolver.onResolveEffect(world, blockTarget);
-            PacketRayEffect.send(world, spellContext, fromPoint, blockTarget.getLocation());
+            send(world, spellContext, fromPoint, blockTarget.getLocation());
             return CastResolveType.SUCCESS;
         }else{
-            PacketRayEffect.send(world, spellContext, fromPoint, toPoint);
+            send(world, spellContext, fromPoint, toPoint);
             return CastResolveType.FAILURE;
         }
 
+    }
+
+    private void send(Level world, SpellContext spellContext, Vec3 fromPoint, Vec3 toPoint) {
+        Networking.sendToNearbyClient(world, spellContext.getUnwrappedCaster(), new PacketRayEffect(fromPoint, toPoint, spellContext.getColors()));
     }
 
     @Nonnull
@@ -136,7 +141,7 @@ public class MethodRay extends AbstractCastMethod {
     }
 
     @Override
-    protected void buildAugmentLimitsConfig(ForgeConfigSpec.Builder builder, Map<ResourceLocation, Integer> defaults) {
+    protected void buildAugmentLimitsConfig(ModConfigSpec.Builder builder, Map<ResourceLocation, Integer> defaults) {
         defaults.put(AugmentSensitive.INSTANCE.getRegistryName(), 2);
         super.buildAugmentLimitsConfig(builder, defaults);
     }

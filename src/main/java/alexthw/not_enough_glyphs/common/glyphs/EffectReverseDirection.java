@@ -28,7 +28,7 @@ public class EffectReverseDirection extends AbstractEffect {
                             // Relative adjustment of 2 required to get to the opposite side of the pivot block
                 .withDirection(rayTraceResult.getDirection().getOpposite());
         spellContext.setCanceled(true);
-        if (spellContext.getCurrentIndex() >= spellContext.getSpell().recipe.size())
+        if (spellContext.getCurrentIndex() >= spellContext.getSpell().size())
             return;
         Spell continuation = spellContext.getRemainingSpell();
         SpellContext newContext = spellContext.clone().withSpell(continuation);

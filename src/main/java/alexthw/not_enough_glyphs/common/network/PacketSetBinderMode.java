@@ -1,26 +1,30 @@
 package alexthw.not_enough_glyphs.common.network;
 
 import alexthw.not_enough_glyphs.common.spellbinder.SpellBinder;
+import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
+import com.hollingsworth.arsnouveau.common.network.AbstractPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Supplier;
-
-public class PacketSetBinderMode {
+public class PacketSetBinderMode extends AbstractPacket {
 
     public CompoundTag tag;
 
     //Decoder
-    public static PacketSetBinderMode decode(FriendlyByteBuf buf) {
-        return new PacketSetBinderMode(buf.readNbt());
+    public PacketSetBinderMode(FriendlyByteBuf buf) {
+       this(buf.readNbt());
     }
 
     //Encoder
-    public void encode(FriendlyByteBuf buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeNbt(tag);
     }
 
@@ -28,24 +32,27 @@ public class PacketSetBinderMode {
         this.tag = tag;
     }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer sender = ctx.get().getSender();
-                if (sender == null) {
-                    return;
-                }
-                InteractionHand bookHand = SpellBinder.getBookHand(sender);
-                if (bookHand == null) {
-                    return;
-                }
+    @Override
+    public void onServerReceived(MinecraftServer minecraftServer, ServerPlayer player) {
+        if (player == null) {
+            return;
+        }
+        InteractionHand bookHand = SpellBinder.getBookHand(player);
+        if (bookHand == null) {
+            return;
+        }
 
-                ItemStack stack = sender.getItemInHand(bookHand);
-                if (stack.getItem() instanceof SpellBinder) {
-                    stack.setTag(tag);
-                }
-            });
-        });
-        ctx.get().setPacketHandled(true);
+        ItemStack stack = player.getItemInHand(bookHand);
+        if (stack.getItem() instanceof SpellBinder) {
+            //stack.setTag(tag);
+        }
+    }
+
+    public static final Type<PacketSetBinderMode> TYPE = new Type<>(NotEnoughGlyphs.prefix("set_binder_mode"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, PacketSetBinderMode> CODEC = StreamCodec.ofMember(PacketSetBinderMode::toBytes, PacketSetBinderMode::new);
+
+    @Override
+    public @NotNull Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

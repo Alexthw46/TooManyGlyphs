@@ -23,8 +23,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -47,17 +47,17 @@ public class EffectFlatten extends AbstractEffect implements IDamageEffect {
 
     private boolean dupeCheck(Level world, BlockPos pos){
         BlockEntity be = world.getBlockEntity(pos);
-        return be != null && (world.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent() || be instanceof Container);
+        return be != null && (world.getCapability(Capabilities.ItemHandler.BLOCK, pos, null) != null || be instanceof Container);
     }
 
     public void doFlat(BlockPos p, BlockHitResult rayTraceResult, Level world, SpellStats spellStats){
         ItemStack shovel = new ItemStack(Items.DIAMOND_SHOVEL);
-        applyEnchantments(spellStats, shovel);
+        applyEnchantments(world, spellStats, shovel);
         Player entity = ANFakePlayer.getPlayer((ServerLevel) world);
         entity.setItemInHand(InteractionHand.MAIN_HAND, shovel);
         if (dupeCheck(world, p)) return;
         entity.setPos(p.getX(), p.getY(), p.getZ());
-        world.getBlockState(p).use(world, entity, InteractionHand.MAIN_HAND, rayTraceResult);
+        world.getBlockState(p).useItemOn(shovel, world, entity, InteractionHand.MAIN_HAND, rayTraceResult);
         shovel.useOn(new UseOnContext(entity, InteractionHand.MAIN_HAND, rayTraceResult));
     }
 
@@ -94,7 +94,7 @@ public class EffectFlatten extends AbstractEffect implements IDamageEffect {
     }
 
     @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
+    public void buildConfig(ModConfigSpec.Builder builder) {
         super.buildConfig(builder);
         this.addDamageConfig(builder, 3.0D);
         this.addAmpConfig(builder, 1.0D);

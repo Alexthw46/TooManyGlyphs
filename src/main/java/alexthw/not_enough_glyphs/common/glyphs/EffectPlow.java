@@ -17,7 +17,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -26,6 +26,7 @@ import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.neg;
 
 public class EffectPlow extends AbstractEffect {
     public static final EffectPlow INSTANCE = new EffectPlow();
+
     public EffectPlow() {
         super(neg("plow"), "Plow");
     }
@@ -37,19 +38,19 @@ public class EffectPlow extends AbstractEffect {
         }
     }
 
-    private boolean dupeCheck(Level world, BlockPos pos){
+    private boolean dupeCheck(Level world, BlockPos pos) {
         BlockEntity be = world.getBlockEntity(pos);
-        return be != null && (world.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent() || be instanceof Container);
+        return be != null && (world.getCapability(Capabilities.ItemHandler.BLOCK, pos, null) != null || be instanceof Container);
     }
 
-    public void doTill(BlockPos p, BlockHitResult rayTraceResult, Level world,@NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver){
+    public void doTill(BlockPos p, BlockHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         ItemStack hoe = new ItemStack(Items.DIAMOND_HOE);
-        applyEnchantments(spellStats, hoe);
+        applyEnchantments(world, spellStats, hoe);
         Player entity = ANFakePlayer.getPlayer((ServerLevel) world);
         entity.setItemInHand(InteractionHand.MAIN_HAND, hoe);
         if (dupeCheck(world, p)) return;
         entity.setPos(p.getX(), p.getY(), p.getZ());
-        world.getBlockState(p).use(world, entity, InteractionHand.MAIN_HAND, rayTraceResult);
+        world.getBlockState(p).useItemOn(hoe, world, entity, InteractionHand.MAIN_HAND, rayTraceResult);
         hoe.useOn(new UseOnContext(entity, InteractionHand.MAIN_HAND, rayTraceResult));
     }
 
@@ -61,11 +62,6 @@ public class EffectPlow extends AbstractEffect {
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
         return setOf(SpellSchools.ELEMENTAL_EARTH);
-    }
-
-    @Override
-    public SpellTier defaultTier() {
-        return SpellTier.ONE;
     }
 
     @Override

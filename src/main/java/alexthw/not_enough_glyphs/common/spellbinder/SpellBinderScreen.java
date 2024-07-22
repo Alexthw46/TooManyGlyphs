@@ -12,10 +12,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import static alexthw.not_enough_glyphs.init.NotEnoughGlyphs.prefix;
+
 
 public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContainer> {
 
-    public static final ResourceLocation BACKGROUND = new ResourceLocation(NotEnoughGlyphs.MODID, "textures/gui/spell_binder.png");
+    public static final ResourceLocation BACKGROUND =prefix("textures/gui/spell_binder.png");
 
     public SpellBinderScreen(SpellBinderContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
@@ -28,7 +30,7 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
 
     @Override
     public void render(@NotNull GuiGraphics gui, int mouseX, int mouseY, float partialTicks) {
-        renderBackground(gui);
+        renderBackground(gui, mouseX, mouseY, partialTicks);
         super.render(gui, mouseX, mouseY, partialTicks);
         renderGlyphPreview(gui, this.leftPos + 8, this.topPos + 8);
         renderTooltip(gui, mouseX, mouseY);
@@ -56,7 +58,7 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
 
     public void renderGlyphPreview(GuiGraphics gui, int x, int y) {
         if (this.menu.binder.isEmpty()) return;
-        SpellCaster spellCaster = new SpellBook.BookCaster(this.menu.binder);
+        SpellCaster spellCaster = null; //new SpellBook.BookCaster(this.menu.binder);
         int offsetX = 0, offsetY = -26;
         for (int i = 0; i < spellCaster.getMaxSlots(); ++i) {
             if (i % 2 == 0) {
@@ -69,7 +71,7 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
             AbstractSpellPart primaryIcon = null;
             AbstractSpellPart secondaryIcon = null;
 
-            for (AbstractSpellPart p : spell.recipe) {
+            for (AbstractSpellPart p : spell.recipe()) {
                 if (p instanceof AbstractCastMethod) {
                     primaryIcon = p;
                 }

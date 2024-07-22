@@ -5,21 +5,20 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.EntityHitResult;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
 public class FilterUtil {
-    public static IFilter getTargetFilter(SpellContext spellContext, IFilter defaultFilter) {
-        return getTargetFilter(spellContext.getSpell().recipe.subList(spellContext.getCurrentIndex(), spellContext.getSpell().getSpellSize()), defaultFilter);
-    }
 
     public static IFilter getTargetFilter(Spell spell, IFilter defaultFilter) {
-        return getTargetFilter(spell.recipe, defaultFilter);
+        return getTargetFilter(spell.recipe(), 0, defaultFilter);
     }
 
-    public static IFilter getTargetFilter(List<AbstractSpellPart> recipe, IFilter defaultFilter) {
+    public static IFilter getTargetFilter(Iterable<AbstractSpellPart> recipe, int startIdx, IFilter defaultFilter) {
+        int index = -1;
         for (AbstractSpellPart part : recipe) {
+            index++;
+            if (startIdx > index) continue;
             if (part instanceof IFilter) return (IFilter) part;
             if (part instanceof AbstractEffect) break;
         }
@@ -41,9 +40,12 @@ public class FilterUtil {
     /**
      * Returns a set of all filters in the spell, starting at the given index.
      */
-    public static Set<IFilter> getFilters(List<AbstractSpellPart> recipe, int index) {
+    public static Set<IFilter> getFilters(Iterable<AbstractSpellPart> recipe, int startIndex) {
         Set<IFilter> list = new HashSet<>();
-        for (AbstractSpellPart glyph : recipe.subList(index, recipe.size())) {
+        int index = -1;
+        for (AbstractSpellPart glyph : recipe) {
+            index++;
+            if (startIndex < index) continue;
             if (glyph instanceof AbstractCastMethod) continue;
             if (glyph instanceof IFilter filter) {
                 list.add(filter);
@@ -56,7 +58,7 @@ public class FilterUtil {
      * Returns a predicate that checks if an entity is affected by the given spell.
      */
     public static Predicate<Entity>getFilterPredicate(Spell spell, Predicate<Entity> defaultFilter) {
-        Set<IFilter> set = getFilters(spell.recipe, 0);
+        Set<IFilter> set = getFilters(spell.recipe(), 0);
         if (set.isEmpty()) return defaultFilter;
         return (entity -> !checkIgnoreFilters(entity, set));
     }
