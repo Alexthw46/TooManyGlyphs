@@ -3,11 +3,11 @@ package alexthw.not_enough_glyphs.common.network;
 import alexthw.not_enough_glyphs.common.spellbinder.SpellBinder;
 import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.common.network.AbstractPacket;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,7 @@ public class OpenSpellBinderPacket extends AbstractPacket {
     }
 
     @Override
-    public void onClientReceived(Minecraft minecraft, Player player) {
+    public void onServerReceived(MinecraftServer minecraft, ServerPlayer player) {
 
         if (player == null || hand == null) return;
         ItemStack bag = player.getItemInHand(hand);

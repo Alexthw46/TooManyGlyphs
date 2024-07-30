@@ -85,7 +85,7 @@ public class NEGGlyphRecipeProvider extends GlyphRecipeProvider {
 
     protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
         var regname = getRegistryName(glyph);
-        return pathIn.resolve("data/" + regname.getNamespace() + "/recipes/" + regname.getPath() + ".json");
+        return pathIn.resolve("data/" + regname.getNamespace() + "/recipe/" + regname.getPath() + ".json");
     }
 
     public void addRecipe(AbstractSpellPart part, ItemLike... items) {

@@ -1,16 +1,16 @@
 {
   "type": "ars_nouveau:glyph",
-  "exp": 160,
+  "exp": 55,
   "inputs": [
     {
       "item": "ars_nouveau:manipulation_essence"
     },
     {
-      "item": "ars_nouveau:glyph_homing_projectile"
+      "item": "ars_nouveau:glyph_underfoot"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_propagator_homing"
+    "id": "arsomega:glyph_propagate_underfoot"
   }
 }

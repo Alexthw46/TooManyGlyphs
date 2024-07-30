@@ -1,16 +1,16 @@
 {
   "type": "ars_nouveau:glyph",
-  "exp": 55,
+  "exp": 160,
   "inputs": [
     {
       "item": "ars_nouveau:manipulation_essence"
     },
     {
-      "item": "ars_nouveau:glyph_projectile"
+      "item": "ars_elemental:glyph_homing_projectile"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_propagate_projectile"
+    "id": "ars_elemental:glyph_propagator_homing"
   }
 }

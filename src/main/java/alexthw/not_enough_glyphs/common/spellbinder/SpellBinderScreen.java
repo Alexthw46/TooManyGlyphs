@@ -1,9 +1,8 @@
 package alexthw.not_enough_glyphs.common.spellbinder;
 
-import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
+import com.hollingsworth.arsnouveau.api.registry.SpellCasterRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.gui.utils.RenderUtils;
-import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -58,7 +57,7 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
 
     public void renderGlyphPreview(GuiGraphics gui, int x, int y) {
         if (this.menu.binder.isEmpty()) return;
-        SpellCaster spellCaster = null; //new SpellBook.BookCaster(this.menu.binder);
+        AbstractCaster<?> spellCaster = SpellCasterRegistry.from(this.menu.binder);
         int offsetX = 0, offsetY = -26;
         for (int i = 0; i < spellCaster.getMaxSlots(); ++i) {
             if (i % 2 == 0) {

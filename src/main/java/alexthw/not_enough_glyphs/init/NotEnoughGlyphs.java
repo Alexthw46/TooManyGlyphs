@@ -1,6 +1,7 @@
 package alexthw.not_enough_glyphs.init;
 
 import alexthw.not_enough_glyphs.ClientStuff;
+import alexthw.not_enough_glyphs.Events;
 import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -21,6 +22,7 @@ public class NotEnoughGlyphs
     public NotEnoughGlyphs(IEventBus modEventBus, ModContainer modContainer) {
         if (!FMLEnvironment.production) ArsNouveauAPI.ENABLE_DEBUG_NUMBERS = true;
         Registry.init(modEventBus);
+        Events.registerListeners(modEventBus, NeoForge.EVENT_BUS);
         ArsNouveauRegistry.registerGlyphs();
         modEventBus.addListener(Networking::register);
         modEventBus.addListener(this::setup);

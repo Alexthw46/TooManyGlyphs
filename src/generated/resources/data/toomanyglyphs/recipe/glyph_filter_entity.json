@@ -3,11 +3,11 @@
   "exp": 27,
   "inputs": [
     {
-      "item": "minecraft:emerald"
+      "tag": "c:nuggets/iron"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_filter_item"
+    "id": "toomanyglyphs:glyph_filter_entity"
   }
 }

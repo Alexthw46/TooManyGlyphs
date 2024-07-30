@@ -6,11 +6,11 @@
       "item": "ars_nouveau:manipulation_essence"
     },
     {
-      "item": "ars_nouveau:glyph_underfoot"
+      "item": "ars_nouveau:glyph_self"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_propagate_underfoot"
+    "id": "arsomega:glyph_propagate_self"
   }
 }

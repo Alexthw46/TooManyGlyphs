@@ -19,9 +19,9 @@ public class Networking {
         final PayloadRegistrar reg = event.registrar("1");
 
         reg.playToClient(PacketRayEffect.TYPE, PacketRayEffect.CODEC, Networking::handle);
-        reg.playToClient(PacketSetBinderMode.TYPE, PacketSetBinderMode.CODEC, Networking::handle);
+        reg.playToServer(PacketSetBinderMode.TYPE, PacketSetBinderMode.CODEC, Networking::handle);
 
-        reg.playToClient(OpenSpellBinderPacket.TYPE, OpenSpellBinderPacket.CODEC, Networking::handle);
+        reg.playToServer(OpenSpellBinderPacket.TYPE, OpenSpellBinderPacket.CODEC, Networking::handle);
 
 
     }

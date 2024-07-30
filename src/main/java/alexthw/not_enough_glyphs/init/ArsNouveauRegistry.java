@@ -13,6 +13,7 @@ import alexthw.not_enough_glyphs.common.spell.PacificThread;
 import alexthw.not_enough_glyphs.common.spell.RandomPerk;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
 import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
+import com.hollingsworth.arsnouveau.api.registry.SpellCasterRegistry;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import com.hollingsworth.arsnouveau.setup.registry.APIRegistry;
@@ -103,6 +104,7 @@ public class ArsNouveauRegistry {
     }
 
     public static void postInit() {
+        SpellCasterRegistry.register(Registry.SPELL_BINDER.get(), (stack) -> stack.get(Registry.SPELL_BINDER_CASTER));
         PerkRegistry.registerPerkProvider(Registry.SPELL_BINDER.get(),List.of(List.of(PerkSlot.ONE, PerkSlot.TWO)));
         EffectReset.RESET_LIMITS.add(PropagatePlane.INSTANCE);
         EffectReset.RESET_LIMITS.add(EffectChaining.INSTANCE);

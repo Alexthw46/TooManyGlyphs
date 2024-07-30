@@ -1,13 +1,13 @@
 {
   "type": "ars_nouveau:glyph",
-  "exp": 27,
+  "exp": 55,
   "inputs": [
     {
-      "item": "minecraft:beef"
+      "tag": "c:eggs"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_filter_animal"
+    "id": "toomanyglyphs:glyph_filter_is_baby"
   }
 }

@@ -1,28 +1,31 @@
 package alexthw.not_enough_glyphs.init;
 
 import alexthw.not_enough_glyphs.common.spell.TrailingProjectile;
+import alexthw.not_enough_glyphs.common.spellbinder.BinderCasterData;
 import alexthw.not_enough_glyphs.common.spellbinder.SpellBinder;
 import alexthw.not_enough_glyphs.common.spellbinder.SpellBinderContainer;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
+
 
 public class Registry {
 
@@ -31,21 +34,21 @@ public class Registry {
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(BuiltInRegistries.MENU, NotEnoughGlyphs.MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(BuiltInRegistries.ATTRIBUTE, NotEnoughGlyphs.MODID);
     public static final Supplier<EntityType<TrailingProjectile>> TRAILING_PROJECTILE;
-    public static final Supplier<Attribute> MANA_DISCOUNT = registerAttribute("not_enough_glyphs.perk.mana_discount", (id) -> new RangedAttribute(id, 0.0, 0.0, Double.MAX_VALUE).setSyncable(true));
+    public static final DeferredHolder<Attribute,Attribute> MANA_DISCOUNT = registerAttribute("not_enough_glyphs.perk.mana_discount", (id) -> new RangedAttribute(id, 0.0, 0.0, Double.MAX_VALUE).setSyncable(true));
 
-    // public static final Supplier<MenuType<SpellBinderContainer>> SPELL_HOLDER;
+    public static final Supplier<MenuType<SpellBinderContainer>> SPELL_HOLDER;
     public static final Supplier<Item> SPELL_BINDER;
 
     static {
         TRAILING_PROJECTILE = addEntity("trail", 0.5F, 0.5F, true, true, TrailingProjectile::new, MobCategory.MISC);
 
-        SPELL_BINDER = ITEMS.registerSimpleItem("spell_binder"); //ITEMS.registerItem("spell_binder", () -> new SpellBinder(new Item.Properties().stacksTo(1)));
+        SPELL_BINDER = ITEMS.register("spell_binder", () -> new SpellBinder(new Item.Properties().stacksTo(1)));
 
-//        SPELL_HOLDER = CONTAINERS.register("spell_holder", () -> IForgeMenuType.create((int id, Inventory inv, FriendlyByteBuf extraData) -> {
-//            boolean mainHand = extraData.readBoolean();
-//            ItemStack stack = inv.player.getItemInHand(mainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
-//            return new SpellBinderContainer(id, inv, stack);
-//        }));
+        SPELL_HOLDER = CONTAINERS.register("spell_holder", () -> IMenuTypeExtension.create((id, inv, extraData) -> {
+            boolean mainHand = extraData.readBoolean();
+            ItemStack stack = inv.player.getItemInHand(mainHand ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+            return new SpellBinderContainer(id, inv, stack);
+        }));
 
     }
 
@@ -69,6 +72,7 @@ public class Registry {
         ENTITIES.register(modbus);
         CONTAINERS.register(modbus);
         ATTRIBUTES.register(modbus);
+        DATA.register(modbus);
         modbus.addListener((BuildCreativeModeTabContentsEvent event) -> {
             if (event.getTab() == CreativeTabRegistry.BLOCKS.get())
                 for (var item : ITEMS.getEntries())
@@ -78,7 +82,7 @@ public class Registry {
     }
 
 
-    public static Supplier<Attribute> registerAttribute(String name, Function<String, Attribute> attribute) {
+    public static DeferredHolder<Attribute,Attribute> registerAttribute(String name, Function<String, Attribute> attribute) {
         //UUIDS.put(registryObject, uuid);
         return ATTRIBUTES.register(name, () -> attribute.apply(name));
     }
@@ -86,4 +90,10 @@ public class Registry {
     public static void modifyEntityAttributes(EntityAttributeModificationEvent event) {
         event.getTypes().stream().filter(e -> e == EntityType.PLAYER).forEach(e -> Registry.ATTRIBUTES.getEntries().forEach((v) -> event.add(e, v)));
     }
+
+
+    public static final DeferredRegister<DataComponentType<?>> DATA = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, NotEnoughGlyphs.MODID);
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BinderCasterData>> SPELL_BINDER_CASTER = DATA.register("spell_binder_caster", () -> DataComponentType.<BinderCasterData>builder().persistent(BinderCasterData.CODEC.codec()).networkSynchronized(BinderCasterData.STREAM_CODEC).build());
+
 }

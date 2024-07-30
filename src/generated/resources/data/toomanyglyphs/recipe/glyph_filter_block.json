@@ -1,13 +1,13 @@
 {
   "type": "ars_nouveau:glyph",
-  "exp": 55,
+  "exp": 27,
   "inputs": [
     {
-      "tag": "c:eggs"
+      "tag": "c:cobblestones"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_filter_is_baby"
+    "id": "toomanyglyphs:glyph_filter_block"
   }
 }

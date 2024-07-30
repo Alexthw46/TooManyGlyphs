@@ -1,16 +1,16 @@
 {
   "type": "ars_nouveau:glyph",
-  "exp": 55,
+  "exp": 27,
   "inputs": [
     {
       "item": "ars_nouveau:manipulation_essence"
     },
     {
-      "item": "ars_nouveau:glyph_self"
+      "item": "minecraft:glass_pane"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_propagate_self"
+    "id": "toomanyglyphs:glyph_reverse_direction"
   }
 }

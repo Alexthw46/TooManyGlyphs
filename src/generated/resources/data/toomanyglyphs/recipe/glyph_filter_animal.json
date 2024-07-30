@@ -1,13 +1,13 @@
 {
   "type": "ars_nouveau:glyph",
-  "exp": 55,
+  "exp": 27,
   "inputs": [
     {
-      "item": "minecraft:chicken"
+      "item": "minecraft:beef"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_filter_is_mature"
+    "id": "toomanyglyphs:glyph_filter_animal"
   }
 }

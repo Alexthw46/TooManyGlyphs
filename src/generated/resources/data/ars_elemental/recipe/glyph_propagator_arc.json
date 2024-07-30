@@ -6,11 +6,11 @@
       "item": "ars_nouveau:manipulation_essence"
     },
     {
-      "item": "ars_nouveau:glyph_arc_projectile"
+      "item": "ars_elemental:glyph_arc_projectile"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_propagator_arc"
+    "id": "ars_elemental:glyph_propagator_arc"
   }
 }

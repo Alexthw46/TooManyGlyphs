@@ -3,11 +3,11 @@
   "exp": 27,
   "inputs": [
     {
-      "item": "minecraft:oxeye_daisy"
+      "item": "minecraft:emerald"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_filter_living_not_monster"
+    "id": "toomanyglyphs:glyph_filter_item"
   }
 }

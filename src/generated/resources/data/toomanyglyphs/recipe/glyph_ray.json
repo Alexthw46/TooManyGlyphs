@@ -3,14 +3,14 @@
   "exp": 27,
   "inputs": [
     {
-      "item": "ars_nouveau:earth_essence"
+      "item": "minecraft:target"
     },
     {
-      "item": "minecraft:stone_hoe"
+      "item": "ars_nouveau:source_gem"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_plow"
+    "id": "toomanyglyphs:glyph_ray"
   }
 }

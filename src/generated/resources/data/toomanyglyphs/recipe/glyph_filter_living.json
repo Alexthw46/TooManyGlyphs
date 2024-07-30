@@ -3,11 +3,11 @@
   "exp": 27,
   "inputs": [
     {
-      "item": "minecraft:blue_orchid"
+      "item": "minecraft:dandelion"
     }
   ],
   "output": {
     "count": 1,
-    "id": "ars_nouveau:glyph_filter_living_not_player"
+    "id": "toomanyglyphs:glyph_filter_living"
   }
 }
