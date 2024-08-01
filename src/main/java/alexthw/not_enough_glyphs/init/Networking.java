@@ -1,8 +1,8 @@
 package alexthw.not_enough_glyphs.init;
 
-import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
-import alexthw.not_enough_glyphs.common.network.PacketSetBinderMode;
 import alexthw.not_enough_glyphs.common.network.OpenSpellBinderPacket;
+import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
+import alexthw.not_enough_glyphs.common.network.PacketSetBinderSlot;
 import com.hollingsworth.arsnouveau.common.network.AbstractPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
@@ -19,7 +19,7 @@ public class Networking {
         final PayloadRegistrar reg = event.registrar("1");
 
         reg.playToClient(PacketRayEffect.TYPE, PacketRayEffect.CODEC, Networking::handle);
-        reg.playToServer(PacketSetBinderMode.TYPE, PacketSetBinderMode.CODEC, Networking::handle);
+        reg.playToServer(PacketSetBinderSlot.TYPE, PacketSetBinderSlot.CODEC, Networking::handle);
 
         reg.playToServer(OpenSpellBinderPacket.TYPE, OpenSpellBinderPacket.CODEC, Networking::handle);
 

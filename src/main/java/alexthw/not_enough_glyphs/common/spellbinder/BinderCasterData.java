@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 
 public class BinderCasterData extends AbstractCaster<BinderCasterData> {
 
-    public BinderCasterData(int maxSlots){
+    public BinderCasterData(int maxSlots) {
         this(0, "", false, "", maxSlots);
     }
 
@@ -37,11 +37,11 @@ public class BinderCasterData extends AbstractCaster<BinderCasterData> {
         this(slot, flavorText, isHidden, hiddenText, maxSlots, new SpellSlotMap(ImmutableMap.of()));
     }
 
-    public BinderCasterData(Integer slot, String flavorText, Boolean isHidden, String hiddenText, int maxSlots, SpellSlotMap spells){
+    public BinderCasterData(Integer slot, String flavorText, Boolean isHidden, String hiddenText, int maxSlots, SpellSlotMap spells) {
         super(slot, flavorText, isHidden, hiddenText, maxSlots, spells);
     }
 
-    public static BinderCasterData create(int slot, String flavorText, Boolean isHidden, String hiddenText, int maxSlots){
+    public static BinderCasterData create(int slot, String flavorText, Boolean isHidden, String hiddenText, int maxSlots) {
         return new BinderCasterData(slot, flavorText, isHidden, hiddenText, maxSlots);
     }
 

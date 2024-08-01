@@ -3,11 +3,8 @@ package alexthw.not_enough_glyphs.common.spellbinder;
 import alexthw.not_enough_glyphs.init.Registry;
 import com.hollingsworth.arsnouveau.api.registry.SpellCasterRegistry;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCaster;
-import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.common.items.CasterTome;
 import com.hollingsworth.arsnouveau.common.items.SpellParchment;
-import com.hollingsworth.arsnouveau.common.network.Networking;
-import com.hollingsworth.arsnouveau.common.network.PacketUpdateCaster;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -41,7 +38,7 @@ public class SpellBinderContainer extends AbstractContainerMenu {
         for (int i = 0; i < 5; ++i) {
             for (int j = 0; j < 2; ++j) {
                 int index = i * 2 + j;
-                addSlot(this.makeSlot(inventory, -8 + i * 23, (j % 2 == 0 ? -5 : +14) + j * 20, index, this));
+                addSlot(this.makeSlot(inventory, -8 + i * 23, (j % 2 == 0 ? -5 : +14) + j * 20, index));
             }
         }
 
@@ -54,7 +51,7 @@ public class SpellBinderContainer extends AbstractContainerMenu {
                     default -> +2;
                     case 1 -> +9;
                     case 2 -> +16;
-                } + (pageoffset + j) * 12, index, this));
+                } + (pageoffset + j) * 12, index));
             }
         }
 
@@ -72,12 +69,11 @@ public class SpellBinderContainer extends AbstractContainerMenu {
     }
 
     @NotNull
-    protected Slot makeSlot(IItemHandler inventory, int y, int x, int index, SpellBinderContainer binder) {
+    protected Slot makeSlot(IItemHandler inventory, int y, int x, int index) {
         return new ItemHandlerCopySlot(inventory, index, x, y) {
             @Override
             protected void setStackCopy(@NotNull ItemStack stack) {
                 super.setStackCopy(stack);
-                SpellBinderContainer.updateCaster(stack, binder, index);
             }
 
             @Override
@@ -86,47 +82,23 @@ public class SpellBinderContainer extends AbstractContainerMenu {
             }
 
             @Override
-            public int getMaxStackSize() {
+            public int getMaxStackSize(@NotNull ItemStack stack) {
+                if (stack.getItem() instanceof SpellParchment) {
+                    AbstractCaster<?> parchmentCaster = SpellCasterRegistry.from(stack);
+                    if (parchmentCaster != null && parchmentCaster.getSpell().isEmpty()) {
+                        return super.getMaxStackSize(stack);
+                    }
+                }
                 return 1;
             }
 
         };
     }
 
-    private static void updateCaster(ItemStack stack, SpellBinderContainer binder, int index) {
-        if (index >= 0 && index < 10) {
-            AbstractCaster<?> caster = SpellCasterRegistry.from(stack);
-            AbstractCaster<?> binderCaster = SpellCasterRegistry.from(binder.binder);
-            if (caster != null && binderCaster != null) {
-                if (!caster.getSpell(index).recipe().equals(binderCaster.getSpell(index).recipe())) {
-                    binderCaster.setSpell(caster.getSpell(), index);
-                    //Networking.sendToServer(new PacketUpdateCaster(caster.getSpell(index), index, caster.getSpellName(index), true));
-                }
-            }
-        }
-    }
-
     @Override
     public void removed(Player playerIn) {
         playerIn.level().playSound(null, playerIn.blockPosition(), SoundEvents.ARMOR_EQUIP_LEATHER.value(), SoundSource.PLAYERS, 1, 1);
         super.removed(playerIn);
-        // updates the binder spell caster with the first ten slots
-        AbstractCaster<?> caster = SpellCasterRegistry.from(binder);
-        if (caster == null) return;
-        for (int i = 0; i < 10; i++) {
-            var slotCaster = SpellCasterRegistry.from(inventory.getStackInSlot(i));
-            if ((inventory.getStackInSlot(i).getItem() instanceof SpellParchment || inventory.getStackInSlot(i).getItem() instanceof CasterTome)
-                    && slotCaster != null) {
-                if (!caster.getSpell(i).recipe().equals(slotCaster.getSpell(i).recipe())) {
-                    caster.setSpell(slotCaster.getSpell(), i);
-                    Networking.sendToServer(new PacketUpdateCaster(slotCaster.getSpell(), i, slotCaster.getSpellName(), playerIn.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof SpellBinder));
-                }
-            } else if (!caster.getSpell(i).isEmpty()) {
-                caster.setSpell(new Spell(), i);
-            }
-        }
-        caster.saveToStack(binder);
-
     }
 
     public int offset() {

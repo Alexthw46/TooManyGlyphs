@@ -1,6 +1,7 @@
 package alexthw.not_enough_glyphs.common.spellbinder;
 
 import alexthw.not_enough_glyphs.common.network.OpenSpellBinderPacket;
+import alexthw.not_enough_glyphs.common.network.PacketSetBinderSlot;
 import alexthw.not_enough_glyphs.common.spell.BulldozeThread;
 import alexthw.not_enough_glyphs.common.spell.RandomPerk;
 import alexthw.not_enough_glyphs.init.Registry;
@@ -20,7 +21,6 @@ import com.hollingsworth.arsnouveau.client.gui.utils.RenderUtils;
 import com.hollingsworth.arsnouveau.client.registry.ModKeyBindings;
 import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.common.network.Networking;
-import com.hollingsworth.arsnouveau.common.network.PacketSetCasterSlot;
 import com.hollingsworth.arsnouveau.setup.config.Config;
 import com.hollingsworth.arsnouveau.setup.registry.DataComponentRegistry;
 import net.minecraft.ChatFormatting;
@@ -46,6 +46,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -54,6 +56,40 @@ import java.util.List;
 import java.util.Optional;
 
 public class SpellBinder extends Item implements ICasterTool, IRadialProvider, ISpellModifierItem {
+
+
+    /**
+     * Used to ensure that the binder caster is up-to-date with the inventory it is bound to
+     *
+     * @param stack the ItemStack to read
+     * @return the caster from the stack
+     */
+    public static AbstractCaster<?> getBinderCaster(ItemStack stack) {
+        IItemHandler inv = stack.getCapability(Capabilities.ItemHandler.ITEM);
+        AbstractCaster<?> binderCaster = SpellCasterRegistry.from(stack);
+
+        if (inv != null && binderCaster != null) {
+            //take the spell data from the first 10 slots of the inventory
+            for (int index = 0; index >= 0 && index < 10; index++) {
+                ItemStack stackInSlot = inv.getStackInSlot(index);
+                if (stackInSlot.isEmpty()) {
+                    binderCaster = binderCaster.setSpell(new Spell(), index);
+                    continue;
+                }
+                AbstractCaster<?> caster = SpellCasterRegistry.from(stackInSlot);
+                if (caster != null) {
+                    binderCaster = binderCaster.setSpell(caster.getSpell(), index);
+                } else {
+                    binderCaster = binderCaster.setSpell(new Spell(), index);
+                }
+            }
+            binderCaster.saveToStack(stack); // ensure updates are saved
+            return binderCaster;
+        }
+
+        return binderCaster;
+    }
+
 
     public static @Nullable ArmorPerkHolder getHolderForPerkHands(IPerk perk, @NotNull LivingEntity entity) {
         ArmorPerkHolder highestHolder = null;
@@ -81,11 +117,11 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
 
     @Override
     public @NotNull Component getName(@NotNull ItemStack pStack) {
-        var caster = getSpellCaster(pStack);
-        String name = caster.getSpellName(caster.getCurrentSlot());
-        if (name.isEmpty()) {
+        var caster = SpellCasterRegistry.from(pStack);
+        if (caster == null || caster.getSpell().name().isEmpty()) {
             return super.getName(pStack);
         } else {
+            String name = caster.getSpellName(caster.getCurrentSlot());
             return Component.literal(super.getName(pStack).getString() + '(' + name + ')');
         }
     }
@@ -94,8 +130,7 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
         super(pProperties.component(DataComponentRegistry.ARMOR_PERKS, new ArmorPerkHolder()).component(Registry.SPELL_BINDER_CASTER.get(), new BinderCasterData(10)));
     }
 
-    public void openContainer(Level level, ServerPlayer player, ItemStack bag) {
-
+    public void openContainer(ServerPlayer player, ItemStack bag) {
         MenuProvider container = new SimpleMenuProvider((w, p, pl) -> new SpellBinderContainer(w, p, bag), bag.getHoverName());
         player.openMenu(container, b -> b.writeBoolean(getBookHand(player) == InteractionHand.MAIN_HAND));
         player.level().playSound(null, player.blockPosition(), SoundEvents.BUNDLE_INSERT, SoundSource.PLAYERS, 1, 1);
@@ -105,7 +140,7 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
-        AbstractCaster<?> caster = this.getSpellCaster(stack);
+        AbstractCaster<?> caster = getBinderCaster(stack);
         return caster.castSpell(pLevel, pPlayer, pUsedHand, Component.translatable("ars_nouveau.invalid_spell"));
     }
 
@@ -131,9 +166,7 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
     }
 
     public RadialMenu<AbstractSpellPart> getRadialMenuProviderForSpellpart(ItemStack itemStack) {
-        return new RadialMenu<>((int slot) -> {
-            Networking.sendToServer(new PacketSetCasterSlot(slot));
-        },
+        return new RadialMenu<>((int slot) -> Networking.sendToServer(new PacketSetBinderSlot(slot)),
                 getRadialMenuSlotsForSpellpart(itemStack),
                 RenderUtils::drawSpellPart,
                 0);
@@ -168,8 +201,9 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
     @OnlyIn(Dist.CLIENT)
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        AbstractCaster<?> caster = getSpellCaster(stack);
-
+        AbstractCaster<?> caster = SpellCasterRegistry.from(stack); // getBinderCaster(stack);
+        if (caster == null)
+            return;
         if (!Config.GLYPH_TOOLTIPS.get() || Screen.hasShiftDown() || caster.isSpellHidden() || caster.getSpell().isEmpty())
             getInformation(stack, context, tooltip, flag);
 

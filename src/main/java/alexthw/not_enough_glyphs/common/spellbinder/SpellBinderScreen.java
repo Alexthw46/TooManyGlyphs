@@ -36,8 +36,8 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
     }
 
     @Override
-    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
-        pGuiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
+    protected void renderLabels(@NotNull GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
+        //pGuiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
     }
 
     @Override
@@ -57,7 +57,8 @@ public class SpellBinderScreen extends AbstractContainerScreen<SpellBinderContai
 
     public void renderGlyphPreview(GuiGraphics gui, int x, int y) {
         if (this.menu.binder.isEmpty()) return;
-        AbstractCaster<?> spellCaster = SpellCasterRegistry.from(this.menu.binder);
+        AbstractCaster<?> spellCaster = SpellCasterRegistry.from(menu.binder);
+        if (spellCaster == null) return;
         int offsetX = 0, offsetY = -26;
         for (int i = 0; i < spellCaster.getMaxSlots(); ++i) {
             if (i % 2 == 0) {

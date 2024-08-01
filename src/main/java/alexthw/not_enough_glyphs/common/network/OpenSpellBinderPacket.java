@@ -34,7 +34,7 @@ public class OpenSpellBinderPacket extends AbstractPacket {
         ItemStack bag = player.getItemInHand(hand);
 
         if (bag.getItem() instanceof SpellBinder bagItem) {
-            bagItem.openContainer(player.level(), player, bag);
+            bagItem.openContainer(player, bag);
         }
 
     }
