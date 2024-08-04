@@ -35,6 +35,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
@@ -174,6 +175,8 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
 
     public List<RadialMenuSlot<AbstractSpellPart>> getRadialMenuSlotsForSpellpart(ItemStack itemStack) {
         AbstractCaster<?> spellCaster = SpellCasterRegistry.from(itemStack);
+        if (spellCaster == null)
+            return new ArrayList<>();
         List<RadialMenuSlot<AbstractSpellPart>> radialMenuSlots = new ArrayList<>();
 
         for (int i = 0; i < spellCaster.getMaxSlots(); ++i) {
@@ -233,8 +236,10 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
     public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(@NotNull ItemStack stack) {
         var modifiers = super.getDefaultAttributeModifiers(stack);
         var perkHolder = PerkUtil.getPerkHolder(stack);
-        if (perkHolder == null)
-            return modifiers;
+        if (perkHolder != null)
+            for (PerkInstance instance : perkHolder.getPerkInstances(stack))
+                if (instance.getPerk() instanceof IPerk perk)
+                    modifiers = perk.applyAttributeModifiers(modifiers, stack, instance.getSlot().value(), EquipmentSlotGroup.HAND);
         return modifiers;
     }
 

@@ -36,13 +36,18 @@ Also includes the spellbinder and its focus threads.
 '''
 [[dependencies.not_enough_glyphs]]
     modId="minecraft"
-    mandatory=true
     versionRange="[1.21,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.not_enough_glyphs]]
     modId="ars_nouveau"
-    mandatory=true
-    versionRange="[1.20.1-4.0,)"
+versionRange = "[1.21.0-5.0,)"
+ordering = "AFTER"
+side = "BOTH"
+[[dependencies.not_enough_glyphs]]
+modId = "ars_elemental"
+type = "optional"
+reason = "Adds focus threads for the spellbinder"
+versionRange = "[1.21.0,)"
     ordering="AFTER"
     side="BOTH"

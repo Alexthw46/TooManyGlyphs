@@ -1,16 +1,15 @@
 package alexthw.not_enough_glyphs.common.spell;
 
 import alexthw.not_enough_glyphs.init.Registry;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.api.perk.IEffectResolvePerk;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -26,13 +25,11 @@ public class PacificThread extends BookPerk implements IEffectResolvePerk {
     public static final UUID PERK_MANA_UUID = UUID.fromString("7dde4d5c-2feb-4c4d-bf8f-26548d7f9aff");
 
 
-
     @Override
-    public Multimap<Attribute, AttributeModifier> getModifiers(EquipmentSlot pEquipmentSlot, ItemStack stack, int slotValue) {
-        ImmutableMultimap.Builder<Attribute, AttributeModifier> modifiers = new ImmutableMultimap.Builder<>();
-        modifiers.put(PerkAttributes.SPELL_DAMAGE_BONUS.get(), new AttributeModifier(prefix("pacific_perk"), -6 , AttributeModifier.Operation.ADD_VALUE));
-        modifiers.put(Registry.MANA_DISCOUNT.get(), new AttributeModifier(prefix("pacific_perk"), 100, AttributeModifier.Operation.ADD_VALUE));
-        return modifiers.build();
+    public @NotNull ItemAttributeModifiers applyAttributeModifiers(ItemAttributeModifiers modifiers, ItemStack stack, int slotValue, EquipmentSlotGroup equipmentSlotGroup) {
+        return modifiers
+                .withModifierAdded(Registry.MANA_DISCOUNT, new AttributeModifier(prefix("pacific_perk"), 50 * slotValue, AttributeModifier.Operation.ADD_VALUE), equipmentSlotGroup)
+                .withModifierAdded(PerkAttributes.SPELL_DAMAGE_BONUS, new AttributeModifier(prefix("pacific_perk"), -3 * slotValue, AttributeModifier.Operation.ADD_VALUE), equipmentSlotGroup);
     }
 
 }

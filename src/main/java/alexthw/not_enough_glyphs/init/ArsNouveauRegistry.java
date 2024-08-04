@@ -29,7 +29,7 @@ public class ArsNouveauRegistry {
 
     public static void registerGlyphs() {
 
-        arsElemental = false; // ModList.get().isLoaded("ars_elemental");
+        arsElemental = ModList.get().isLoaded("ars_elemental");
         tooManyGlyphs = ModList.get().isLoaded("toomanyglyphs");
         arsOmega = ModList.get().isLoaded("arsomega");
 

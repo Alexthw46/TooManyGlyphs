@@ -6,7 +6,8 @@ plugins {
     id 'net.neoforged.moddev' version '1.0+'
 }
 
-
+version = "${minecraft_version}-${mod_version}"
+group = 'alexthw.not_enough_glyphs'
 base {
     archivesName = project.mod_id
 }
