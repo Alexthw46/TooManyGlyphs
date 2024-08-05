@@ -2,9 +2,8 @@ package alexthw.not_enough_glyphs.common.glyphs.filters;
 
 import com.hollingsworth.arsnouveau.common.entity.EntityDummy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-
-import java.util.logging.Level;
 
 public class EffectFilterLivingNotPlayer extends EffectFilterLiving {
     public static final EffectFilterLivingNotPlayer INSTANCE = new EffectFilterLivingNotPlayer("filter_living_not_player", "Filter: Not Player");

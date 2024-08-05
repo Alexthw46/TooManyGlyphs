@@ -34,6 +34,9 @@ description='''
 A mixed bag of add-ons to make Ars Nouveau spells more flexible, more intelligent, or maybe in a few cases just crazy convoluted combos.
 Also includes the spellbinder and its focus threads.
 '''
+[[mixins]]
+config = "not_enough_glyphs.mixins.json"
+
 [[dependencies.not_enough_glyphs]]
     modId="minecraft"
     versionRange="[1.21,)"

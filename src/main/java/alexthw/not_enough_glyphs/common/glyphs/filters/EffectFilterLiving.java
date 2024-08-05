@@ -2,9 +2,8 @@ package alexthw.not_enough_glyphs.common.glyphs.filters;
 
 import alexthw.not_enough_glyphs.common.glyphs.CompatRL;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-
-import java.util.logging.Level;
 
 public class EffectFilterLiving extends AbstractEffectFilter {
 
