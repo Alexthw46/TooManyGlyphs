@@ -7,9 +7,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Set;
 
@@ -45,7 +45,7 @@ public abstract class AbstractEffectFilter extends AbstractFilter {
         if (!shouldResolveOnBlock(rayTraceResult, world)) spellContext.setCanceled(true);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Set<SpellSchool> getSchools() {
         return setOf(SpellSchools.MANIPULATION);
@@ -56,7 +56,7 @@ public abstract class AbstractEffectFilter extends AbstractFilter {
         return 0;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
         return Collections.emptySet();
