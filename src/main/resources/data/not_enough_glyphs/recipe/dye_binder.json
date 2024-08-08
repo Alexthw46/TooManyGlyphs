@@ -1,14 +1,16 @@
 {
   "type": "ars_nouveau:dye",
+  "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:dyes"
+      "tag": "c:dyes"
     },
     {
       "item": "not_enough_glyphs:spell_binder"
     }
   ],
   "result": {
-      "item": "not_enough_glyphs:spell_binder"
+    "count": 1,
+    "id": "not_enough_glyphs:spell_binder"
   }
 }

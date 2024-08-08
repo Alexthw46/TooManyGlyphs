@@ -8,11 +8,11 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.animation.AnimationState;
 
 public class SpellBinderModel extends TransformAnimatedModel<SpellBinder> {
-    public static final ResourceLocation OPEN = new ResourceLocation(NotEnoughGlyphs.MODID, "geo/spell_binder.geo.json");
-    public static final ResourceLocation CLOSED = new ResourceLocation(NotEnoughGlyphs.MODID, "geo/spell_binder_closed.geo.json");
+    public static final ResourceLocation OPEN = ResourceLocation.fromNamespaceAndPath(NotEnoughGlyphs.MODID, "geo/spell_binder.geo.json");
+    public static final ResourceLocation CLOSED = ResourceLocation.fromNamespaceAndPath(NotEnoughGlyphs.MODID, "geo/spell_binder_closed.geo.json");
 
     public ResourceLocation modelLoc;
 
@@ -34,7 +34,6 @@ public class SpellBinderModel extends TransformAnimatedModel<SpellBinder> {
 
     @Override
     public ResourceLocation getModelResource(SpellBinder object, @Nullable ItemDisplayContext transformType) {
-//        return modelLoc;
         if (transformType == ItemDisplayContext.GUI || transformType == ItemDisplayContext.FIXED) {
             return CLOSED;
         }
@@ -44,12 +43,12 @@ public class SpellBinderModel extends TransformAnimatedModel<SpellBinder> {
 
     @Override
     public ResourceLocation getTextureResource(SpellBinder object) {
-        return new ResourceLocation(ArsNouveau.MODID, "textures/item/spellbinder_purple.png");
+        return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "textures/item/spellbinder_purple.png");
     }
 
     @Override
     public ResourceLocation getAnimationResource(SpellBinder animatable) {
-        return new ResourceLocation(ArsNouveau.MODID, "animations/empty.json");
+        return ResourceLocation.fromNamespaceAndPath(ArsNouveau.MODID, "animations/empty.json");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package alexthw.not_enough_glyphs.common.spellbinder;
 
+import alexthw.not_enough_glyphs.client.SpellBinderRenderer;
 import alexthw.not_enough_glyphs.common.network.OpenSpellBinderPacket;
 import alexthw.not_enough_glyphs.common.network.PacketSetBinderSlot;
 import alexthw.not_enough_glyphs.common.spell.BulldozeThread;
@@ -19,6 +20,7 @@ import com.hollingsworth.arsnouveau.client.gui.radial_menu.RadialMenu;
 import com.hollingsworth.arsnouveau.client.gui.radial_menu.RadialMenuSlot;
 import com.hollingsworth.arsnouveau.client.gui.utils.RenderUtils;
 import com.hollingsworth.arsnouveau.client.registry.ModKeyBindings;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.IDyeable;
 import com.hollingsworth.arsnouveau.common.items.data.ArmorPerkHolder;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.setup.config.Config;
@@ -27,6 +29,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -50,13 +53,19 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
-public class SpellBinder extends Item implements ICasterTool, IRadialProvider, ISpellModifierItem {
+public class SpellBinder extends Item implements ICasterTool, IDyeable, GeoItem, IRadialProvider, ISpellModifierItem {
 
 
     /**
@@ -252,5 +261,26 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
         return Optional.empty();
     }
 
+    AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    }
+
+    @Override
+    public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+        consumer.accept(new GeoRenderProvider() {
+            public static final BlockEntityWithoutLevelRenderer renderer = new SpellBinderRenderer();
+
+            @Override
+            public @NotNull BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
+                return renderer;
+            }
+        });
+    }
 }
