@@ -1,6 +1,7 @@
 package alexthw.not_enough_glyphs.common.spellbinder;
 
 import alexthw.not_enough_glyphs.api.ThreadwiseSpellResolver;
+import alexthw.not_enough_glyphs.client.SpellBinderRenderer;
 import alexthw.not_enough_glyphs.common.network.OpenSpellBinderPacket;
 import alexthw.not_enough_glyphs.common.network.PacketSetBinderMode;
 import alexthw.not_enough_glyphs.common.spell.BulldozeThread;
@@ -24,12 +25,14 @@ import com.hollingsworth.arsnouveau.client.gui.radial_menu.RadialMenu;
 import com.hollingsworth.arsnouveau.client.gui.radial_menu.RadialMenuSlot;
 import com.hollingsworth.arsnouveau.client.gui.utils.RenderUtils;
 import com.hollingsworth.arsnouveau.client.registry.ModKeyBindings;
+import com.hollingsworth.arsnouveau.common.crafting.recipes.IDyeable;
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import com.hollingsworth.arsnouveau.setup.config.Config;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -53,6 +56,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -62,16 +66,44 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static alexthw.not_enough_glyphs.init.Networking.fxChannel;
 
-public class SpellBinder extends Item implements ICasterTool, IRadialProvider, ISpellModifierItem {
+public class SpellBinder extends Item implements ICasterTool, IDyeable, IRadialProvider, ISpellModifierItem, GeoItem {
+
+    AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar data) {
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+
+    @Override
+    public void initializeClient(@NotNull Consumer<IClientItemExtensions> consumer) {
+        super.initializeClient(consumer);
+        consumer.accept(new IClientItemExtensions() {
+            private final BlockEntityWithoutLevelRenderer renderer = new SpellBinderRenderer();
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return renderer;
+            }
+        });
+    }
 
     public static @Nullable IPerkHolder<ItemStack> getHolderForPerkHands(IPerk perk, @NotNull LivingEntity entity) {
         IPerkHolder<ItemStack> highestHolder = null;
@@ -161,9 +193,9 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
             opt = LazyOptional.of(() -> new InvWrapper(getInventory(stack)));
         }
 
-        @Nonnull
+        @NotNull
         @Override
-        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
+        public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
             return ForgeCapabilities.ITEM_HANDLER.orEmpty(capability, opt);
         }
     }
@@ -250,7 +282,7 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
         if (shooter != null) {
             IPerkHolder<ItemStack> slowPerk = getHolderForPerkHands(BulldozeThread.INSTANCE, shooter);
             if (slowPerk != null)
-                builder.addAccelerationModifier(-1.5f * (slowPerk.getTier()+1));
+                builder.addAccelerationModifier(-1.5f * (slowPerk.getTier() + 1));
             if (getHolderForPerkHands(RandomPerk.INSTANCE, shooter) != null)
                 // apply the modifiers from the perk to the builder
                 return RandomPerk.applyItemModifiers(builder, world);
@@ -267,7 +299,7 @@ public class SpellBinder extends Item implements ICasterTool, IRadialProvider, I
             if (perkHolder != null) {
                 for (PerkInstance perkInstance : perkHolder.getPerkInstances()) {
                     IPerk perk = perkInstance.getPerk();
-                    attributes.putAll(perk.getModifiers(pEquipmentSlot, stack, 2*perkInstance.getSlot().value));
+                    attributes.putAll(perk.getModifiers(pEquipmentSlot, stack, 2 * perkInstance.getSlot().value));
                 }
 
             }
