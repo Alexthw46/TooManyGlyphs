@@ -1,7 +1,11 @@
-// 1.21	2024-07-22T16:55:11.4932225	Apparatus
+// 1.21	2024-08-22T12:31:48.0364862	Apparatus
 50692507ae92aceb02b93ae63103698376663b22 data/ars_nouveau/recipe/spell_binder.json
+e589dea8222d4637ae8676c23c0a95206046ff26 data/ars_nouveau/recipe/thread_air_focus.json
 7333e4e92c265c7ef01f549a1ee72d2935fdefa8 data/ars_nouveau/recipe/thread_cheap_damage.json
+ea6fb34d9c2cb39bd8ac737796098c6e196ca1bd data/ars_nouveau/recipe/thread_earth_focus.json
+2d4f86f7fda575cc0f4483bf27a41e370c2a1def data/ars_nouveau/recipe/thread_fire_focus.json
 89c1f9b18bc3d340d525d84d4c15c06199912b5f data/ars_nouveau/recipe/thread_shaper_focus.json
 c6cfbb2d460b191a37d5a9858fba02f3e4916091 data/ars_nouveau/recipe/thread_slow_power.json
 fa456fb1dfb57e1a1e49effa0f1f9a9ad90e62c7 data/ars_nouveau/recipe/thread_summon_focus.json
+eb8c4b63e73b0c9c1560ed5330eaf4fa46ffb54f data/ars_nouveau/recipe/thread_water_focus.json
 6983f1bd63d8d4601b1acc723114bd591ad17d56 data/ars_nouveau/recipe/thread_wild_magic.json

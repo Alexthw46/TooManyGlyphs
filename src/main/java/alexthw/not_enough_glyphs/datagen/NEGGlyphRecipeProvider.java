@@ -41,17 +41,17 @@ public class NEGGlyphRecipeProvider extends GlyphRecipeProvider {
         recipes.add(get(EffectPlow.INSTANCE).withItem(ItemsRegistry.EARTH_ESSENCE).withItem(Items.STONE_HOE));
         recipes.add(get(EffectFlatten.INSTANCE).withItem(ItemsRegistry.EARTH_ESSENCE).withItem(Items.IRON_SHOVEL).withItem(Items.ANVIL));
 
-//        addRecipe(arsElemental ? MethodArcProjectile.INSTANCE : MethodArc.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
-//        addRecipe(arsElemental ? MethodHomingProjectile.INSTANCE : MethodHoming.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
+        addRecipe(arsElemental ? MethodArcProjectile.INSTANCE : MethodArc.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
+        addRecipe(arsElemental ? MethodHomingProjectile.INSTANCE : MethodHoming.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
+
+        addRecipe(arsElemental ? PropagatorArc.INSTANCE : PropagateArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, (arsElemental ? MethodArcProjectile.INSTANCE : MethodArc.INSTANCE).getGlyph());
+        addRecipe(arsElemental ? PropagatorHoming.INSTANCE : PropagateHoming.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, (arsElemental ? MethodHomingProjectile.INSTANCE : MethodHoming.INSTANCE).getGlyph());
+
+//        addRecipe(MethodArc.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
+//        addRecipe(MethodHoming.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
 //
-//        addRecipe(arsElemental ? PropagatorArc.INSTANCE : PropagateArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, (arsElemental ? MethodArcProjectile.INSTANCE :MethodArc.INSTANCE).getGlyph());
-//        addRecipe(arsElemental ? PropagatorHoming.INSTANCE : PropagateHoming.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, (arsElemental ? MethodHomingProjectile.INSTANCE : MethodHoming.INSTANCE).getGlyph());
-
-        addRecipe(MethodArc.INSTANCE, Items.ARROW, Items.SNOWBALL, Items.SLIME_BALL, Items.ENDER_PEARL);
-        addRecipe(MethodHoming.INSTANCE, Items.NETHER_STAR, ItemsRegistry.MANIPULATION_ESSENCE, ItemsRegistry.DOWSING_ROD, Items.ENDER_EYE);
-
-        addRecipe(PropagateArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodArc.INSTANCE.getGlyph());
-        addRecipe(PropagateHoming.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodHoming.INSTANCE.getGlyph());
+//        addRecipe(PropagateArc.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodArc.INSTANCE.getGlyph());
+//        addRecipe(PropagateHoming.INSTANCE, ItemsRegistry.MANIPULATION_ESSENCE, MethodHoming.INSTANCE.getGlyph());
 
         recipes.add(get(MethodRay.INSTANCE).withItem(Items.TARGET).withItem(ItemsRegistry.SOURCE_GEM, 1));
         recipes.add(get(MethodTrail.INSTANCE).withItem(Items.DRAGON_BREATH).withItem(Items.ECHO_SHARD, 2).withItem(ItemsRegistry.AIR_ESSENCE));
@@ -75,7 +75,7 @@ public class NEGGlyphRecipeProvider extends GlyphRecipeProvider {
         recipes.add(get(PropagatePlane.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(Items.DIAMOND_BLOCK).withItem(Items.FIREWORK_STAR).withItem(ItemsRegistry.WILDEN_SPIKE));
         recipes.add(get(PropagateSelf.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodSelf.INSTANCE.getGlyph()));
         recipes.add(get(PropagateProjectile.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodProjectile.INSTANCE.getGlyph()));
-        //recipes.add(get(PropagateOrbit.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodOrbit.INSTANCE.getGlyph()));
+
         recipes.add(get(PropagateUnderfoot.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodUnderfoot.INSTANCE.getGlyph()));
 
         Path outputBase = generator.getPackOutput().getOutputFolder();

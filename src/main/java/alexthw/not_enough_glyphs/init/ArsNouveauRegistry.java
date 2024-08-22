@@ -1,9 +1,9 @@
 package alexthw.not_enough_glyphs.init;
 
-//import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
-//import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
-//import alexthw.ars_elemental.common.glyphs.PropagatorArc;
-//import alexthw.ars_elemental.common.glyphs.PropagatorHoming;
+import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
+import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
+import alexthw.ars_elemental.common.glyphs.PropagatorArc;
+import alexthw.ars_elemental.common.glyphs.PropagatorHoming;
 import alexthw.not_enough_glyphs.common.glyphs.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
@@ -80,10 +80,10 @@ public class ArsNouveauRegistry {
             register(PropagateHoming.INSTANCE);
         } else {
 
-//            registeredSpells.addAll(List.of(
-//                    MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE,
-//                    PropagatorArc.INSTANCE, PropagatorHoming.INSTANCE)
-//            );
+            registeredSpells.addAll(List.of(
+                    MethodArcProjectile.INSTANCE, MethodHomingProjectile.INSTANCE,
+                    PropagatorArc.INSTANCE, PropagatorHoming.INSTANCE)
+            );
             PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_FIRE);
             PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_WATER);
             PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_EARTH);
