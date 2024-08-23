@@ -2,7 +2,6 @@ package alexthw.not_enough_glyphs.common.spell;
 
 import alexthw.not_enough_glyphs.init.Registry;
 import com.hollingsworth.arsnouveau.ArsNouveau;
-import com.hollingsworth.arsnouveau.api.perk.IEffectResolvePerk;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -15,7 +14,7 @@ import java.util.UUID;
 
 import static alexthw.not_enough_glyphs.init.NotEnoughGlyphs.prefix;
 
-public class PacificThread extends BookPerk implements IEffectResolvePerk {
+public class PacificThread extends BookPerk {
     public PacificThread(ResourceLocation key) {
         super(key);
     }

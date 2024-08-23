@@ -40,6 +40,8 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
@@ -101,8 +103,8 @@ public class SpellBinder extends Item implements ICasterTool, IDyeable, GeoItem,
     }
 
 
-    public static @Nullable ArmorPerkHolder getHolderForPerkHands(IPerk perk, @NotNull LivingEntity entity) {
-        ArmorPerkHolder highestHolder = null;
+    public static @Nullable PerkInstance getPerkInstanceFromHands(IPerk perk, @NotNull LivingEntity entity) {
+        PerkInstance highestHolder = null;
         int maxCount = 0;
         for (ItemStack stack : entity.getHandSlots()) {
             ArmorPerkHolder holder = PerkUtil.getPerkHolder(stack);
@@ -111,7 +113,7 @@ public class SpellBinder extends Item implements ICasterTool, IDyeable, GeoItem,
             for (PerkInstance instance : holder.getPerkInstances(stack)) {
                 if (instance.getPerk() == perk) {
                     maxCount = Math.max(maxCount, instance.getSlot().value());
-                    highestHolder = holder;
+                    highestHolder = instance;
                 }
             }
         }
@@ -231,12 +233,13 @@ public class SpellBinder extends Item implements ICasterTool, IDyeable, GeoItem,
     @Override
     public SpellStats.Builder applyItemModifiers(ItemStack stack, SpellStats.Builder builder, AbstractSpellPart spellPart, HitResult rayTraceResult, Level world, @org.jetbrains.annotations.Nullable LivingEntity shooter, SpellContext spellContext) {
         if (shooter != null) {
-            ArmorPerkHolder slowPerk = getHolderForPerkHands(BulldozeThread.INSTANCE, shooter);
+            PerkInstance slowPerk = getPerkInstanceFromHands(BulldozeThread.INSTANCE, shooter);
             if (slowPerk != null)
-                builder.addAccelerationModifier(-1.5f * (slowPerk.getTier() + 1));
-            if (getHolderForPerkHands(RandomPerk.INSTANCE, shooter) != null)
+                builder.addAccelerationModifier(-1.5f * (slowPerk.getSlot().value() + 1));
+            PerkInstance randomPerk = getPerkInstanceFromHands(RandomPerk.INSTANCE, shooter);
+            if (randomPerk != null)
                 // apply the modifiers from the perk to the builder
-                return RandomPerk.applyItemModifiers(builder, world);
+                return RandomPerk.applyItemModifiers(builder, world, randomPerk.getSlot().value());
         }
         return builder;
     }
@@ -244,6 +247,9 @@ public class SpellBinder extends Item implements ICasterTool, IDyeable, GeoItem,
     @Override
     public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers(@NotNull ItemStack stack) {
         var modifiers = super.getDefaultAttributeModifiers(stack);
+        modifiers = modifiers.withModifierAdded(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 0.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                .withModifierAdded(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+
         var perkHolder = PerkUtil.getPerkHolder(stack);
         if (perkHolder != null)
             for (PerkInstance instance : perkHolder.getPerkInstances(stack))

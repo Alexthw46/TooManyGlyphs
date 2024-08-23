@@ -2,10 +2,7 @@ package alexthw.not_enough_glyphs.datagen;
 
 import alexthw.ars_elemental.ArsElemental;
 import alexthw.ars_elemental.registry.ModItems;
-import alexthw.not_enough_glyphs.common.spell.BulldozeThread;
-import alexthw.not_enough_glyphs.common.spell.FocusPerk;
-import alexthw.not_enough_glyphs.common.spell.PacificThread;
-import alexthw.not_enough_glyphs.common.spell.RandomPerk;
+import alexthw.not_enough_glyphs.common.spell.*;
 import alexthw.not_enough_glyphs.init.Registry;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -45,6 +42,10 @@ public class NEGApparatusProvider extends ApparatusRecipeProvider {
         addRecipe(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(Items.ENDER_PEARL).withPedestalItem(Items.RABBIT_FOOT).withPedestalItem(Items.BONE).withResult(getPerkItem(RandomPerk.INSTANCE.getRegistryName())).build());
         addRecipe(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(Items.GHAST_TEAR).withPedestalItem(Items.FEATHER).withPedestalItem(Items.EMERALD).withResult(getPerkItem(PacificThread.INSTANCE.getRegistryName())).build());
         addRecipe(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(Items.IRON_BLOCK).withPedestalItem(Items.BLAZE_POWDER).withPedestalItem(Items.NETHERITE_SCRAP).withResult(getPerkItem(BulldozeThread.INSTANCE.getRegistryName())).build());
+
+        addRecipe(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(Items.DIAMOND_SWORD).withPedestalItem(ItemsRegistry.MANIPULATION_ESSENCE).withPedestalItem(Items.FLINT).withResult(getPerkItem(SharpThread.INSTANCE.getRegistryName())).build());
+        addRecipe(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(Items.PISTON).withPedestalItem(ItemsRegistry.AIR_ESSENCE).withPedestalItem(Items.IRON_BLOCK).withResult(getPerkItem(PounchThread.INSTANCE.getRegistryName())).build());
+
         elementalList.add(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(ModItems.LESSER_FIRE_FOCUS.get()).withPedestalItem(2, ItemsRegistry.FIRE_ESSENCE).withResult(getPerkItem(FocusPerk.ELEMENTAL_FIRE.getRegistryName())).build());
         elementalList.add(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(ModItems.LESSER_WATER_FOCUS.get()).withPedestalItem(2, ItemsRegistry.WATER_ESSENCE).withResult(getPerkItem(FocusPerk.ELEMENTAL_WATER.getRegistryName())).build());
         elementalList.add(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(ModItems.LESSER_EARTH_FOCUS.get()).withPedestalItem(2, ItemsRegistry.EARTH_ESSENCE).withResult(getPerkItem(FocusPerk.ELEMENTAL_EARTH.getRegistryName())).build());

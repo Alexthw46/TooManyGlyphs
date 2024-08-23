@@ -9,8 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 import static com.hollingsworth.arsnouveau.ArsNouveau.prefix;
 
 public class BulldozeThread extends BookPerk implements IEffectResolvePerk {
@@ -19,7 +17,6 @@ public class BulldozeThread extends BookPerk implements IEffectResolvePerk {
     }
 
     public static final BulldozeThread INSTANCE = new BulldozeThread(prefix("thread_slow_power"));
-    public static final UUID PERK_DAMAGE_UUID = UUID.fromString("f014bc52-946d-41c9-4569-b0eba318d307");
 
     @Override
     public @NotNull ItemAttributeModifiers applyAttributeModifiers(ItemAttributeModifiers modifiers, ItemStack stack, int slotValue, EquipmentSlotGroup equipmentSlotGroup) {

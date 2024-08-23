@@ -116,11 +116,16 @@
 	"item.ars_nouveau.thread_air_focus": "Air Focus",
 	"ars_nouveau.perk_desc.thread_air_focus": "Thread for the spellbinder. Will cast spells as if the air focus was equipped.",
 	"item.ars_nouveau.thread_wild_magic": "Wild Magic",
-	"ars_nouveau.perk_desc.thread_wild_magic": "Thread for the spellbinder. Will randomly add positive or negative augments to effects of your spells when equipped.",
+	"ars_nouveau.perk_desc.thread_wild_magic": "Thread for the spellbinder. Will randomly add positive augments to effects of your spells when equipped.",
 	"item.ars_nouveau.thread_cheap_damage":"Cheap Damage",
 	"ars_nouveau.perk_desc.thread_cheap_damage": "Thread for the spellbinder. Will greatly discount the spells cast from the equipped book but heavily reduce their damage.",
 	"item.ars_nouveau.thread_slow_power": "Slow Power",
 	"ars_nouveau.perk_desc.thread_slow_power": "Thread for the spellbinder. Will increase the damage of the spells cast from the equipped book but heavily reduce their speed.",
+	"item.ars_nouveau.thread_sharp_paper": "Sharp Pages",
+	"ars_nouveau.perk_desc.thread_sharp_paper": "Thread for the spellbinder. Will increase the melee damage if used as a weapon.",
+	"item.ars_nouveau.thread_knockback": "Heavy Cover",
+	"ars_nouveau.perk_desc.thread_knockback": "Thread for the spellbinder. Will increase the knockback of the spellbook if used as a melee weapon.",
+
 
 	"not_enough_glyphs.perk.mana_discount": "Mana Discount",
 	"not_enough_glyphs.perk.mana_discount.desc": "Reduces the mana cost of the spell by %s."

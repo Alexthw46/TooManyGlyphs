@@ -1,11 +1,12 @@
 package alexthw.not_enough_glyphs.common.glyphs;
 
+import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
-import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectBurst;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectLinger;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectWall;
 import net.minecraft.core.BlockPos;
@@ -39,10 +40,12 @@ public class EffectChaining extends AbstractEffect {
     public EffectChaining(String tag, String description) {
         super(tmg(tag), description);
     }
+
     @Override
     protected void addDefaultInvalidCombos(Set<ResourceLocation> defaults) {
-        defaults.addAll(Stream.of(EffectLinger.INSTANCE, EffectWall.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
+        defaults.addAll(Stream.of(EffectLinger.INSTANCE, EffectWall.INSTANCE, EffectBurst.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
     }
+
     // configurable bits
     public ModConfigSpec.IntValue BASE_MAX_BLOCKS;
     public ModConfigSpec.IntValue BONUS_BLOCKS;
@@ -67,8 +70,7 @@ public class EffectChaining extends AbstractEffect {
         BONUS_ENTITY_DISTANCE = builder.comment("Bonus search distance around each target entity per augment").defineInRange("bonus_entity_distance", 4.0d, 0, Double.MAX_VALUE);
     }
 
-    private static Vec3 getBlockCenter(BlockPos blockPos)
-    {
+    private static Vec3 getBlockCenter(BlockPos blockPos) {
         return new Vec3(blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
     }
 
@@ -86,18 +88,17 @@ public class EffectChaining extends AbstractEffect {
                 EffectChaining::getBlockCenter,
                 bp -> getBlockCenter(bp).subtract(getBlockCenter(rayTraceResult.getBlockPos())).length() * 0.01,
                 (bp, isMatch) -> BlockPos.betweenClosedStream(
-                        bp.offset(searchBlockDistance, searchBlockDistance, searchBlockDistance),
-                        bp.offset(-searchBlockDistance, -searchBlockDistance, -searchBlockDistance))
+                                bp.offset(searchBlockDistance, searchBlockDistance, searchBlockDistance),
+                                bp.offset(-searchBlockDistance, -searchBlockDistance, -searchBlockDistance))
                         .filter(nbp -> getBlockCenter(bp).distanceToSqr(getBlockCenter(nbp)) <= searchDistanceSqr && isMatch.test(nbp))
                         .map(BlockPos::immutable)
                         .collect(Collectors.toCollection(ArrayList::new)),
                 bp -> world.getBlockState(bp).is(struck.getBlock()));
         spellContext.setCanceled(true);
         Spell continuation = spellContext.getRemainingSpell();
-        for (Edge<BlockPos> edge : chain)
-        {
+        for (Edge<BlockPos> edge : chain) {
             Vec3 toCenter = getBlockCenter(edge.to);
-            BlockHitResult chainedRayTraceResult = new BlockHitResult(toCenter, rayTraceResult.getDirection(), edge.to,true);
+            BlockHitResult chainedRayTraceResult = new BlockHitResult(toCenter, rayTraceResult.getDirection(), edge.to, true);
             Networking.sendToNearbyClient(world, edge.to, new PacketRayEffect(getBlockCenter(edge.from), toCenter, spellContext.getColors()));
             SpellContext newContext = spellContext.clone().withSpell(continuation);
             resolver.getNewResolver(newContext).onResolveEffect(world, chainedRayTraceResult);
@@ -126,8 +127,7 @@ public class EffectChaining extends AbstractEffect {
                 e -> e != shooter);
 
         Spell continuation = spellContext.getRemainingSpell();
-        for (Edge<Entity> edge : chain)
-        {
+        for (Edge<Entity> edge : chain) {
             Vec3 midpoint = edge.from.position().add(edge.to.position()).scale(0.5);
             double radius = 64.0 + edge.from.position().distanceTo(midpoint);
             if (world instanceof ServerLevel) {
@@ -154,13 +154,12 @@ public class EffectChaining extends AbstractEffect {
         return setOf(AugmentAOE.INSTANCE, AugmentPierce.INSTANCE, AugmentSensitive.INSTANCE);
     }
 
-    public static Iterable<BlockPos> SearchBlockStates(Level world, Collection<BlockPos> start, int maxBlocks, int searchDistance, Predicate<BlockState> isMatch)
-    {
+    public static Iterable<BlockPos> SearchBlockStates(Level world, Collection<BlockPos> start, int maxBlocks, int searchDistance, Predicate<BlockState> isMatch) {
         LinkedList<BlockPos> searchQueue = new LinkedList<>(start);
         HashSet<BlockPos> searched = new HashSet<>(start);
         ArrayList<BlockPos> found = new ArrayList<>();
 
-        while(!searchQueue.isEmpty() && found.size() < maxBlocks) {
+        while (!searchQueue.isEmpty() && found.size() < maxBlocks) {
             BlockPos current = searchQueue.removeFirst();
             BlockState state = world.getBlockState(current);
             if (isMatch.test(state)) {
@@ -201,8 +200,7 @@ public class EffectChaining extends AbstractEffect {
         }
     }
 
-    public static Iterable<Edge<Entity>> SearchEntities(Level world, Collection<Entity> start, int maxEntities, double searchDistance, Predicate<Entity> isMatch)
-    {
+    public static Iterable<Edge<Entity>> SearchEntities(Level world, Collection<Entity> start, int maxEntities, double searchDistance, Predicate<Entity> isMatch) {
         HashMap<Entity, Edge<Entity>> bestEdgeForTo = new HashMap<>();
         PriorityQueue<Edge<Entity>> searchQueue = new PriorityQueue<>(Comparator.comparingDouble(item -> item.distanceSqr));
         HashSet<Entity> selected = new HashSet<>();
@@ -211,8 +209,7 @@ public class EffectChaining extends AbstractEffect {
 
         start.stream().filter(isMatch).map(e -> new Edge<>(0d, e, e)).forEach(searchQueue::add);
 
-        while (!searchQueue.isEmpty() && selected.size() < maxEntities)
-        {
+        while (!searchQueue.isEmpty() && selected.size() < maxEntities) {
             Edge<Entity> currentEdge = searchQueue.poll();
             Entity current = currentEdge.to;
             selected.add(current);
@@ -244,16 +241,14 @@ public class EffectChaining extends AbstractEffect {
                                                       Function<T, Vec3> getPosition,
                                                       Function<T, Double> distanceAdjustment,
                                                       BiFunction<T, Predicate<T>, Collection<T>> expandSearchNode,
-                                                      Predicate<T> isMatch)
-    {
+                                                      Predicate<T> isMatch) {
         HashMap<T, Edge<T>> bestEdgeForTo = new HashMap<>();
         PriorityQueue<Edge<T>> searchQueue = new PriorityQueue<>(Comparator.comparingDouble(item -> item.distanceSqr));
         HashSet<T> selected = new HashSet<>();
         ArrayList<Edge<T>> selectedEdges = new ArrayList<>();
 
         start.stream().filter(isMatch).map(e -> new Edge<>(0d, e, e)).forEach(searchQueue::add);
-        while (!searchQueue.isEmpty() && selected.size() < maxTargets)
-        {
+        while (!searchQueue.isEmpty() && selected.size() < maxTargets) {
             Edge<T> currentEdge = searchQueue.poll();
             T current = currentEdge.to;
             selected.add(current);

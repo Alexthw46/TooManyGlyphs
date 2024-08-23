@@ -19,9 +19,9 @@ public class ThreadwiseSpellResolver extends SpellResolver {
     public boolean hasFocus(ItemStack stack) {
         if (super.hasFocus(stack)) return true;
         if (stack.getItem() == ItemsRegistry.SHAPERS_FOCUS.get())
-            return SpellBinder.getHolderForPerkHands(FocusPerk.MANIPULATION, this.spellContext.getUnwrappedCaster()) != null;
+            return SpellBinder.getPerkInstanceFromHands(FocusPerk.MANIPULATION, this.spellContext.getUnwrappedCaster()) != null;
         if (stack.getItem() == ItemsRegistry.SUMMONING_FOCUS.get())
-            return SpellBinder.getHolderForPerkHands(FocusPerk.SUMMONING, this.spellContext.getUnwrappedCaster()) != null;
+            return SpellBinder.getPerkInstanceFromHands(FocusPerk.SUMMONING, this.spellContext.getUnwrappedCaster()) != null;
         if (ArsNouveauRegistry.arsElemental)
             return ElementalCompat.focusCheck(stack, this.spellContext.getUnwrappedCaster());
         return false;
