@@ -17,6 +17,7 @@ public class ClientStuff {
     @SubscribeEvent
     public static void bindRenderers(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(Registry.TRAILING_PROJECTILE.get(), ClientStuff::projectileRender);
+        event.registerEntityRenderer(Registry.MISSILE_PROJECTILE.get(), ClientStuff::projectileRender);
     }
 
     @SubscribeEvent

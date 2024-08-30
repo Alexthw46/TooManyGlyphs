@@ -33,6 +33,7 @@ public class ArsNouveauRegistry {
         //neg effects
         register(EffectPlow.INSTANCE);
         register(MethodTrail.INSTANCE);
+        register(EffectMomentum.INSTANCE);
 
         //tmg
         if (!tooManyGlyphs) {
@@ -67,7 +68,11 @@ public class ArsNouveauRegistry {
             register(PropagateUnderfoot.INSTANCE);
             register(PropagateProjectile.INSTANCE);
             register(PropagateSelf.INSTANCE);
+
+            register(MethodMissile.INSTANCE);
+            register(PropagateMissile.INSTANCE);
         }
+
         //elemental
         if (!arsElemental) {
             register(MethodArc.INSTANCE);
@@ -104,7 +109,7 @@ public class ArsNouveauRegistry {
 
     public static void postInit() {
         SpellCasterRegistry.register(Registry.SPELL_BINDER.get(), (stack) -> stack.get(Registry.SPELL_BINDER_CASTER));
-        PerkRegistry.registerPerkProvider(Registry.SPELL_BINDER.get(),List.of(List.of(PerkSlot.ONE, PerkSlot.TWO)));
+        PerkRegistry.registerPerkProvider(Registry.SPELL_BINDER.get(), List.of(List.of(PerkSlot.ONE, PerkSlot.TWO)));
         EffectReset.RESET_LIMITS.add(PropagatePlane.INSTANCE);
         EffectReset.RESET_LIMITS.add(EffectChaining.INSTANCE);
     }

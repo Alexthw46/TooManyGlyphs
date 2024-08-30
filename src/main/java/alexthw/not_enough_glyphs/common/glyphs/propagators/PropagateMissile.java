@@ -2,17 +2,15 @@ package alexthw.not_enough_glyphs.common.glyphs.propagators;
 
 import alexthw.not_enough_glyphs.api.IPropagator;
 import alexthw.not_enough_glyphs.common.glyphs.CompatRL;
-import alexthw.not_enough_glyphs.common.glyphs.MethodArc;
+import alexthw.not_enough_glyphs.common.glyphs.MethodMissile;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
 import com.hollingsworth.arsnouveau.common.block.BasicSpellTurret;
 import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
 import com.hollingsworth.arsnouveau.common.entity.EntityProjectileSpell;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -26,12 +24,12 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class PropagateArc extends AbstractEffect implements IPropagator {
+public class PropagateMissile extends AbstractEffect implements IPropagator {
 
-    public static final PropagateArc INSTANCE = new PropagateArc();
+    public static final PropagateMissile INSTANCE = new PropagateMissile();
 
-    public PropagateArc() {
-        super(CompatRL.elemental("propagator_arc"), "Propagate Arc");
+    public PropagateMissile() {
+        super(CompatRL.omega("propagate_missile"), "Propagate Missile");
     }
 
     @Override
@@ -43,24 +41,18 @@ public class PropagateArc extends AbstractEffect implements IPropagator {
     public void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         Vec3 pos = hitResult.getLocation();
         ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
-        EntityProjectileSpell projectileSpell = new EntityProjectileSpell(world, resolver).setGravity(true);
-        projectileSpell.setPos(pos.add(0, 1, 0));
-        projectiles.add(projectileSpell);
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
-        float sizeRatio = shooter.getEyeHeight() / Player.DEFAULT_EYE_HEIGHT;
+        int opposite = -1;
+        int counter = 0;
 
-        for (int i = 1; i < numSplits + 1; i++) {
-            Direction offset = shooter.getDirection().getClockWise();
-            if (i % 2 == 0) offset = offset.getOpposite();
-            // Alternate sides
-            BlockPos projPos = BlockPos.containing(pos).relative(offset, i).offset(0, (int) (1.5 * sizeRatio), 0);
-            EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver).setGravity(true);
-            spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
+        for (int i = 0; i < numSplits + 1; i++) {
+            EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver);
             projectiles.add(spell);
         }
 
-        float velocity = MethodArc.getProjectileSpeed(stats);
+        float velocity = MethodMissile.getProjectileSpeed(stats);
+        boolean gravity = stats.hasBuff(AugmentDampen.INSTANCE);
         Vec3 direction = pos.subtract(shooter.position());
         if (resolver.spellContext.getCaster() instanceof TileCaster tc) {
             if (tc.getTile() instanceof RotatingTurretTile rotatingTurretTile) {
@@ -70,12 +62,16 @@ public class PropagateArc extends AbstractEffect implements IPropagator {
             }
         }
         for (EntityProjectileSpell proj : projectiles) {
-            proj.setPos(proj.position().add(0, 0.25 * sizeRatio, 0));
+            proj.setPos(pos.add(0, 1, 0));
             if (!(shooter instanceof FakePlayer)) {
-                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, velocity, 0.3f);
+                proj.shoot(shooter, shooter.getXRot(), shooter.getYRot() + Math.round(counter / 2.0) * 5 * opposite, 0.0F, velocity, 0.8f);
             } else {
                 proj.shoot(direction.x, direction.y, direction.z, velocity, 0.8F);
             }
+            opposite = opposite * -1;
+            counter++;
+            world.addFreshEntity(proj);
+            proj.setGravity(gravity);
             world.addFreshEntity(proj);
         }
     }
@@ -92,13 +88,13 @@ public class PropagateArc extends AbstractEffect implements IPropagator {
 
     @Override
     public int getDefaultManaCost() {
-        return 150;
+        return 200;
     }
 
     @NotNull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return MethodArc.INSTANCE.getCompatibleAugments();
+        return MethodMissile.INSTANCE.getCompatibleAugments();
     }
 
     public SpellTier defaultTier() {
@@ -109,5 +105,4 @@ public class PropagateArc extends AbstractEffect implements IPropagator {
     public Set<SpellSchool> getSchools() {
         return this.setOf(SpellSchools.MANIPULATION);
     }
-
 }

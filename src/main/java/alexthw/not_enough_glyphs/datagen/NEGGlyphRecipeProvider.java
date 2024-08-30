@@ -78,14 +78,18 @@ public class NEGGlyphRecipeProvider extends GlyphRecipeProvider {
 
         recipes.add(get(PropagateUnderfoot.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodUnderfoot.INSTANCE.getGlyph()));
 
+        recipes.add(get(MethodMissile.INSTANCE).withItem(Items.FIREWORK_ROCKET, 2).withItem(ItemsRegistry.AIR_ESSENCE).withItem(ItemsRegistry.FIRE_ESSENCE));
+        recipes.add(get(PropagateMissile.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodMissile.INSTANCE.getGlyph()));
+
+
         Path outputBase = generator.getPackOutput().getOutputFolder();
         for (GlyphRecipe recipe : recipes)
             saveStable(pOutput, GlyphRecipe.CODEC.encodeStart(JsonOps.INSTANCE, recipe).getOrThrow(), getScribeGlyphPath(outputBase, recipe.output.getItem()));
     }
 
     protected static Path getScribeGlyphPath(Path pathIn, Item glyph) {
-        var regname = getRegistryName(glyph);
-        return pathIn.resolve("data/" + regname.getNamespace() + "/recipe/" + regname.getPath() + ".json");
+        var regName = getRegistryName(glyph);
+        return pathIn.resolve("data/" + regName.getNamespace() + "/recipe/" + regName.getPath() + ".json");
     }
 
     public void addRecipe(AbstractSpellPart part, ItemLike... items) {

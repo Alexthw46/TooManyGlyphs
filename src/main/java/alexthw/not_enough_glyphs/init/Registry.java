@@ -1,5 +1,6 @@
 package alexthw.not_enough_glyphs.init;
 
+import alexthw.not_enough_glyphs.common.spell.MissileProjectile;
 import alexthw.not_enough_glyphs.common.spell.TrailingProjectile;
 import alexthw.not_enough_glyphs.common.spellbinder.BinderCasterData;
 import alexthw.not_enough_glyphs.common.spellbinder.SpellBinder;
@@ -34,6 +35,8 @@ public class Registry {
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(BuiltInRegistries.MENU, NotEnoughGlyphs.MODID);
     public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(BuiltInRegistries.ATTRIBUTE, NotEnoughGlyphs.MODID);
     public static final Supplier<EntityType<TrailingProjectile>> TRAILING_PROJECTILE;
+    public static final Supplier<EntityType<MissileProjectile>> MISSILE_PROJECTILE;
+
     public static final DeferredHolder<Attribute,Attribute> MANA_DISCOUNT = registerAttribute("not_enough_glyphs.perk.mana_discount", (id) -> new RangedAttribute(id, 0.0, 0.0, Double.MAX_VALUE).setSyncable(true));
 
     public static final Supplier<MenuType<SpellBinderContainer>> SPELL_HOLDER;
@@ -41,6 +44,7 @@ public class Registry {
 
     static {
         TRAILING_PROJECTILE = addEntity("trail", 0.5F, 0.5F, true, true, TrailingProjectile::new, MobCategory.MISC);
+        MISSILE_PROJECTILE = addEntity("missile", 0.75F, 0.75F, true, true, MissileProjectile::new, MobCategory.MISC);
 
         SPELL_BINDER = ITEMS.register("spell_binder", () -> new SpellBinder(new Item.Properties().stacksTo(1)));
 

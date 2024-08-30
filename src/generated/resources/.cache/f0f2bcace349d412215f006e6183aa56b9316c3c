@@ -1,5 +1,7 @@
-// 1.21.1	2024-08-23T11:44:56.973873	Glyph Recipes
+// 1.21.1	2024-08-30T16:06:41.5160448	Glyph Recipes
 eadf85ed85d3d51d18d233f60f42499db50c2701 data/arsomega/recipe/glyph_flatten.json
+29e10750ffe510f94a668aa0c857457de6b70ec9 data/arsomega/recipe/glyph_missile.json
+f34ec52cb55ecf79a98debf54dac79944db20864 data/arsomega/recipe/glyph_propagate_missile.json
 642037c134d803d493740a9e7dd2f02b5911b50f data/arsomega/recipe/glyph_propagate_projectile.json
 dc74a3fdaea2a848f06db15f92aba680a9194aa3 data/arsomega/recipe/glyph_propagate_self.json
 e62fe6551cbd2a9494844faa81ca51c350c0c98a data/arsomega/recipe/glyph_propagate_underfoot.json
