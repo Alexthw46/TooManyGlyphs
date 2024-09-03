@@ -1,7 +1,9 @@
 package alexthw.not_enough_glyphs.common.glyphs;
 
 import alexthw.not_enough_glyphs.common.spell.MissileProjectile;
+import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.items.Glyph;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.world.InteractionHand;
@@ -119,4 +121,16 @@ public class MethodMissile extends AbstractCastMethod {
         return this.setOf(SpellSchools.ELEMENTAL_AIR, SpellSchools.ELEMENTAL_FIRE);
     }
 
+    @Override
+    public Glyph getGlyph() {
+        if (glyphItem == null) {
+            glyphItem = new Glyph(this) {
+                @Override
+                public @NotNull String getCreatorModId(@NotNull ItemStack itemStack) {
+                    return NotEnoughGlyphs.MODID;
+                }
+            };
+        }
+        return this.glyphItem;
+    }
 }

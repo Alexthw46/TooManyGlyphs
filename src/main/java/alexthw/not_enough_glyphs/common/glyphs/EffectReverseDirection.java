@@ -1,9 +1,13 @@
 package alexthw.not_enough_glyphs.common.glyphs;
 
+import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.items.Glyph;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -45,5 +49,19 @@ public class EffectReverseDirection extends AbstractEffect {
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
         return Collections.emptySet();
+    }
+
+
+    @Override
+    public Glyph getGlyph() {
+        if (glyphItem == null) {
+            glyphItem = new Glyph(this) {
+                @Override
+                public @NotNull String getCreatorModId(@NotNull ItemStack itemStack) {
+                    return NotEnoughGlyphs.MODID;
+                }
+            };
+        }
+        return this.glyphItem;
     }
 }

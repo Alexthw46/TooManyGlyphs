@@ -1,10 +1,12 @@
 package alexthw.not_enough_glyphs.common.glyphs;
 
 import alexthw.not_enough_glyphs.api.FilterUtil;
+import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.api.entity.ISummon;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.entity.EntityHomingProjectileSpell;
 import com.hollingsworth.arsnouveau.common.entity.familiar.FamiliarEntity;
+import com.hollingsworth.arsnouveau.common.items.Glyph;
 import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -138,4 +140,16 @@ public class MethodHoming extends AbstractCastMethod {
         return ignore;
     }
 
+    @Override
+    public Glyph getGlyph() {
+        if (glyphItem == null) {
+            glyphItem = new Glyph(this) {
+                @Override
+                public @NotNull String getCreatorModId(@NotNull ItemStack itemStack) {
+                    return NotEnoughGlyphs.MODID;
+                }
+            };
+        }
+        return this.glyphItem;
+    }
 }

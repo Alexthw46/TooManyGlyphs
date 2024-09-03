@@ -1,10 +1,13 @@
 package alexthw.not_enough_glyphs.common.glyphs.propagators;
 
 import alexthw.not_enough_glyphs.api.IPropagator;
+import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.items.Glyph;
 import com.hollingsworth.arsnouveau.common.spell.method.MethodUnderfoot;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -61,4 +64,16 @@ public class PropagateUnderfoot extends AbstractEffect implements IPropagator {
         return MethodUnderfoot.INSTANCE.getCompatibleAugments();
     }
 
+    @Override
+    public Glyph getGlyph() {
+        if (glyphItem == null) {
+            glyphItem = new Glyph(this) {
+                @Override
+                public @NotNull String getCreatorModId(@NotNull ItemStack itemStack) {
+                    return NotEnoughGlyphs.MODID;
+                }
+            };
+        }
+        return this.glyphItem;
+    }
 }

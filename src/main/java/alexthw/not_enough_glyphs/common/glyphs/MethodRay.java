@@ -1,7 +1,9 @@
 package alexthw.not_enough_glyphs.common.glyphs;
 
 import alexthw.not_enough_glyphs.common.network.PacketRayEffect;
+import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.items.Glyph;
 import com.hollingsworth.arsnouveau.common.network.Networking;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -18,6 +20,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -146,4 +149,16 @@ public class MethodRay extends AbstractCastMethod {
         super.buildAugmentLimitsConfig(builder, defaults);
     }
 
+    @Override
+    public Glyph getGlyph() {
+        if (glyphItem == null) {
+            glyphItem = new Glyph(this) {
+                @Override
+                public @NotNull String getCreatorModId(@NotNull ItemStack itemStack) {
+                    return NotEnoughGlyphs.MODID;
+                }
+            };
+        }
+        return this.glyphItem;
+    }
 }

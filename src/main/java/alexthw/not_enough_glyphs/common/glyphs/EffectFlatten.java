@@ -1,8 +1,10 @@
 package alexthw.not_enough_glyphs.common.glyphs;
 
+import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
+import com.hollingsworth.arsnouveau.common.items.Glyph;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentFortune;
@@ -125,5 +127,19 @@ public class EffectFlatten extends AbstractEffect implements IDamageEffect {
     @Nonnull
     public Set<SpellSchool> getSchools() {
         return this.setOf(SpellSchools.ELEMENTAL_EARTH);
+    }
+
+
+    @Override
+    public Glyph getGlyph() {
+        if (glyphItem == null) {
+            glyphItem = new Glyph(this) {
+                @Override
+                public @NotNull String getCreatorModId(@NotNull ItemStack itemStack) {
+                    return NotEnoughGlyphs.MODID;
+                }
+            };
+        }
+        return this.glyphItem;
     }
 }
