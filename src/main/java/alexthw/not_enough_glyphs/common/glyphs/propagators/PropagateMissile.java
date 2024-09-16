@@ -73,7 +73,6 @@ public class PropagateMissile extends AbstractEffect implements IPropagator {
             }
             opposite = opposite * -1;
             counter++;
-            world.addFreshEntity(proj);
             proj.setGravity(gravity);
             world.addFreshEntity(proj);
         }

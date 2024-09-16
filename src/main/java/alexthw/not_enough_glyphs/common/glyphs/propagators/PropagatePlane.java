@@ -5,13 +5,9 @@ import alexthw.not_enough_glyphs.common.glyphs.EffectChaining;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentPierce;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
+import com.hollingsworth.arsnouveau.common.spell.augment.*;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectBurst;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectLinger;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectWall;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -68,14 +64,13 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
         BlockPos center = blockHitResult.getBlockPos();
 
         if (stats.isSensitive())
-            circle(world, resolver, shooter, blockHitResult, center, width, height, stats.hasBuff(AugmentDampen.INSTANCE));
+            circle(world, resolver, shooter, blockHitResult, center, width, height, stats.hasBuff(AugmentDampen.INSTANCE), stats.getBuffCount(AugmentRandomize.INSTANCE));
         else
-            cube(world, resolver, shooter, blockHitResult, center, width, height, stats.hasBuff(AugmentDampen.INSTANCE));
+            cube(world, resolver, shooter, blockHitResult, center, width, height, stats.hasBuff(AugmentDampen.INSTANCE), stats.getBuffCount(AugmentRandomize.INSTANCE));
 
     }
 
-    private void circle(Level world, SpellResolver resolver, LivingEntity shooter, BlockHitResult blockHitResult, BlockPos center, double width, int height, boolean isHollow) {
-
+    private void circle(Level world, SpellResolver resolver, LivingEntity shooter, BlockHitResult blockHitResult, BlockPos center, double width, int height, boolean isHollow, int random) {
         // Define cylinder parameters
         int radius = (int) width;
         @SuppressWarnings("unused") //this would be normally useless, but it's needed to make the whole thing work
@@ -90,7 +85,10 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
             int x = pos.getX();
             int y = pos.getY();
             int z = pos.getZ();
-
+            // random dropout if randomized
+            if (random > 0 && shooter.getRandom().nextFloat() <= random / 4f) {
+                continue;
+            }
             // Check if the point is within the cylinder's radius
             double distance = BlockUtil.distanceFromCenter(center, switch (blockHitResult.getDirection()) {
                 case EAST, WEST -> new BlockPos(center.getX(), y, z);
@@ -109,7 +107,7 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
     }
 
     private static void cube(Level world, SpellResolver resolver, LivingEntity shooter, BlockHitResult
-            blockHitResult, BlockPos center, double width, int height, boolean isHollow) {
+            blockHitResult, BlockPos center, double width, int height, boolean isHollow, int random) {
 
         if (isHollow) width += width % 2;
         // Calculate minimum and maximum coordinates for x and z axes
@@ -151,6 +149,10 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
 
         // Loop through cuboid dimensions
         for (BlockPos p : SpellUtil.calcAOEBlocks(shooter, center, blockHitResult, width, height)) {
+            // random dropout if randomized
+            if (random > 0 && shooter.getRandom().nextFloat() <= random / 4f) {
+                continue;
+            }
             // Check if the point should be part of the hollow cuboid
             if (isHollow) switch (axis) {
                 case X -> {
@@ -213,6 +215,6 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
 
     @Override
     protected @NotNull Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentAOE.INSTANCE, AugmentPierce.INSTANCE, AugmentDampen.INSTANCE, AugmentSensitive.INSTANCE);
+        return augmentSetOf(AugmentRandomize.INSTANCE,AugmentAOE.INSTANCE, AugmentPierce.INSTANCE, AugmentDampen.INSTANCE, AugmentSensitive.INSTANCE);
     }
 }
