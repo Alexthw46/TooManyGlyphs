@@ -51,47 +51,49 @@ public class MethodRay extends AbstractCastMethod {
     }
 
     public CastResolveType fireRay(Level world, LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver) {
+        Vec3 fromPoint = shooter.getEyePosition(1.0f);
+        Vec3 viewVector = shooter.getViewVector(1.0f);
+        return fireRay(world, shooter, stats, spellContext, resolver, fromPoint, viewVector);
+    }
+
+
+    public CastResolveType fireRay(Level world, LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, Vec3 fromPoint, Vec3 viewVector) {
         int sensitivity = stats.getBuffCount(AugmentSensitive.INSTANCE);
         double range = getRange(stats);
 
-        Vec3 fromPoint = shooter.getEyePosition(1.0f);
-        Vec3 toPoint = fromPoint.add(shooter.getViewVector(1.0f).scale(range));
+        Vec3 toPoint = fromPoint.add(viewVector.scale(range));
         ClipContext rayTraceContext = new ClipContext(fromPoint, toPoint, sensitivity >= 1 ? ClipContext.Block.OUTLINE : ClipContext.Block.COLLIDER, sensitivity >= 2 ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, shooter);
         BlockHitResult blockTarget = world.clip(rayTraceContext);
 
         if (blockTarget.getType() != HitResult.Type.MISS) {
             BlockPos pos = blockTarget.getBlockPos();
-            Vec3 blockCenter = new Vec3(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d);
+            Vec3 blockCenter = Vec3.atCenterOf(pos);
             double distance = fromPoint.distanceTo(blockCenter) + 0.5d;
-            toPoint = fromPoint.add(shooter.getViewVector(1.0f).scale(Math.min(range, distance)));
+            toPoint = fromPoint.add(viewVector.scale(Math.min(range, distance)));
         }
         EntityHitResult entityTarget = ProjectileUtil.getEntityHitResult(world, shooter, fromPoint, toPoint, new AABB(fromPoint, toPoint).inflate(1.5d), e -> e != shooter && e.isAlive() && e instanceof LivingEntity);
 
 
-
-        if (entityTarget != null)
-        {
-            resolver.onResolveEffect(world,  entityTarget);
+        if (entityTarget != null) {
+            resolver.onResolveEffect(world, entityTarget);
             Vec3 hitPoint = findNearestPointOnLine(fromPoint, toPoint, entityTarget.getLocation());
             send(world, spellContext, fromPoint, hitPoint);
             return CastResolveType.SUCCESS;
         }
 
-        if (blockTarget.getType() == HitResult.Type.BLOCK)
-        {
+        if (blockTarget.getType() == HitResult.Type.BLOCK) {
             resolver.onResolveEffect(world, blockTarget);
             send(world, spellContext, fromPoint, blockTarget.getLocation());
             return CastResolveType.SUCCESS;
         }
 
-        if (blockTarget.getType() == HitResult.Type.MISS && sensitivity >= 2)
-        {
+        if (blockTarget.getType() == HitResult.Type.MISS && sensitivity >= 2) {
             Vec3 approximateNormal = fromPoint.subtract(toPoint).normalize();
             blockTarget = new BlockHitResult(toPoint, Direction.getNearest(approximateNormal.x, approximateNormal.y, approximateNormal.z), BlockPos.containing(toPoint), true);
             resolver.onResolveEffect(world, blockTarget);
             send(world, spellContext, fromPoint, blockTarget.getLocation());
             return CastResolveType.SUCCESS;
-        }else{
+        } else {
             send(world, spellContext, fromPoint, toPoint);
             return CastResolveType.FAILURE;
         }
@@ -103,8 +105,7 @@ public class MethodRay extends AbstractCastMethod {
     }
 
     @Nonnull
-    private static Vec3 findNearestPointOnLine(@Nonnull Vec3 fromPoint, @Nonnull Vec3 toPoint, @Nonnull Vec3 hitPoint)
-    {
+    private static Vec3 findNearestPointOnLine(@Nonnull Vec3 fromPoint, @Nonnull Vec3 toPoint, @Nonnull Vec3 hitPoint) {
         // algorithm thanks to https://stackoverflow.com/a/9368901
         Vec3 u = toPoint.subtract(fromPoint);
         Vec3 pq = hitPoint.subtract(fromPoint);

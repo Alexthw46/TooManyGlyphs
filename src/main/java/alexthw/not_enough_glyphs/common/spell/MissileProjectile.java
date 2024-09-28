@@ -150,7 +150,11 @@ public class MissileProjectile extends EntityProjectileSpell {
             Vec3 offset = new Vec3(sideOffset, upOffset, sideOffset);
             AABB axis = new AABB(pos.x + offset.x, pos.y + offset.y, pos.z + offset.z, pos.x - offset.x, pos.y - offset.y, pos.z - offset.z);
             List<LivingEntity> entities = this.level().getEntitiesOfClass(LivingEntity.class, axis, entity -> entity != spellResolver.spellContext.getUnwrappedCaster());
-            if (entities.isEmpty()) {
+            if (!entities.isEmpty()) {
+                for (LivingEntity entity : entities) {
+                    this.spellResolver.onResolveEffect(this.level(), new EntityHitResult(entity));
+                }
+            } else if (activateOnEmpty) {
                 Vec3 vector3d2 = this.position();
                 Vec3 dist;
                 if (this.getOwner() == null) {
@@ -159,10 +163,6 @@ public class MissileProjectile extends EntityProjectileSpell {
                     dist = this.position().subtract(this.getOwner().position());
                 }
                 this.spellResolver.onResolveEffect(this.level(), new BlockHitResult(vector3d2, Direction.getNearest(dist.x, dist.y, dist.z), BlockPos.containing(vector3d2), true));
-            } else {
-                for (LivingEntity entity : entities) {
-                    this.spellResolver.onResolveEffect(this.level(), new EntityHitResult(entity));
-                }
             }
         }
     }

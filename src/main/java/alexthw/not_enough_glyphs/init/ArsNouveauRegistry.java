@@ -12,12 +12,26 @@ import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
 import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.api.registry.SpellCasterRegistry;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
+import com.hollingsworth.arsnouveau.api.spell.ITurretBehavior;
+import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
+import com.hollingsworth.arsnouveau.api.spell.SpellStats;
+import com.hollingsworth.arsnouveau.common.block.tile.RotatingTurretTile;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import com.hollingsworth.arsnouveau.common.spell.effect.EffectReset;
 import com.hollingsworth.arsnouveau.setup.registry.APIRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.hollingsworth.arsnouveau.common.block.BasicSpellTurret.TURRET_BEHAVIOR_MAP;
+import static com.hollingsworth.arsnouveau.common.block.RotatingSpellTurret.ROT_TURRET_BEHAVIOR_MAP;
 
 public class ArsNouveauRegistry {
     public static List<AbstractSpellPart> registeredSpells = new ArrayList<>();
@@ -113,4 +127,47 @@ public class ArsNouveauRegistry {
         EffectReset.RESET_LIMITS.add(PropagatePlane.INSTANCE);
         EffectReset.RESET_LIMITS.add(EffectChaining.INSTANCE);
     }
+
+    static {
+        TURRET_BEHAVIOR_MAP.put(MethodMissile.INSTANCE, new ITurretBehavior() {
+
+            @Override
+            public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position iposition, Direction direction) {
+                SpellStats stats = resolver.getCastStats();
+                boolean gravity = stats.hasBuff(AugmentDampen.INSTANCE);
+                int duration = (int) Math.max(5, 30 + 7f * stats.getDurationMultiplier());
+
+                MissileProjectile spell = new MissileProjectile(world, resolver, duration, true, (float) stats.getAoeMultiplier());
+                spell.setOwner(fakePlayer);
+                spell.setPos(iposition.x(), iposition.y(), iposition.z());
+                spell.setGravity(gravity);
+                float velocity = Math.max(0.1f, 0.75f + stats.getAccMultiplier() / 2);
+                if (world.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
+                    Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
+                    spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), velocity, 0);
+                } else {
+                    spell.shoot(direction.getStepX(), ((float) direction.getStepY()), direction.getStepZ(), velocity, 0);
+                }
+                world.addFreshEntity(spell);
+            }
+        });
+        ROT_TURRET_BEHAVIOR_MAP.put(MethodMissile.INSTANCE, TURRET_BEHAVIOR_MAP.get(MethodMissile.INSTANCE));
+
+        TURRET_BEHAVIOR_MAP.put(MethodRay.INSTANCE, new ITurretBehavior() {
+            @Override
+            public void onCast(SpellResolver resolver, ServerLevel serverLevel, BlockPos pos, Player fakePlayer, Position dispensePosition, Direction direction) {
+                Vec3 fromPoint = (Vec3) dispensePosition;
+                Vec3 viewVector;
+                if (serverLevel.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
+                    viewVector = rotatingTurretTile.getShootAngle().normalize();
+                } else
+                    viewVector = pos.getCenter().vectorTo((Vec3) dispensePosition).normalize();
+                MethodRay.INSTANCE.fireRay(serverLevel, fakePlayer, resolver.getCastStats(), resolver.spellContext, resolver, fromPoint, viewVector);
+            }
+        });
+        ROT_TURRET_BEHAVIOR_MAP.put(MethodRay.INSTANCE, TURRET_BEHAVIOR_MAP.get(MethodRay.INSTANCE));
+
+    }
+
+
 }
