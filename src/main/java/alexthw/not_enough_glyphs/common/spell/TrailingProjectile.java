@@ -55,8 +55,8 @@ public class TrailingProjectile extends EntityProjectileSpell {
 
     @Override
     public void tick() {
-        super.tick();
         if (age > 5 && totalProcs < maxProcs && age % (Math.max(2, 12 - 2 * getDelay())) == 0) castSpells();
+        super.tick();
     }
 
     public void traceAnyHit(@Nullable HitResult rayTraceResult, Vec3 thisPosition, Vec3 nextPosition) {
@@ -70,27 +70,28 @@ public class TrailingProjectile extends EntityProjectileSpell {
 
         if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !onProjectileImpact(this, rayTraceResult)) {
             Level level = level();
-            if (!level.isClientSide && rayTraceResult instanceof BlockHitResult blockRaytraceResult && !this.isRemoved() && !hitList.contains(blockRaytraceResult.getBlockPos())) {
+            if (!level.isClientSide && rayTraceResult instanceof BlockHitResult blockRaytraceResult && !this.isRemoved())
+                if (!hitList.contains(blockRaytraceResult.getBlockPos())) {
 
-                BlockState state = level.getBlockState(blockRaytraceResult.getBlockPos());
+                    BlockState state = level.getBlockState(blockRaytraceResult.getBlockPos());
 
-                if (state.getBlock() instanceof IPrismaticBlock prismaticBlock) {
-                    prismaticBlock.onHit((ServerLevel) level, blockRaytraceResult.getBlockPos(), this);
-                    return;
+                    if (state.getBlock() instanceof IPrismaticBlock prismaticBlock) {
+                        prismaticBlock.onHit((ServerLevel) level, blockRaytraceResult.getBlockPos(), this);
+                        return;
+                    }
+
+                    if (state.is(BlockTags.PORTALS)) {
+                        state.entityInside(level, blockRaytraceResult.getBlockPos(), this);
+                        return;
+                    }
+
+                    if (state.getBlock() instanceof TargetBlock) {
+                        this.onHitBlock(blockRaytraceResult);
+                    }
+                    attemptRemoval();
+                    this.hitList.add(blockRaytraceResult.getBlockPos());
+
                 }
-
-                if (state.is(BlockTags.PORTALS)) {
-                    state.entityInside(level, blockRaytraceResult.getBlockPos(), this);
-                    return;
-                }
-
-                if (state.getBlock() instanceof TargetBlock) {
-                    this.onHitBlock(blockRaytraceResult);
-                }
-                attemptRemoval();
-                this.hitList.add(blockRaytraceResult.getBlockPos());
-
-            }
             this.hasImpulse = true;
         }
         if (rayTraceResult != null && rayTraceResult.getType() == HitResult.Type.MISS && rayTraceResult instanceof BlockHitResult blockHitResult
@@ -117,6 +118,7 @@ public class TrailingProjectile extends EntityProjectileSpell {
                 for (BlockPos p : BlockPos.betweenClosed(blockPosition().east(flatAoe).north(flatAoe), blockPosition().west(flatAoe).south(flatAoe))) {
                     spellResolver.onResolveEffect(level(), new
                             BlockHitResult(Vec3.atCenterOf(p), Direction.DOWN, p, true));
+                    this.hitList.add(p.immutable());
                     counter++;
                 }
                 if (counter > 0)

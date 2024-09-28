@@ -129,6 +129,31 @@ public class ArsNouveauRegistry {
     }
 
     static {
+
+        TURRET_BEHAVIOR_MAP.put(MethodTrail.INSTANCE, new ITurretBehavior() {
+            @Override
+            public void onCast(SpellResolver resolver, ServerLevel world, BlockPos pos, Player fakePlayer, Position iposition, Direction direction) {
+                SpellStats stats = resolver.getCastStats();
+                boolean gravity = stats.hasBuff(AugmentDampen.INSTANCE);
+                TrailingProjectile spell = new TrailingProjectile(world, resolver);
+                spell.setOwner(fakePlayer);
+                spell.setPos(iposition.x(), iposition.y(), iposition.z());
+                spell.setAoe(stats.getAoeMultiplier());
+                spell.setDelay((int) stats.getDurationMultiplier());
+                spell.setGravity(gravity);
+                float velocity = Math.max(0.1f, 0.75f + stats.getAccMultiplier() / 2);
+                if (world.getBlockEntity(pos) instanceof RotatingTurretTile rotatingTurretTile) {
+                    Vec3 vec3d = rotatingTurretTile.getShootAngle().normalize();
+                    spell.shoot(vec3d.x(), vec3d.y(), vec3d.z(), velocity, 0);
+                } else {
+                    spell.shoot(direction.getStepX(), ((float) direction.getStepY()), direction.getStepZ(), velocity, 0);
+                }
+                world.addFreshEntity(spell);
+
+            }
+        });
+        ROT_TURRET_BEHAVIOR_MAP.put(MethodTrail.INSTANCE, TURRET_BEHAVIOR_MAP.get(MethodTrail.INSTANCE));
+
         TURRET_BEHAVIOR_MAP.put(MethodMissile.INSTANCE, new ITurretBehavior() {
 
             @Override
