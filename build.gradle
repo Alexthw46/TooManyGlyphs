@@ -9,7 +9,7 @@ plugins {
 version = mod_version
 group = 'com.alexthw.not_enough_glyphs'
 base {
-    archivesName = project.mod_id + project.minecraft_version
+    archivesName = project.mod_id + '-' + project.minecraft_version
 }
 
 if (System.getenv('BUILD_NUMBER') != null) {
