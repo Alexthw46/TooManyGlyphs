@@ -6,13 +6,19 @@ plugins {
     id 'net.neoforged.moddev' version '1.0+'
 }
 
-version = "${minecraft_version}-${mod_version}"
+version = mod_version
 group = 'alexthw.not_enough_glyphs'
 base {
-    archivesName = project.mod_id
+    archivesName = project.mod_id + project.minecraft_version
 }
+
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "." + System.getenv('BUILD_NUMBER')
+}
+
 // Mojang ships Java 21 to end users in 1.21+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.withSourcesJar()
 
 tasks.named('wrapper', Wrapper).configure {
     // Define wrapper values here so as to not have to always do so when updating gradlew.properties.
@@ -29,7 +35,7 @@ neoForge {
 
     parchment {
         mappingsVersion = project.parchment_version
-        minecraftVersion = "1.20.6"
+        minecraftVersion = "1.21"
     }
 
 
@@ -97,7 +103,7 @@ configurations {
 }
 
 //minecraft.accessTransformers.files(
- //       file('src/main/resources/META-INF/accesstransformer.cfg')
+//       file('src/main/resources/META-INF/accesstransformer.cfg')
 //)
 
 sourceSets.main.resources { srcDir "src/generated/resources" }
@@ -168,14 +174,14 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title": "Not Enough Glyphs",
-                "Specification-Vendor": "Alexthw",
+                "Specification-Title"  : "Not Enough Glyphs",
+                "Specification-Vendor" : "Alexthw",
                 "Specification-Version": "1", // We are version 1 of ourselves
-                "Implementation-Title": project.name,
+                "Implementation-Title" : project.name,
                 "Implementation-Version": project.jar.archiveVersion,
-                "Implementation-Vendor" :"Alexthw",
+                "Implementation-Vendor": "Alexthw",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "not_enough_glyphs.mixins.json"
+                "MixinConfigs"         : "not_enough_glyphs.mixins.json"
         ])
     }
 }

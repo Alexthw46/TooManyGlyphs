@@ -71,7 +71,7 @@ public class MethodRay extends AbstractCastMethod {
             double distance = fromPoint.distanceTo(blockCenter) + 0.5d;
             toPoint = fromPoint.add(viewVector.scale(Math.min(range, distance)));
         }
-        EntityHitResult entityTarget = ProjectileUtil.getEntityHitResult(world, shooter, fromPoint, toPoint, new AABB(fromPoint, toPoint).inflate(1.5d), e -> e != shooter && e.isAlive() && e instanceof LivingEntity);
+        EntityHitResult entityTarget = ProjectileUtil.getEntityHitResult(world, shooter, fromPoint, toPoint, new AABB(fromPoint, toPoint).inflate(1.5d), e -> e != shooter && e.isAlive() && e instanceof Entity);
 
 
         if (entityTarget != null) {
