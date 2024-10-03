@@ -7,7 +7,7 @@ plugins {
 }
 
 version = mod_version
-group = 'alexthw.not_enough_glyphs'
+group = 'com.alexthw.not_enough_glyphs'
 base {
     archivesName = project.mod_id + project.minecraft_version
 }
