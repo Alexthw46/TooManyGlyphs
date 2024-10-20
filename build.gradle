@@ -158,7 +158,7 @@ dependencies {
 
     implementation "software.bernie.geckolib:geckolib-neoforge-1.21:${geckolib_version}"
     implementation "vazkii.patchouli:Patchouli:1.21-${patchouli_version}"
-    implementation "curse.maven:ars-elemental-561470:5678042"
+    implementation "com.alexthw.ars_elemental:ars_elemental-${minecraft_version}:${elemental_version}"
 
     compileOnly "mezz.jei:jei-1.21-neoforge-api:${jei_version}"
     implementation "mezz.jei:jei-1.21-neoforge:${jei_version}"
@@ -166,7 +166,6 @@ dependencies {
     implementation "curse.maven:jade-324717:5444008"
     implementation 'top.theillusivec4.curios:curios-neoforge:9.0.4+1.21'
 
-    compileOnly "curse.maven:ars-elemental-561470:5255908"
 }
 
 
