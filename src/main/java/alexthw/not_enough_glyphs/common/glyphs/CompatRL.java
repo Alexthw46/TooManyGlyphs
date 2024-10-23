@@ -18,4 +18,7 @@ public class CompatRL {
         return ResourceLocation.fromNamespaceAndPath("not_enough_glyphs", "glyph_" + path);
     }
 
+    public static ResourceLocation scalaes(String path) {
+        return ResourceLocation.fromNamespaceAndPath("ars_scalaes", "glyph_" + path);
+    }
 }

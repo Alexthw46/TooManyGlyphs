@@ -106,6 +106,9 @@ public class ArsNouveauRegistry {
             PerkRegistry.registerPerk(FocusPerk.ELEMENTAL_AIR);
         }
 
+        //ex scalaes
+        register(EffectResize.INSTANCE);
+
         //perks
         PerkRegistry.registerPerk(FocusPerk.MANIPULATION);
         PerkRegistry.registerPerk(FocusPerk.SUMMONING);
