@@ -1,4 +1,4 @@
-// 1.21.1	2024-08-30T16:03:33.3506238	Patchouli
+// 1.21.1	2024-10-23T19:43:56.1664082	Patchouli
 31eaf65318695c13717138cad5666073714be6b0 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_1/glyph_filter_animal.json
 88fcdfb07a467c56265c3c8dfddde74163529f6e assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_1/glyph_filter_block.json
 7bf748058414433791be7d27286610b98a87d07d assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_1/glyph_filter_entity.json
@@ -24,6 +24,7 @@ b6003d951be0dfe6ce97414b54c50f9e991c6d6a assets/ars_nouveau/patchouli_books/worn
 31f11b1caec48eb7b3aca366f7a5895acfcd59dd assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_2/glyph_propagate_self.json
 4511a87c1514518acab1267aa179a0ade541e1ef assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_2/glyph_propagate_underfoot.json
 d2362d0e8a652ab5d73938256cb3c9636e3c1c90 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_2/glyph_propagator_arc.json
+93877d2af39163acce3249fc1680f3f2c0eed258 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_2/glyph_resize.json
 2ac1193d204d7f15a34f2ec259d8d0a0e4a8b879 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_3/glyph_homing_projectile.json
 95bd4dcffef125b5008743e27ccbb8487a271f2a assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_3/glyph_propagator_homing.json
 637a5db74225287a745addd437bb2d9d9c5f4573 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_3/glyph_trail.json

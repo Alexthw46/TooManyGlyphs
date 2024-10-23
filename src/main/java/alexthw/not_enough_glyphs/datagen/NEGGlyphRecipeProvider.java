@@ -81,6 +81,8 @@ public class NEGGlyphRecipeProvider extends GlyphRecipeProvider {
         recipes.add(get(MethodMissile.INSTANCE).withItem(Items.FIREWORK_ROCKET, 2).withItem(ItemsRegistry.AIR_ESSENCE).withItem(ItemsRegistry.FIRE_ESSENCE));
         recipes.add(get(PropagateMissile.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodMissile.INSTANCE.getGlyph()));
 
+        recipes.add(get(EffectResize.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ItemsRegistry.ABJURATION_ESSENCE).withItem(Items.BROWN_MUSHROOM));
+
 
         Path outputBase = generator.getPackOutput().getOutputFolder();
         for (GlyphRecipe recipe : recipes)
