@@ -29,7 +29,7 @@ public class DatagenMain {
         generator.addProvider(event.includeServer(), new NEGGlyphRecipeProvider(generator));
         generator.addProvider(event.includeServer(), new NEGApparatusProvider(generator));
 
-        generator.addProvider(event.includeServer(), new PatchouliProvider(generator));
+        generator.addProvider(event.includeServer(), new NEGPatchouliProvider(generator));
     }
 
 }

@@ -1,0 +1,16 @@
+{
+  "category": "ars_nouveau:equipment",
+  "icon": "ars_nouveau:thread_slow_power",
+  "name": "item.ars_nouveau.thread_slow_power",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_nouveau.perk_desc.thread_slow_power"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_nouveau:thread_slow_power"
+    }
+  ],
+  "sortnum": 99
+}

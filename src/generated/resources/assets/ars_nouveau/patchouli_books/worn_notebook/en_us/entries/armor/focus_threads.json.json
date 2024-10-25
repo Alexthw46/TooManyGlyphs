@@ -1,0 +1,36 @@
+{
+  "category": "ars_nouveau:armor",
+  "icon": "ars_nouveau:thread_shaper_focus",
+  "name": "ars_nouveau.page.focus_threads",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "focus_threads.desc"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_nouveau:thread_summon_focus"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_nouveau:thread_shaper_focus"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_nouveau:thread_fire_focus"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_nouveau:thread_air_focus"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_nouveau:thread_earth_focus"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_nouveau:thread_water_focus"
+    }
+  ],
+  "sortnum": 99
+}

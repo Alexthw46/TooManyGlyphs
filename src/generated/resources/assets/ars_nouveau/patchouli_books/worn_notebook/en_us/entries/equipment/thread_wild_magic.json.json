@@ -1,0 +1,16 @@
+{
+  "category": "ars_nouveau:equipment",
+  "icon": "ars_nouveau:thread_wild_magic",
+  "name": "item.ars_nouveau.thread_wild_magic",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_nouveau.perk_desc.thread_wild_magic"
+    },
+    {
+      "type": "ars_nouveau:apparatus_recipe",
+      "recipe": "ars_nouveau:thread_wild_magic"
+    }
+  ],
+  "sortnum": 99
+}

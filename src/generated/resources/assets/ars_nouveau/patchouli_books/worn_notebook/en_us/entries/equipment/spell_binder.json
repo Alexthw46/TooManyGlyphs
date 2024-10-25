@@ -1,0 +1,15 @@
+{
+  "category": "ars_nouveau:equipment",
+  "icon": "not_enough_glyphs:spell_binder",
+  "name": "item.not_enough_glyphs.spell_binder",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_nouveau.page.spell_binder"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "not_enough_glyphs:spell_binder"
+    }
+  ]
+}

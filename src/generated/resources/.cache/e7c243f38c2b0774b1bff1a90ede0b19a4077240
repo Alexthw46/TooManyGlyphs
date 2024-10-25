@@ -1,4 +1,11 @@
-// 1.21.1	2024-10-23T19:43:56.1664082	Patchouli
+// 1.21.1	2024-10-25T23:47:05.5290979	Patchouli
+ec8549688c1f6ec5f87e08cb37f321102940fa68 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/armor/focus_threads.json.json
+f6b2627eaf2e1386f7060b21ef88655c9d36f213 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/equipment/spell_binder.json
+bb265a9b72098b9cb9ac94928d11a433c8c9077f assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/equipment/thread_cheap_damage.json.json
+72ce2aca341de8f86a85b35e4c550e87d81be5ca assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/equipment/thread_knockback.json.json
+d72e0f290cc95c3718ef82824e439a5c42f3ded0 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/equipment/thread_sharp_paper.json.json
+da070954cfe0de32d3ba4265cd8a4389ca567f77 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/equipment/thread_slow_power.json.json
+7c865ae49b50419bef6f64fa78891d8f096727e3 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/equipment/thread_wild_magic.json.json
 31eaf65318695c13717138cad5666073714be6b0 assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_1/glyph_filter_animal.json
 88fcdfb07a467c56265c3c8dfddde74163529f6e assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_1/glyph_filter_block.json
 7bf748058414433791be7d27286610b98a87d07d assets/ars_nouveau/patchouli_books/worn_notebook/en_us/entries/glyphs_1/glyph_filter_entity.json
