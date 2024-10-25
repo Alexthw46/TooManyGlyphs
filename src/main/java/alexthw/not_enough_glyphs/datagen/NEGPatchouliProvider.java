@@ -10,7 +10,10 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
 import com.hollingsworth.arsnouveau.api.spell.AbstractEffect;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.datagen.PatchouliProvider;
-import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
+import com.hollingsworth.arsnouveau.common.datagen.patchouli.ApparatusPage;
+import com.hollingsworth.arsnouveau.common.datagen.patchouli.GlyphScribePage;
+import com.hollingsworth.arsnouveau.common.datagen.patchouli.PatchouliBuilder;
+import com.hollingsworth.arsnouveau.common.datagen.patchouli.TextPage;
 import com.hollingsworth.arsnouveau.common.items.PerkItem;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -24,15 +27,15 @@ public class NEGPatchouliProvider extends PatchouliProvider {
     @Override
     public void collectJsons(CachedOutput cache) {
         for (AbstractSpellPart part : ArsNouveauRegistry.registeredSpells) this.addGlyphPage(part);
-        addBasicItem(Registry.SPELL_BINDER.get(), EQUIPMENT, new CraftingPage(Registry.SPELL_BINDER.get()));
+        addBasicItem(Registry.SPELL_BINDER.get(), EQUIPMENT, new ApparatusPage(Registry.SPELL_BINDER.get()));
         addPerkPage(BulldozeThread.INSTANCE);
         addPerkPage(PacificThread.INSTANCE);
         addPerkPage(SharpThread.INSTANCE);
         addPerkPage(PounchThread.INSTANCE);
         addPerkPage(RandomPerk.INSTANCE);
-        PatchouliBuilder builder = new PatchouliBuilder(ARMOR, "focus_threads")
+        PatchouliBuilder builder = new PatchouliBuilder(EQUIPMENT, "focus_threads")
                 .withIcon(PerkRegistry.getPerkItemMap().get(FocusPerk.MANIPULATION.getRegistryName()))
-                .withTextPage("focus_threads.desc")
+                .withTextPage("ars_nouveau.page.focus_threads.desc")
                 .withPage(new ApparatusPage(PerkRegistry.getPerkItemMap().get(FocusPerk.SUMMONING.getRegistryName())))
                 .withPage(new ApparatusPage(PerkRegistry.getPerkItemMap().get(FocusPerk.MANIPULATION.getRegistryName())))
                 .withPage(new ApparatusPage(PerkRegistry.getPerkItemMap().get(FocusPerk.ELEMENTAL_FIRE.getRegistryName())))

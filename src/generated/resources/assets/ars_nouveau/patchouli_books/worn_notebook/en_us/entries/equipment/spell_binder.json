@@ -8,7 +8,7 @@
       "text": "ars_nouveau.page.spell_binder"
     },
     {
-      "type": "patchouli:crafting",
+      "type": "ars_nouveau:apparatus_recipe",
       "recipe": "not_enough_glyphs:spell_binder"
     }
   ]
