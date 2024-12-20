@@ -7,6 +7,7 @@ import alexthw.not_enough_glyphs.init.Registry;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.hollingsworth.arsnouveau.ArsNouveau;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeBuilder;
 import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
@@ -14,6 +15,7 @@ import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -23,20 +25,20 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hollingsworth.arsnouveau.ArsNouveau.prefix;
+import static alexthw.not_enough_glyphs.init.NotEnoughGlyphs.prefix;
 
 public class NEGApparatusProvider extends ApparatusRecipeProvider {
     public NEGApparatusProvider(DataGenerator generatorIn) {
         super(generatorIn);
     }
 
-    static TagKey<Item> SPELLBOOKS = TagKey.create(Registries.ITEM, prefix("spellbook"));
+    static TagKey<Item> SPELLBOOKS = TagKey.create(Registries.ITEM, ArsNouveau.prefix("spellbook"));
 
     @Override
     public void collectJsons(CachedOutput pOutput) {
         List<ApparatusRecipeBuilder.RecipeWrapper<? extends EnchantingApparatusRecipe>> elementalList = new ArrayList<>();
 
-        addRecipe(builder().withReagent(Ingredient.of(SPELLBOOKS)).withPedestalItem(8, Items.LEATHER).withResult(Registry.SPELL_BINDER.get()).build());
+        addRecipe(builder().withReagent(Ingredient.of(SPELLBOOKS)).withPedestalItem(8, Items.LEATHER).withResult(Registry.SPELL_BINDER.get()).withId(prefix("spell_binder")).build());
         addRecipe(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(ItemsRegistry.SHAPERS_FOCUS).withPedestalItem(2, ItemsRegistry.MANIPULATION_ESSENCE).withResult(getPerkItem(FocusPerk.MANIPULATION.getRegistryName())).build());
         addRecipe(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(ItemsRegistry.SUMMONING_FOCUS).withPedestalItem(2, ItemsRegistry.CONJURATION_ESSENCE).withResult(getPerkItem(FocusPerk.SUMMONING.getRegistryName())).build());
         addRecipe(builder().withReagent(ItemsRegistry.BLANK_THREAD).withPedestalItem(Items.ENDER_PEARL).withPedestalItem(Items.RABBIT_FOOT).withPedestalItem(Items.BONE).withResult(getPerkItem(RandomPerk.INSTANCE.getRegistryName())).build());
@@ -53,7 +55,7 @@ public class NEGApparatusProvider extends ApparatusRecipeProvider {
 
 
         for (var recipe : recipes) {
-            Path path = getRecipePath(this.output, recipe.id().getPath());
+            Path path = getRecipePath(this.output, recipe.id());
             this.saveStable(pOutput, recipe.serialize(), path);
         }
 
@@ -65,6 +67,10 @@ public class NEGApparatusProvider extends ApparatusRecipeProvider {
             this.saveStable(pOutput, json, path);
         }
 
+    }
+
+    protected static Path getRecipePath(Path pathIn, ResourceLocation str) {
+        return pathIn.resolve("data/" + str.getNamespace() + "/recipe/" + str.getPath() + ".json");
     }
 
     public static JsonObject addModLoadedCondition(JsonElement recipeElement, String modId) {
