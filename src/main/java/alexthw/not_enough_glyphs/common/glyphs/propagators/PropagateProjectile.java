@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.omega;
@@ -33,6 +34,16 @@ public class PropagateProjectile extends AbstractEffect implements IPropagator {
 
     public PropagateProjectile() {
         super(omega("propagate_projectile"), "Propagate Projectile");
+    }
+
+    @Override
+    public String getBookDescription() {
+        return "Convert the remainder of the spell into a Projectile spell, shot from the hit point towards where the caster is looking.";
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        MethodProjectile.INSTANCE.addAugmentDescriptions(map);
     }
 
     @Override

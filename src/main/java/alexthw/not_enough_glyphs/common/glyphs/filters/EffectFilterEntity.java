@@ -13,6 +13,11 @@ public class EffectFilterEntity extends AbstractEffectFilter {
     }
 
     @Override
+    String getDescriptionSegment() {
+        return "an Entity";
+    }
+
+    @Override
     public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
         return true;
     }

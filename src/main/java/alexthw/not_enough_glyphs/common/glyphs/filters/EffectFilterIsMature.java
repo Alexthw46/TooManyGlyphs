@@ -23,4 +23,11 @@ public class EffectFilterIsMature extends EffectFilterEntity {
         if (!(target.getEntity() instanceof AgeableMob ageableMob)) return false;
         return !ageableMob.isBaby();
     }
+
+
+    @Override
+    String getDescriptionSegment() {
+        return "an adult";
+    }
+
 }

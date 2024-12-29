@@ -15,4 +15,11 @@ public class EffectFilterLivingNotMonster extends EffectFilterLiving {
     public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
         return super.shouldResolveOnEntity(target, level) && target.getEntity().getClassification(false) != MobCategory.MONSTER;
     }
+
+
+    @Override
+    String getDescriptionSegment() {
+        return super.getDescriptionSegment() + " but not a Monster";
+    }
+
 }

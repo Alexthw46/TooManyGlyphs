@@ -16,4 +16,9 @@ public class EffectFilterLivingNotPlayer extends EffectFilterLiving {
     public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
         return super.shouldResolveOnEntity(target, level) && !(target.getEntity() instanceof Player || target.getEntity() instanceof EntityDummy);
     }
+
+    @Override
+    String getDescriptionSegment() {
+        return super.getDescriptionSegment() + " but not a Player";
+    }
 }

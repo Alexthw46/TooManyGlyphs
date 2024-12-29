@@ -25,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -34,6 +35,16 @@ public class MethodTrail extends AbstractCastMethod {
 
     public MethodTrail() {
         super(CompatRL.neg("trail"), "Trail");
+    }
+
+    @Override
+    public String getName() {
+        return "Echoing Trail";
+    }
+
+    @Override
+    public String getBookDescription() {
+        return  "Fire a projectile that resolves the spell multiple times on its trail. Add Sensitive to make it resolve on blocks. Use extend time to reduce the delay between each cast and AoE to increase the area of effect.";
     }
 
     @Override
@@ -152,5 +163,18 @@ public class MethodTrail extends AbstractCastMethod {
 
     public int getProjectileLifespan() {
         return PROJECTILE_TTL != null ? PROJECTILE_TTL.get() : 60;
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        map.put(AugmentExtendTime.INSTANCE, "Increases the time between each cast.");
+        map.put(AugmentAOE.INSTANCE, "Increases the area of effect.");
+        map.put(AugmentSplit.INSTANCE, "Creates additional projectiles.");
+        map.put(AugmentPierce.INSTANCE, "Allows the projectile to pierce through enemies.");
+        map.put(AugmentSensitive.INSTANCE, "Causes the projectile to resolve on blocks, but on a smaller area.");
+        map.put(AugmentDurationDown.INSTANCE, "Decreases the delay between each cast.");
+        map.put(AugmentAccelerate.INSTANCE, "Increases the velocity of the projectile.");
+        map.put(AugmentDecelerate.INSTANCE, "Decreases the velocity of the projectile.");
     }
 }

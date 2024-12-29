@@ -1,5 +1,6 @@
 package alexthw.not_enough_glyphs.datagen;
 
+import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.common.datagen.ModDatagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -30,6 +31,8 @@ public class DatagenMain {
         generator.addProvider(event.includeServer(), new NEGApparatusProvider(generator));
 
         generator.addProvider(event.includeServer(), new NEGPatchouliProvider(generator));
+
+        generator.addProvider(event.includeClient(), new NEGLangProvider(generator.getPackOutput(), NotEnoughGlyphs.MODID, "en_us"));
     }
 
 }

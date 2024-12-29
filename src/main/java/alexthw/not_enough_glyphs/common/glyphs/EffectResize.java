@@ -19,6 +19,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Set;
 
 import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.scalaes;
@@ -32,6 +33,23 @@ public class EffectResize extends AbstractEffect implements IPotionEffect {
     }
 
     @Override
+    public String getName() {
+        return "Resize";
+    }
+
+    @Override
+    public String getBookDescription() {
+        return "Resizes the target entity for a short time. Amplify to increase the size, dampen to shrink.";
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        map.put(AugmentAmplify.INSTANCE, "Enlarge the target.");
+        map.put(AugmentDampen.INSTANCE, "Shrink the target.");
+    }
+
+    @Override
     public SpellTier defaultTier() {
         return SpellTier.TWO;
     }
@@ -40,7 +58,7 @@ public class EffectResize extends AbstractEffect implements IPotionEffect {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         // the entity support the vanilla scale attribute
         if (rayTraceResult.getEntity() instanceof LivingEntity living && living.getAttribute(Attributes.SCALE) != null) {
-            // if amplified, apply expand effect, otherwise apply shrink effect
+            // if amplified, apply the expand effect, otherwise apply shrink effect
             applyConfigPotion(living, spellStats.getAmpMultiplier() >= 0 ? Registry.GROWING_EFFECT : Registry.SHRINKING_EFFECT, spellStats, false);
         }
     }

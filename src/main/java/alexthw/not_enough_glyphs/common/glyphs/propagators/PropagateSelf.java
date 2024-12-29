@@ -26,6 +26,11 @@ public class PropagateSelf extends AbstractEffect implements IPropagator {
     }
 
     @Override
+    public String getBookDescription() {
+        return "Resolves the remainder of the spell on the caster.";
+    }
+
+    @Override
     public void propagate(Level world, HitResult result, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         resolver.onResolveEffect(world, new EntityHitResult(shooter));
     }

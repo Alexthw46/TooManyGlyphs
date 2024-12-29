@@ -14,6 +14,11 @@ public class EffectFilterAny extends AbstractEffectFilter {
     }
 
     @Override
+    String getDescriptionSegment() {
+        return "Placeholder";
+    }
+
+    @Override
     public boolean shouldResolveOnBlock(BlockHitResult target, Level level) {
         return true;
     }

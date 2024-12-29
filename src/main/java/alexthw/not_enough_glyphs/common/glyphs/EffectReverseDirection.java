@@ -24,6 +24,11 @@ public class EffectReverseDirection extends AbstractEffect {
     }
 
     @Override
+    public String getBookDescription() {
+        return "Reverses the direction of the spell, making it resolve as it was cast from the opposite side of the block. Especially useful with block-placing spells, as reversing the direction of pierce will point towards the caster instead of away.";
+    }
+
+    @Override
     public void onResolveBlock(BlockHitResult rayTraceResult, Level world, @Nullable LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         BlockHitResult reversedRayTraceResult = rayTraceResult
                 .withPosition(rayTraceResult.isInside()

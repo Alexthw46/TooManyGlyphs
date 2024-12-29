@@ -45,6 +45,24 @@ public class EffectChaining extends AbstractEffect {
     }
 
     @Override
+    public String getName() {
+        return "Chaining";
+    }
+
+    @Override
+    public String getBookDescription() {
+        return "Causes a spell to chain through multiple grouped targets, either similar blocks or living entities other than the caster. AOE increases target count. Pierce increases maximum jump distance between targets.";
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        map.put(AugmentAOE.INSTANCE, "Increases the number of targets struck.");
+        map.put(AugmentPierce.INSTANCE, "Increases the maximum distance between targets.");
+        map.put(AugmentSensitive.INSTANCE, "Restrict chaining to same-type entities and to exposed blocks. If two are added, chaining on blocks will only happen where the hit side of the block is exposed.");
+    }
+
+    @Override
     protected void addDefaultInvalidCombos(Set<ResourceLocation> defaults) {
         defaults.addAll(Stream.of(EffectLinger.INSTANCE, EffectWall.INSTANCE, EffectBurst.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
     }
@@ -162,8 +180,6 @@ public class EffectChaining extends AbstractEffect {
     @Override
     protected void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
         defaults.put(AugmentSensitive.INSTANCE.getRegistryName(), 2);
-        defaults.put(AugmentExtract.INSTANCE.getRegistryName(), 1);
-        defaults.put(AugmentDampen.INSTANCE.getRegistryName(), 1);
     }
 
     @Nonnull

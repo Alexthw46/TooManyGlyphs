@@ -4,6 +4,7 @@ import com.hollingsworth.arsnouveau.api.spell.AbstractAugment;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellStats;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentDampen;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
@@ -19,12 +20,7 @@ public interface IPropagator {
         propagate(world, rayTraceResult, shooter, stats, newResolver);
     }
 
-    AbstractAugment DUMMY = new AbstractAugment("dummy", "Dummy") {
-        @Override
-        public int getDefaultManaCost() {
-            return 0;
-        }
-    };
+    AbstractAugment DUMMY = AugmentDampen.INSTANCE;
 
     void propagate(Level world, HitResult hitResult, LivingEntity shooter, SpellStats stats, SpellResolver resolver);
 

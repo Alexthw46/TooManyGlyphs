@@ -20,6 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Set;
 
 import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.neg;
@@ -29,6 +30,16 @@ public class EffectPlow extends AbstractEffect {
 
     public EffectPlow() {
         super(neg("plow"), "Plow");
+    }
+
+    @Override
+    public String getName() {
+        return "Plow";
+    }
+
+    @Override
+    public String getBookDescription() {
+        return "Simulate the use of an Hoe on blocks.";
     }
 
     @Override
@@ -69,4 +80,9 @@ public class EffectPlow extends AbstractEffect {
         return setOf(AugmentAOE.INSTANCE);
     }
 
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        map.put(AugmentAOE.INSTANCE, "Increases the area of effect.");
+    }
 }

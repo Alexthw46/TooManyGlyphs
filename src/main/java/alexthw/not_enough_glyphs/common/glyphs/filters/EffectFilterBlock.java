@@ -15,6 +15,11 @@ public class EffectFilterBlock extends AbstractEffectFilter implements IFilter {
     }
 
     @Override
+    String getDescriptionSegment() {
+        return "a Block";
+    }
+
+    @Override
     public SpellTier defaultTier() {
         return SpellTier.ONE;
     }

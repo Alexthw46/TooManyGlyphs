@@ -18,6 +18,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 import static alexthw.not_enough_glyphs.common.glyphs.CompatRL.omega;
@@ -28,6 +29,20 @@ public class MethodMissile extends AbstractCastMethod {
 
     public MethodMissile(String path, String description) {
         super(omega(path), description);
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        map.put(AugmentPierce.INSTANCE, "Missiles will pierce through enemies and blocks an additional time.");
+        map.put(AugmentSplit.INSTANCE, "Missiles multiple projectiles.");
+        map.put(AugmentAccelerate.INSTANCE, "Missiles will move faster.");
+        map.put(AugmentDecelerate.INSTANCE, "Missiles will move slower.");
+        map.put(AugmentSensitive.INSTANCE, "Missiles will hit plants and other materials that do not block motion.");
+        map.put(AugmentDurationDown.INSTANCE, "Missiles will have a shorter lifespan, exploding earlier.");
+        map.put(AugmentExtendTime.INSTANCE, "Missiles will have a longer lifespan.");
+        map.put(AugmentAOE.INSTANCE, "Missiles will have a larger area of effect.");
+        map.put(AugmentDampen.INSTANCE, "Missiles will be affected by gravity.");
     }
 
     public static float getProjectileSpeed(SpellStats stats) {
@@ -107,7 +122,7 @@ public class MethodMissile extends AbstractCastMethod {
     }
 
     public String getBookDescription() {
-        return "Summons a projectile that applies spell effects in a small area when this projectile hits a target or expires. Sensitive will allow Projectiles to break plants or other materials that do not block motion.";
+        return "Summons a projectile that applies spell effects in a small area when it hits a target or expires. Use Time augments to adjust the fuse and AoE to increase its area of effect.";
     }
 
     @Override

@@ -15,4 +15,9 @@ public class EffectFilterAnimal extends EffectFilterLiving {
     public boolean shouldResolveOnEntity(EntityHitResult target, Level level) {
         return super.shouldResolveOnEntity(target, level) && target.getEntity() instanceof Animal;
     }
+
+    @Override
+    String getDescriptionSegment() {
+        return "an Animal";
+    }
 }

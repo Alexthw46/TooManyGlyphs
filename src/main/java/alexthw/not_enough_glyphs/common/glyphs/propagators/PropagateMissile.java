@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 public class PropagateMissile extends AbstractEffect implements IPropagator {
@@ -33,6 +34,16 @@ public class PropagateMissile extends AbstractEffect implements IPropagator {
 
     public PropagateMissile() {
         super(CompatRL.omega("propagate_missile"), "Propagate Missile");
+    }
+
+    @Override
+    public String getBookDescription() {
+        return "Convert the remainder of the spell into a Missile spell and shoot it from where it resolves towards where the caster is looking.";
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        MethodMissile.INSTANCE.addAugmentDescriptions(map);
     }
 
     @Override

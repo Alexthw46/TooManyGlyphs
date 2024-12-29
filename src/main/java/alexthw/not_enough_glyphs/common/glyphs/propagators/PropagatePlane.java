@@ -37,6 +37,21 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
     }
 
     @Override
+    public String getBookDescription() {
+        return "Resolves the remainder of the spell into a wider plane, starting from the block hit and extending based on applied AoE and Pierce. Add Sensitive to make the plane circular. Add Dampen to make the plane hollow.";
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        map.put(AugmentSensitive.INSTANCE, "Makes the plane circular.");
+        map.put(AugmentDampen.INSTANCE, "Makes the plane hollow.");
+        map.put(AugmentRandomize.INSTANCE, "Randomly drops out blocks.");
+        map.put(AugmentAOE.INSTANCE, "Increases the width of the plane.");
+        map.put(AugmentPierce.INSTANCE, "Increases the depth of the plane.");
+    }
+
+    @Override
     protected void addDefaultInvalidCombos(Set<ResourceLocation> defaults) {
         defaults.addAll(Stream.of(EffectWall.INSTANCE, EffectLinger.INSTANCE, EffectBurst.INSTANCE, EffectChaining.INSTANCE).map(AbstractSpellPart::getRegistryName).toList());
     }
@@ -75,9 +90,9 @@ public class PropagatePlane extends AbstractEffect implements IPropagator {
         int radius = (int) width;
         @SuppressWarnings("unused") //this would be normally useless, but it's needed to make the whole thing work
         int anchor = switch (blockHitResult.getDirection()) {
-            case EAST, WEST -> anchor = center.getX();
-            case NORTH, SOUTH -> anchor = center.getZ();
-            case UP, DOWN -> anchor = center.getY();
+            case EAST, WEST -> center.getX();
+            case NORTH, SOUTH -> center.getZ();
+            case UP, DOWN -> center.getY();
         };
 
         // Loop through cylinder dimensions

@@ -56,7 +56,6 @@ public class MethodRay extends AbstractCastMethod {
         return fireRay(world, shooter, stats, spellContext, resolver, fromPoint, viewVector);
     }
 
-
     public CastResolveType fireRay(Level world, LivingEntity shooter, SpellStats stats, SpellContext spellContext, SpellResolver resolver, Vec3 fromPoint, Vec3 viewVector) {
         int sensitivity = stats.getBuffCount(AugmentSensitive.INSTANCE);
         double range = getRange(stats);
@@ -148,6 +147,18 @@ public class MethodRay extends AbstractCastMethod {
     protected void buildAugmentLimitsConfig(ModConfigSpec.Builder builder, Map<ResourceLocation, Integer> defaults) {
         defaults.put(AugmentSensitive.INSTANCE.getRegistryName(), 2);
         super.buildAugmentLimitsConfig(builder, defaults);
+    }
+
+    @Override
+    public void addAugmentDescriptions(Map<AbstractAugment, String> map) {
+        super.addAugmentDescriptions(map);
+        map.put(AugmentSensitive.INSTANCE, "Sensitive 1 lets the ray strike objects that do not block motion, such as plants or floating Magelight globes. Sensitive 2 allows the ray to strike fluids.");
+        map.put(AugmentAOE.INSTANCE, "Increases reach.");
+    }
+
+    @Override
+    public String getBookDescription() {
+        return "Instantaneously strikes the pointed-at target, at limited yet greater range than Touch. Mana is expended whether or not the ray hits anything. AOE increases range. Sensitive 1 lets the ray strike objects that do not block motion, such as plants or floating Magelight globes. Sensitive 2 allows the ray to strike fluids.";
     }
 
     @Override

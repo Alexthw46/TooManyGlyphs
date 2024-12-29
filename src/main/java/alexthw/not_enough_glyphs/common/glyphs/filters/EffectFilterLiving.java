@@ -17,4 +17,11 @@ public class EffectFilterLiving extends AbstractEffectFilter {
         if (!(target.getEntity() instanceof LivingEntity)) return false;
         return target.getEntity().isAlive();
     }
+
+
+    @Override
+    String getDescriptionSegment() {
+        return "a Living Entity";
+    }
+
 }

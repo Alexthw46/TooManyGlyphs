@@ -23,6 +23,13 @@ public abstract class AbstractEffectFilter extends AbstractFilter {
         super(tag, description);
     }
 
+    @Override
+    public String getBookDescription() {
+        return "Stops the spell from resolving unless it targets " + getDescriptionSegment();
+    }
+
+    abstract String getDescriptionSegment();
+
     public AbstractEffectFilter inverted() {
         this.inverted = !inverted;
         return this;

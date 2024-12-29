@@ -33,6 +33,11 @@ public class PropagateUnderfoot extends AbstractEffect implements IPropagator {
     }
 
     @Override
+    public String getBookDescription() {
+        return "Takes the remainder of the spell and cast it below the target.";
+    }
+
+    @Override
     public void propagate(Level world, HitResult result, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         if (result instanceof EntityHitResult entityHitResult)
             resolver.onResolveEffect(world, new BlockHitResult(entityHitResult.getEntity().position(), Direction.DOWN, entityHitResult.getEntity().blockPosition().below(), true));
