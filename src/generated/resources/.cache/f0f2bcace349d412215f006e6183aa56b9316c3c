@@ -1,4 +1,4 @@
-// 1.21.1	2025-01-09T10:39:32.9225461	Glyph Recipes
+// 1.21.1	2025-01-09T11:51:09.7505489	Glyph Recipes
 eadf85ed85d3d51d18d233f60f42499db50c2701 data/arsomega/recipe/glyph_flatten.json
 29e10750ffe510f94a668aa0c857457de6b70ec9 data/arsomega/recipe/glyph_missile.json
 9a0a6a76839cd613040c7bf0412471aec097f076 data/arsomega/recipe/glyph_overhead.json
@@ -13,6 +13,7 @@ e62fe6551cbd2a9494844faa81ca51c350c0c98a data/arsomega/recipe/glyph_propagate_un
 eb084e4b61bcc3dff594ddd75416665f4107533c data/ars_elemental/recipe/glyph_propagator_homing.json
 92ea9816ab5204c2064ce71f27c6829264484772 data/ars_scalaes/recipe/glyph_resize.json
 bf0f52d4ae8885ae1ad355a1966678617191ddc3 data/not_enough_glyphs/recipe/glyph_filter_dark.json
+3050cdbecd6e7811334e940401f0cc90dc140dbe data/not_enough_glyphs/recipe/glyph_filter_light.json
 903e502ae38e0389fd850d5bf8df8e20c396aea3 data/not_enough_glyphs/recipe/glyph_plow.json
 4f5e847f4298f028fc2f4c95970d22f1bfcf86c3 data/not_enough_glyphs/recipe/glyph_propagate_plane.json
 7ad530c41308a5fc46da0080da9c9e32b7f85555 data/not_enough_glyphs/recipe/glyph_trail.json
