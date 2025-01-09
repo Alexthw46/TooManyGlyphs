@@ -4,8 +4,9 @@ import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.PropagatorArc;
 import alexthw.ars_elemental.common.glyphs.PropagatorHoming;
-import alexthw.not_enough_glyphs.common.glyphs.*;
+import alexthw.not_enough_glyphs.common.glyphs.effects.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
+import alexthw.not_enough_glyphs.common.glyphs.forms.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
 import alexthw.not_enough_glyphs.common.spell.*;
 import com.hollingsworth.arsnouveau.api.perk.PerkSlot;
@@ -49,6 +50,10 @@ public class ArsNouveauRegistry {
         register(MethodTrail.INSTANCE);
         register(EffectMomentum.INSTANCE);
 
+        //neg filters
+        register(FilterLight.LIGHT);
+        register(FilterLight.DARK);
+
         //tmg
         if (!tooManyGlyphs) {
             //tmg methods
@@ -59,17 +64,17 @@ public class ArsNouveauRegistry {
             register(EffectChaining.INSTANCE);
 
             //filters
-            register(EffectFilterBlock.INSTANCE);
-            register(EffectFilterEntity.INSTANCE);
-            register(EffectFilterLiving.INSTANCE);
-            register(EffectFilterLivingNotMonster.INSTANCE);
-            register(EffectFilterLivingNotPlayer.INSTANCE);
-            register(EffectFilterMonster.INSTANCE);
-            register(EffectFilterPlayer.INSTANCE);
-            register(EffectFilterItem.INSTANCE);
-            register(EffectFilterAnimal.INSTANCE);
-            register(EffectFilterIsBaby.INSTANCE);
-            register(EffectFilterIsMature.INSTANCE);
+            register(FilterBlock.INSTANCE);
+            register(FilterEntity.INSTANCE);
+            register(FilterLiving.INSTANCE);
+            register(FilterLivingNotMonster.INSTANCE);
+            register(FilterLivingNotPlayer.INSTANCE);
+            register(FilterMonster.INSTANCE);
+            register(FilterPlayer.INSTANCE);
+            register(FilterItem.INSTANCE);
+            register(FilterAnimal.INSTANCE);
+            register(FilterBaby.INSTANCE);
+            register(FilterMature.INSTANCE);
         }
 
         //neg propagators
@@ -84,7 +89,9 @@ public class ArsNouveauRegistry {
             register(PropagateSelf.INSTANCE);
 
             register(MethodMissile.INSTANCE);
+            register(MethodOverhead.INSTANCE);
             register(PropagateMissile.INSTANCE);
+            register(PropagateOverhead.INSTANCE);
         }
 
         //elemental

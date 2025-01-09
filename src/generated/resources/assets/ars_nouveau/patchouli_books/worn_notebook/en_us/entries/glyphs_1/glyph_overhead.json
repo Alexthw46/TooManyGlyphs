@@ -1,0 +1,17 @@
+{
+  "!flag": "mod:arsomega",
+  "category": "ars_nouveau:glyphs_1",
+  "icon": "arsomega:glyph_overhead",
+  "name": "arsomega.glyph_name.glyph_overhead",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "arsomega.glyph_desc.glyph_overhead"
+    },
+    {
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "arsomega:glyph_overhead"
+    }
+  ],
+  "sortnum": 1
+}

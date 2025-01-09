@@ -2,7 +2,7 @@ package alexthw.not_enough_glyphs.common.glyphs.propagators;
 
 import alexthw.not_enough_glyphs.api.IPropagator;
 import alexthw.not_enough_glyphs.common.glyphs.CompatRL;
-import alexthw.not_enough_glyphs.common.glyphs.MethodHoming;
+import alexthw.not_enough_glyphs.common.glyphs.forms.MethodHoming;
 import alexthw.not_enough_glyphs.init.NotEnoughGlyphs;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.TileCaster;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static alexthw.not_enough_glyphs.common.glyphs.MethodHoming.getProjectileSpeed;
+import static alexthw.not_enough_glyphs.common.glyphs.forms.MethodHoming.getProjectileSpeed;
 
 public class PropagateHoming extends AbstractEffect implements IPropagator {
 

@@ -1,7 +1,7 @@
 package alexthw.not_enough_glyphs.common.glyphs.propagators;
 
 import alexthw.not_enough_glyphs.api.IPropagator;
-import alexthw.not_enough_glyphs.common.glyphs.EffectChaining;
+import alexthw.not_enough_glyphs.common.glyphs.effects.EffectChaining;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.BlockUtil;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;

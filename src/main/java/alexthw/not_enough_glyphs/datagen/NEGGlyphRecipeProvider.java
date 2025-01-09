@@ -4,8 +4,9 @@ import alexthw.ars_elemental.common.glyphs.MethodArcProjectile;
 import alexthw.ars_elemental.common.glyphs.MethodHomingProjectile;
 import alexthw.ars_elemental.common.glyphs.PropagatorArc;
 import alexthw.ars_elemental.common.glyphs.PropagatorHoming;
-import alexthw.not_enough_glyphs.common.glyphs.*;
+import alexthw.not_enough_glyphs.common.glyphs.effects.*;
 import alexthw.not_enough_glyphs.common.glyphs.filters.*;
+import alexthw.not_enough_glyphs.common.glyphs.forms.*;
 import alexthw.not_enough_glyphs.common.glyphs.propagators.*;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import com.hollingsworth.arsnouveau.common.crafting.recipes.GlyphRecipe;
@@ -58,19 +59,21 @@ public class NEGGlyphRecipeProvider extends GlyphRecipeProvider {
         recipes.add(get(EffectChaining.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(Items.CHAIN, 3).withItem(Items.LAPIS_BLOCK, 1).withItem(Items.REDSTONE_BLOCK, 1).withItem(BlockRegistry.SOURCE_GEM_BLOCK, 1));
         recipes.add(get(EffectReverseDirection.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(Items.GLASS_PANE));
 
-        recipes.add(get(EffectFilterBlock.INSTANCE).withIngredient(Ingredient.of(Tags.Items.COBBLESTONES)));
-        recipes.add(get(EffectFilterEntity.INSTANCE).withIngredient(Ingredient.of(Tags.Items.NUGGETS_IRON)));
+        recipes.add(get(FilterBlock.INSTANCE).withIngredient(Ingredient.of(Tags.Items.COBBLESTONES)));
+        recipes.add(get(FilterEntity.INSTANCE).withIngredient(Ingredient.of(Tags.Items.NUGGETS_IRON)));
 
-        recipes.add(get(EffectFilterItem.INSTANCE).withItem(Items.EMERALD));
-        recipes.add(get(EffectFilterLiving.INSTANCE).withItem(Items.DANDELION));
-        recipes.add(get(EffectFilterMonster.INSTANCE).withItem(Items.LILY_OF_THE_VALLEY));
-        recipes.add(get(EffectFilterAnimal.INSTANCE).withItem(Items.BEEF));
-        recipes.add(get(EffectFilterPlayer.INSTANCE).withItem(Items.POPPY));
-        recipes.add(get(EffectFilterLivingNotMonster.INSTANCE).withItem(Items.OXEYE_DAISY));
-        recipes.add(get(EffectFilterLivingNotPlayer.INSTANCE).withItem(Items.BLUE_ORCHID));
+        recipes.add(get(FilterItem.INSTANCE).withItem(Items.EMERALD));
+        recipes.add(get(FilterLiving.INSTANCE).withItem(Items.DANDELION));
+        recipes.add(get(FilterMonster.INSTANCE).withItem(Items.LILY_OF_THE_VALLEY));
+        recipes.add(get(FilterAnimal.INSTANCE).withItem(Items.BEEF));
+        recipes.add(get(FilterPlayer.INSTANCE).withItem(Items.POPPY));
+        recipes.add(get(FilterLivingNotMonster.INSTANCE).withItem(Items.OXEYE_DAISY));
+        recipes.add(get(FilterLivingNotPlayer.INSTANCE).withItem(Items.BLUE_ORCHID));
 
-        recipes.add(get(EffectFilterIsBaby.INSTANCE).withIngredient(Ingredient.of(Tags.Items.EGGS)));
-        recipes.add(get(EffectFilterIsMature.INSTANCE).withItem(Items.CHICKEN));
+        recipes.add(get(FilterBaby.INSTANCE).withIngredient(Ingredient.of(Tags.Items.EGGS)));
+        recipes.add(get(FilterMature.INSTANCE).withItem(Items.CHICKEN));
+
+        recipes.add(get(FilterLight.DARK).withItem(Items.TORCH).withIngredient(Ingredient.of(Tags.Items.DYES_BLACK)));
 
         recipes.add(get(PropagatePlane.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(Items.DIAMOND_BLOCK).withItem(Items.FIREWORK_STAR).withItem(ItemsRegistry.WILDEN_SPIKE));
         recipes.add(get(PropagateSelf.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodSelf.INSTANCE.getGlyph()));
@@ -80,6 +83,9 @@ public class NEGGlyphRecipeProvider extends GlyphRecipeProvider {
 
         recipes.add(get(MethodMissile.INSTANCE).withItem(Items.FIREWORK_ROCKET, 2).withItem(ItemsRegistry.AIR_ESSENCE).withItem(ItemsRegistry.FIRE_ESSENCE));
         recipes.add(get(PropagateMissile.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodMissile.INSTANCE.getGlyph()));
+
+        recipes.add(get(MethodOverhead.INSTANCE).withItem(Items.IRON_HELMET).withItem(ItemsRegistry.AIR_ESSENCE));
+        recipes.add(get(PropagateOverhead.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(MethodOverhead.INSTANCE.getGlyph()));
 
         recipes.add(get(EffectResize.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(ItemsRegistry.ABJURATION_ESSENCE).withItem(Items.BROWN_MUSHROOM));
 

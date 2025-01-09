@@ -1,6 +1,6 @@
 package alexthw.not_enough_glyphs.common.spell;
 
-import alexthw.not_enough_glyphs.common.glyphs.MethodTrail;
+import alexthw.not_enough_glyphs.common.glyphs.forms.MethodTrail;
 import alexthw.not_enough_glyphs.init.Registry;
 import com.hollingsworth.arsnouveau.api.block.IPrismaticBlock;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;

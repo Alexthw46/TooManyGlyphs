@@ -1,0 +1,16 @@
+{
+  "type": "ars_nouveau:glyph",
+  "exp": 27,
+  "inputs": [
+    {
+      "item": "minecraft:torch"
+    },
+    {
+      "tag": "c:dyes/black"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "not_enough_glyphs:glyph_filter_dark"
+  }
+}
