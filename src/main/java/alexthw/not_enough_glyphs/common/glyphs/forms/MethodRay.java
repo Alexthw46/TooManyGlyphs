@@ -65,12 +65,10 @@ public class MethodRay extends AbstractCastMethod {
         BlockHitResult blockTarget = world.clip(rayTraceContext);
 
         if (blockTarget.getType() != HitResult.Type.MISS) {
-            BlockPos pos = blockTarget.getBlockPos();
-            Vec3 blockCenter = Vec3.atCenterOf(pos);
-            double distance = fromPoint.distanceTo(blockCenter) + 0.5d;
+            double distance = fromPoint.distanceTo(blockTarget.getLocation());
             toPoint = fromPoint.add(viewVector.scale(Math.min(range, distance)));
         }
-        EntityHitResult entityTarget = ProjectileUtil.getEntityHitResult(world, shooter, fromPoint, toPoint, new AABB(fromPoint, toPoint).inflate(1.5d), e -> e != shooter && e.isAlive() && e instanceof Entity);
+        EntityHitResult entityTarget = ProjectileUtil.getEntityHitResult(world, shooter, fromPoint, toPoint, new AABB(fromPoint, toPoint).inflate(1.5d), e -> e != shooter && e.isAlive() && e instanceof Entity, 0.0F);
 
 
         if (entityTarget != null) {
